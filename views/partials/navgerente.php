@@ -28,7 +28,9 @@
                     <li class="submenu-item">Reporte Mensual</li>
                 </ul>
             </li>
-
+               <li class="nav-item">
+                <a href="gerente.php?page=roles_pago">Roles de Pago</a>
+            </li>
         </ul>
     </div>
 

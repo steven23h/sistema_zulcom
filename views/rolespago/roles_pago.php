@@ -38,7 +38,7 @@ Listado de Roles
 <div class="mb-3">
 <label class="form-label">Colaborador</label>
 
-<select name="id_trabajador" class="form-select">
+<select id="colaborador" name="id_trabajador">
 <option value="">Seleccione colaborador</option>
 </select>
 
@@ -160,3 +160,8 @@ class='btn btn-success btn-sm'>PDF</a>
 </div>
 
 </div>
+<script src="/zulcom/public/js/rolespago.js"></script>
+
+<script>
+cargarColaboradores();
+</script>

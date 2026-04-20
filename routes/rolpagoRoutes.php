@@ -19,12 +19,13 @@ class RolPagoController {
         try{
 
             $sql = "SELECT 
-                        id AS id_trabajador,
-                        nombres,
-                        apellidos,
-                        role AS cargo
-                    FROM users
-                    ORDER BY nombres ASC";
+            id AS id_trabajador,
+            nombres,
+            apellidos,
+            role AS cargo
+        FROM users
+        WHERE role IN ('Tecnico','Administracion')
+        ORDER BY nombres ASC";
 
             $stmt = $this->db->prepare($sql);
             $stmt->execute();

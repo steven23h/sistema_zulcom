@@ -1,9 +1,15 @@
 <?php
 
 require_once __DIR__ . '/fpdf/fpdf.php';
+$logoPath = __DIR__ . '/../public/img/logo.png';
 
 function toNumber($value){
     return is_numeric($value) ? floatval($value) : 0;
+}
+
+// 🔥 helper para no repetir utf8_decode
+function t($texto){
+    return utf8_decode($texto);
 }
 
 function generarPDFColaborador($colaborador,$roles,$id){
@@ -13,9 +19,7 @@ function generarPDFColaborador($colaborador,$roles,$id){
         $pdf = new FPDF();
         $pdf->AddPage();
         $pdf->SetFont('Arial','B',18);
-        $pdf->Cell(0,20,'No hay roles de pago disponibles para este colaborador.',0,1);
-
-        
+        $pdf->Cell(0,20,t('No hay roles de pago disponibles.'),0,1);
 
         $pdf->Output('D', "rol_pago_$id.pdf");
         return;
@@ -24,11 +28,38 @@ function generarPDFColaborador($colaborador,$roles,$id){
     $pdf = new FPDF();
     $pdf->AddPage();
 
-    // Datos colaborador
+    $morado = [68,63,204];
+
+    // ==============================
+    // LOGO
+    // ==============================
+    $logoPath = __DIR__ . '/../public/img/logo.png';
+    if(file_exists($logoPath)){
+        $pdf->Image($logoPath,10,10,25);
+    }
+
+    // ==============================
+    // ENCABEZADO
+    // ==============================
+    $pdf->SetTextColor($morado[0],$morado[1],$morado[2]);
+
+
+    $pdf->SetFont('Arial','B',14);
+    $pdf->SetXY(150,15);
+    $pdf->Cell(0,10,t('COMPROBANTE DE PAGO'),0,0,'R');
+
+    // Línea
+    $pdf->SetDrawColor($morado[0],$morado[1],$morado[2]);
+    $pdf->SetLineWidth(0.8);
+    $pdf->Line(10,35,200,35);
+
+    // ==============================
+    // DATOS COLABORADOR
+    // ==============================
+    $pdf->SetTextColor(0,0,0);
+    $pdf->SetFont('Arial','',11);
+
     $nombreCompleto = $colaborador['nombres']." ".$colaborador['apellidos'];
-
-    $fechaCreacion = date('d/m/Y H:i');
-
     $cedula = $colaborador['cedula'] ?? 'N/A';
     $cargo = $colaborador['cargo'] ?? 'N/A';
 
@@ -36,139 +67,115 @@ function generarPDFColaborador($colaborador,$roles,$id){
         ? date('d/m/Y',strtotime($colaborador['fecha_ingreso']))
         : 'N/A';
 
-    $morado = [68,63,204];
+    $pdf->SetXY(10,45);
+    $pdf->Cell(100,8,t("Colaborador: $nombreCompleto"));
 
-    header('Content-Type: application/pdf');
-    header("Content-Disposition: attachment; filename=rol_pago_$id.pdf");
+    $pdf->SetXY(10,53);
+    $pdf->Cell(100,8,t("Cédula: $cedula"));
 
-    // Logo
-    $logoPath = __DIR__ . '/../img/logo.png';
+    $pdf->SetXY(110,45);
+    $pdf->Cell(90,8,t("Cargo: $cargo"));
 
-    if(file_exists($logoPath)){
-        $pdf->Image($logoPath,50,45,20);
-    }
+    $pdf->SetXY(110,53);
+    $pdf->Cell(90,8,t("Fecha Ingreso: $fechaIngreso"));
 
-    // Encabezado
-    $pdf->SetTextColor($morado[0],$morado[1],$morado[2]);
-    $pdf->SetFont('Arial','B',22);
-    $pdf->SetXY(120,55);
-    $pdf->Cell(0,10,'Zulcom Solutions S.A.');
+    $pdf->SetXY(10,61);
+    $pdf->Cell(100,8,t("Fecha emisión: ".date('d/m/Y H:i')));
 
-    $pdf->SetFont('Arial','',10);
-    $pdf->SetXY(120,70);
-    $pdf->Cell(0,10,'RUC: 0999999999001');
-
-    $pdf->SetFont('Arial','B',16);
-    $pdf->SetXY(120,90);
-    $pdf->Cell(0,10,'COMPROBANTE DE PAGO',0,0,'R');
-
-    // Línea
-    $pdf->SetDrawColor($morado[0],$morado[1],$morado[2]);
-    $pdf->SetLineWidth(1);
-    $pdf->Line(50,110,190,110);
-
-    // Datos colaborador
-    $pdf->SetTextColor(0,0,0);
-    $pdf->SetFont('Arial','',11);
-
-    $pdf->SetXY(50,120);
-    $pdf->Cell(0,10,"Colaborador: $nombreCompleto");
-
-    $pdf->SetXY(50,130);
-    $pdf->Cell(0,10,"Cedula: $cedula");
-
-    $pdf->SetXY(120,120);
-    $pdf->Cell(0,10,"Cargo: $cargo");
-
-    $pdf->SetXY(120,130);
-    $pdf->Cell(0,10,"Fecha de Ingreso: $fechaIngreso");
-
-    $pdf->SetXY(50,140);
-    $pdf->Cell(0,10,"Fecha de Creacion: $fechaCreacion");
-
-    // Datos del rol
+    // ==============================
+    // DATOS DEL ROL
+    // ==============================
     $rol = $roles[0];
 
     $salario = toNumber($rol['salario']);
-    $cantidadHorasExtra = toNumber($rol['horas_extra']);
-    $valorHorasExtra = toNumber($rol['valor_horas_extras']);
+    $horas = toNumber($rol['horas_extra']);
+    $valorHE = toNumber($rol['valor_horas_extras']);
     $bonos = toNumber($rol['bonos']);
     $descuentos = toNumber($rol['descuentos']);
-    $aporteIess = toNumber($rol['aporte_iess']);
-    $aporteEmpleador = toNumber($rol['aporte_empleador']);
+    $iess = toNumber($rol['aporte_iess']);
+    $empleador = toNumber($rol['aporte_empleador']);
     $total = toNumber($rol['total']);
 
-    $startY = 170;
-
-    // Encabezados
-    $pdf->SetFont('Arial','B',13);
+    // ==============================
+    // TITULOS
+    // ==============================
+    $pdf->SetFont('Arial','B',12);
     $pdf->SetTextColor($morado[0],$morado[1],$morado[2]);
 
-    $pdf->SetXY(50,$startY);
-    $pdf->Cell(80,10,'HABERES');
+    $pdf->SetXY(10,75);
+    $pdf->Cell(90,8,'HABERES');
 
-    $pdf->SetXY(120,$startY);
-    $pdf->Cell(80,10,'DESCUENTOS');
+    $pdf->SetXY(110,75);
+    $pdf->Cell(90,8,'DESCUENTOS');
 
-    $startY += 10;
-
-    $pdf->SetTextColor(0,0,0);
+    // ==============================
+    // CONTENIDO
+    // ==============================
     $pdf->SetFont('Arial','',11);
+    $pdf->SetTextColor(0,0,0);
 
-    // Haberes
-    $pdf->SetXY(50,$startY);
-    $pdf->Cell(80,10,"Salario Basico:");
-    $pdf->Cell(40,10,"$".number_format($salario,2),0,1,'R');
+    $y = 85;
 
-    $pdf->SetX(50);
-    $pdf->Cell(80,10,"Horas extras trabajadas:");
-    $pdf->Cell(40,10,"$cantidadHorasExtra horas",0,1,'R');
+    // HABERES
+    $pdf->SetXY(10,$y);
+    $pdf->Cell(60,8,t('Salario:'));
+    $pdf->Cell(30,8,'$'.number_format($salario,2),0,1);
 
-    $pdf->SetX(50);
-    $pdf->Cell(80,10,"Pago horas extras:");
-    $pdf->Cell(40,10,"$".number_format($valorHorasExtra,2),0,1,'R');
+    $pdf->SetX(10);
+    $pdf->Cell(60,8,t('Horas extra:'));
+    $pdf->Cell(30,8,$horas.' horas',0,1);
 
-    // Descuentos
-    $descY = $startY;
+    $pdf->SetX(10);
+    $pdf->Cell(60,8,t('Valor horas extra:'));
+    $pdf->Cell(30,8,'$'.number_format($valorHE,2),0,1);
 
-    $pdf->SetXY(120,$descY);
-    $pdf->Cell(80,10,"Descuentos:");
-    $pdf->Cell(30,10,"$".number_format($descuentos,2),0,1,'R');
+    $pdf->SetX(10);
+    $pdf->Cell(60,8,t('Bonos:'));
+    $pdf->Cell(30,8,'$'.number_format($bonos,2),0,1);
 
-    $pdf->SetXY(120,$descY+10);
-    $pdf->Cell(80,10,"Aporte IESS:");
-    $pdf->Cell(30,10,"$".number_format($aporteIess,2),0,1,'R');
+    // DESCUENTOS
+    $pdf->SetXY(110,$y);
+    $pdf->Cell(60,8,t('Descuentos:'));
+    $pdf->Cell(30,8,'$'.number_format($descuentos,2),0,1);
 
-    $pdf->SetXY(120,$descY+20);
-    $pdf->Cell(80,10,"Aporte Empleador:");
-    $pdf->Cell(30,10,"$".number_format($aporteEmpleador,2),0,1,'R');
+    $pdf->SetX(110);
+    $pdf->Cell(60,8,t('Aporte IESS:'));
+    $pdf->Cell(30,8,'$'.number_format($iess,2),0,1);
 
-    // Total
+    $pdf->SetX(110);
+    $pdf->Cell(60,8,t('Aporte Empleador:'));
+    $pdf->Cell(30,8,'$'.number_format($empleador,2),0,1);
+
+    // ==============================
+    // TOTAL
+    // ==============================
     $pdf->SetFont('Arial','B',14);
     $pdf->SetTextColor($morado[0],$morado[1],$morado[2]);
-    $pdf->SetXY(50,$startY+60);
-    $pdf->Cell(0,10,"TOTAL A PAGAR: $".number_format($total,2));
 
-    // Cuadro legal
-    $pdf->Rect(50,$startY+80,140,20);
+    $pdf->SetXY(10,130);
+    $pdf->Cell(0,10,t("TOTAL A PAGAR: $").number_format($total,2));
+
+    // ==============================
+    // CUADRO LEGAL
+    // ==============================
+    $pdf->Rect(10,145,190,20);
 
     $pdf->SetFont('Arial','',9);
-    $pdf->SetXY(52,$startY+85);
-
-    $pdf->MultiCell(135,5,
-        'Declaro haber recibido conforme el pago correspondiente al periodo indicado, de acuerdo con la legislacion laboral vigente.'
+    $pdf->SetXY(12,150);
+    $pdf->MultiCell(185,5,
+        t('Declaro haber recibido conforme el pago correspondiente al periodo indicado, de acuerdo con la legislación laboral vigente.')
     );
 
-    // Firmas
-    $firmaY = $startY + 120;
+    // ==============================
+    // FIRMAS
+    // ==============================
+    $pdf->Line(20,180,80,180);
+    $pdf->SetXY(20,182);
+    $pdf->Cell(60,10,t('Firma Empleado'));
 
-    $pdf->Line(50,$firmaY,110,$firmaY);
-    $pdf->SetXY(50,$firmaY+2);
-    $pdf->Cell(60,10,'Firma Empleado');
+    $pdf->Line(120,180,180,180);
+    $pdf->SetXY(120,182);
+    $pdf->Cell(60,10,t('Firma Gerente'));
 
-    $pdf->Line(130,$firmaY,190,$firmaY);
-    $pdf->SetXY(130,$firmaY+2);
-    $pdf->Cell(60,10,'Firma Gerente');
-
-    $pdf->Output();
+    $pdf->Output('D', "rol_pago_$id.pdf");
 }

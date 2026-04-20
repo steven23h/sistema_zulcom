@@ -33,8 +33,7 @@ Listado de Roles
 <div class="card">
 <div class="card-body">
 
-<form method="POST" action="../../controllers/RolPagoController.php">
-
+<form id="formRol">
 <div class="mb-3">
 <label class="form-label">Colaborador</label>
 
@@ -163,5 +162,8 @@ class='btn btn-success btn-sm'>PDF</a>
 <script src="/zulcom/public/js/rolespago.js"></script>
 
 <script>
-cargarColaboradores();
+document.addEventListener("DOMContentLoaded", function() {
+    cargarColaboradores();
+    activarFormularioRol();
+});
 </script>

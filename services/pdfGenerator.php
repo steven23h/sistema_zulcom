@@ -15,10 +15,9 @@ function generarPDFColaborador($colaborador,$roles,$id){
         $pdf->SetFont('Arial','B',18);
         $pdf->Cell(0,20,'No hay roles de pago disponibles para este colaborador.',0,1);
 
-        header('Content-Type: application/pdf');
-        header("Content-Disposition: attachment; filename=rol_pago_$id.pdf");
+        
 
-        $pdf->Output();
+        $pdf->Output('D', "rol_pago_$id.pdf");
         return;
     }
 

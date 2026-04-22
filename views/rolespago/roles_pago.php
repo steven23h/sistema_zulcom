@@ -10,23 +10,11 @@ if (session_status() == PHP_SESSION_NONE) {
 
 <ul class="nav nav-tabs" id="rolTabs">
 
-<li class="nav-item">
-<button class="nav-link active" data-bs-toggle="tab" data-bs-target="#generar">
-Generar Rol
-</button>
-</li>
-
-<li class="nav-item">
-<button class="nav-link" data-bs-toggle="tab" data-bs-target="#listado">
-Listado de Roles
-</button>
-</li>
 
 </ul>
 
 <div class="tab-content mt-4">
 
-<!-- GENERAR ROL -->
 
 <div class="tab-pane fade show active" id="generar">
 

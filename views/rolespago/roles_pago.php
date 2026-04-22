@@ -38,7 +38,7 @@ if (session_status() == PHP_SESSION_NONE) {
 
 <div class="mb-3">
 <label>Periodo</label>
-<input type="text" class="form-control" name="periodo" placeholder="2025-04" required>
+<input type="text" class="form-control" name="periodo" id="periodo" readonly>
 </div>
 
 <div class="row">
@@ -80,64 +80,7 @@ Generar Rol
 
 </div>
 
-<!-- LISTADO -->
 
-<div class="tab-pane fade" id="listado">
-
-<div class="card">
-<div class="card-body">
-
-<div class="table-responsive">
-
-<table class="table table-bordered">
-
-<thead>
-<tr>
-
-<th>ID</th>
-<th>Nombre</th>
-<th>Cargo</th>
-<th>Periodo</th>
-<th>Salario</th>
-<th>Total</th>
-<th>Estado</th>
-<th>Acciones</th>
-
-</tr>
-</thead>
-
-<tbody>
-
-<?php
-/*
-foreach ($roles as $r){
-
-echo "<tr>
-
-<td>{$r['id']}</td>
-<td>{$r['nombres']} {$r['apellidos']}</td>
-<td>{$r['cargo']}</td>
-<td>{$r['periodo']}</td>
-<td>{$r['salario']}</td>
-<td>{$r['total']}</td>
-<td>{$r['estado']}</td>
-
-<td>
-<a href='../../controllers/RolPagoController.php?pdf={$r['id_trabajador']}'
-class='btn btn-success btn-sm'>PDF</a>
-</td>
-
-</tr>";
-
-}
-*/
-?>
-
-</tbody>
-
-</table>
-
-</div>
 
 </div>
 </div>
@@ -153,5 +96,6 @@ class='btn btn-success btn-sm'>PDF</a>
 document.addEventListener("DOMContentLoaded", function() {
     cargarColaboradores();
     activarFormularioRol();
+    asignarPeriodo();
 });
 </script>

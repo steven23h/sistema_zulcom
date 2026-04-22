@@ -7,8 +7,6 @@ function cargarColaboradores(){
     .then(res => res.json())
     .then(data => {
 
-        console.log(data);
-
         const select = document.getElementById("colaborador");
 
         if(!select) return;
@@ -37,18 +35,11 @@ function activarFormularioRol(){
 
     const form = document.getElementById("formRol");
 
-    if(!form){
-        console.log("❌ No encontró el form");
-        return;
-    }
-
-    console.log("✅ Form encontrado");
+    if(!form) return;
 
     form.addEventListener("submit", function(e){
 
         e.preventDefault();
-
-        console.log("🔥 Enviando formulario");
 
         const formData = new FormData(form);
 
@@ -69,4 +60,21 @@ function activarFormularioRol(){
         .catch(error => console.error("Error:", error));
 
     });
+}
+
+
+// ==========================
+// ASIGNAR PERIODO AUTOMÁTICO
+// ==========================
+function asignarPeriodo(){
+
+    const inputPeriodo = document.getElementById("periodo");
+
+    if(!inputPeriodo) return;
+
+    const hoy = new Date();
+    const year = hoy.getFullYear();
+    const month = String(hoy.getMonth() + 1).padStart(2, '0');
+
+    inputPeriodo.value = `${year}-${month}`;
 }

@@ -52,38 +52,37 @@ Cerrar Sesión
 
 switch($page){
 
-case 'roles_pago':
+    // ✅ GENERAR ROL
+    case 'roles_pago':
+        include '../rolespago/roles_pago.php';
+    break;
 
-include '../rolespago/roles_pago.php';
+    // ✅ LISTADO DE ROLES (ESTE TE FALTABA)
+    case 'listar_roles':
+        include '../rolespago/listar_roles.php';
+    break;
 
-break;
+    // ✅ CLIENTES
+    case 'clientes':
+        include '../clientes/index.php';
+    break;
 
-
-case 'clientes':
-
-include '../clientes/index.php';
-
-break;
-
-
-default:
+    // ✅ DASHBOARD
+    default:
 ?>
+    <div class="card" style="background-color: var(--white); padding: 25px; border-radius: 12px; border-left: 5px solid var(--purple-500); box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
 
-<div class="card" style="background-color: var(--white); padding: 25px; border-radius: 12px; border-left: 5px solid var(--purple-500); box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+    <h3 style="margin:0;color:var(--purple-900);font-family:var(--font-title);">
+    Reportes de Crecimiento y Clientes
+    </h3>
 
-<h3 style="margin:0;color:var(--purple-900);font-family:var(--font-title);">
-Reportes de Crecimiento y Clientes
-</h3>
+    <p style="color:var(--dark-gray);margin-top:10px;">
+    Bienvenido al panel de gerencia. Aquí podrá supervisar las métricas de rendimiento y la lista de clientes activos.
+    </p>
 
-<p style="color:var(--dark-gray);margin-top:10px;">
-Bienvenido al panel de gerencia. Aquí podrá supervisar las métricas de rendimiento y la lista de clientes activos.
-</p>
-
-</div>
-
+    </div>
 <?php
 }
-
 ?>
 
 </div>

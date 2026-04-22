@@ -33,7 +33,6 @@
                 <a href="gerente.php?page=roles_pago" style="display:flex; align-items:center; gap:10px;">
                     Roles de Pago
                 </a>
-
                 <!-- SUBMENÚ -->
                 <ul class="submenu">
 

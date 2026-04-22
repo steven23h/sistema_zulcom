@@ -190,11 +190,9 @@ class RolPagoController {
 
         $stmt = $this->db->prepare("
 
-        SELECT id,nombres,apellidos,cedula,role AS cargo
-
-        FROM users
-
-        WHERE id=?
+        SELECT id,nombres,apellidos,cedula,role AS cargo, fecha_ingreso
+         FROM users
+         WHERE id=?
 
         ");
 

@@ -6,7 +6,7 @@
     <div class="nav-section">
         <p class="nav-title">Operaciones</p>
         <ul class="nav-list">
-            
+
             <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'tecnico.php') ? 'active' : ''; ?>">
                 <a href="../dashboard/tecnico.php" style="text-decoration: none; color: inherit; display: flex; align-items: center; width: 100%; gap: 10px;">
                     Mis Trabajos
@@ -30,8 +30,11 @@
                     Manuales Técnicos
                 </a>
             </li>
+            <li class="nav-item">
+                <a href="tecnico.php?page=mis_roles">Mis Roles</a>
+            </li>
         </ul>
     </div>
 
-    
+
 </aside>

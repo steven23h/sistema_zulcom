@@ -3,20 +3,23 @@
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../services/pdfGenerator.php';
 
-class RolPagoController {
+class RolPagoController
+{
 
     private $db;
 
-    public function __construct() {
+    public function __construct()
+    {
         $this->db = Database::connect();
     }
 
     // ==============================
     // CREAR ROL DE PAGO
     // ==============================
-    public function crearRolPago($post){
+    public function crearRolPago($post)
+    {
 
-        try{
+        try {
 
             $id_trabajador = $post['id_trabajador'];
             $salario = $post['salario'];
@@ -26,8 +29,8 @@ class RolPagoController {
             $descuentos = $post['descuentos'] ?? 0;
             $periodo = $post['periodo'];
 
-            if(!$salario || !is_numeric($salario)){
-                return ["mensaje"=>"Salario inválido"];
+            if (!$salario || !is_numeric($salario)) {
+                return ["mensaje" => "Salario inválido"];
             }
 
             $salarioNum = floatval($salario);
@@ -40,8 +43,8 @@ class RolPagoController {
             $pagoHorasExtra = $horasExtrasNum * $valorHoraNormal * 1.5;
 
             // aportes
-            $aporte_iess = round($salarioNum * 0.0945,2);
-            $aporte_empleador = round($salarioNum * 0.1115,2);
+            $aporte_iess = round($salarioNum * 0.0945, 2);
+            $aporte_empleador = round($salarioNum * 0.1115, 2);
 
             // total
             $total =
@@ -67,24 +70,21 @@ class RolPagoController {
                 $periodo,
                 $salarioNum,
                 $horasExtrasNum,
-                round($pagoHorasExtra,2),
+                round($pagoHorasExtra, 2),
                 floatval($decimos),
                 $aporte_iess,
                 $aporte_empleador,
                 floatval($bonos),
                 floatval($descuentos),
-                round($total,2),
+                round($total, 2),
                 "generado"
             ]);
 
-            return ["mensaje"=>"Rol generado correctamente"];
+            return ["mensaje" => "Rol generado correctamente"];
+        } catch (Exception $e) {
 
-        }catch(Exception $e){
-
-            return ["mensaje"=>"Error al generar rol"];
-
+            return ["mensaje" => "Error al generar rol"];
         }
-
     }
 
 
@@ -92,7 +92,8 @@ class RolPagoController {
     // ==============================
     // LISTAR COLABORADORES
     // ==============================
-    public function listarColaboradores(){
+    public function listarColaboradores()
+    {
 
         $stmt = $this->db->prepare("
 
@@ -120,7 +121,8 @@ class RolPagoController {
     // ==============================
     // LISTAR ROLES DE PAGO
     // ==============================
-    public function listarRolesPago($mes=null,$colaborador=null){
+    public function listarRolesPago($mes = null, $colaborador = null)
+    {
 
         session_start();
 
@@ -137,39 +139,33 @@ class RolPagoController {
         $where = [];
         $params = [];
 
-        if(isset($_SESSION['usuario'])){
+        if (isset($_SESSION['user_id'])) {
 
-            $rol = $_SESSION['usuario']['role'];
+            $rol = $_SESSION['role'];
 
-            if($rol=='Tecnico' || $rol=='Administracion'){
+            if ($rol == 'Tecnico' || $rol == 'Administracion') {
 
                 $where[] = "r.id_trabajador = ?";
-                $params[] = $_SESSION['usuario']['id'];
-
+                $params[] = $_SESSION['user_id'];
             }
+        } else {
 
-        }else{
-
-            if($colaborador){
+            if ($colaborador) {
 
                 $where[] = "r.id_trabajador = ?";
                 $params[] = $colaborador;
-
             }
-
         }
 
-        if($mes){
+        if ($mes) {
 
             $where[] = "r.periodo = ?";
             $params[] = $mes;
-
         }
 
-        if(count($where)>0){
+        if (count($where) > 0) {
 
-            $query .= " WHERE ".implode(" AND ",$where);
-
+            $query .= " WHERE " . implode(" AND ", $where);
         }
 
         $query .= " ORDER BY r.periodo DESC, r.id DESC";
@@ -178,7 +174,6 @@ class RolPagoController {
         $stmt->execute($params);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-
     }
 
 
@@ -186,7 +181,8 @@ class RolPagoController {
     // ==============================
     // GENERAR PDF
     // ==============================
-    public function generarPDF($id_trabajador){
+    public function generarPDF($id_trabajador)
+    {
 
         $stmt = $this->db->prepare("
 
@@ -200,8 +196,8 @@ class RolPagoController {
 
         $colaborador = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if(!$colaborador){
-            return ["mensaje"=>"Colaborador no encontrado"];
+        if (!$colaborador) {
+            return ["mensaje" => "Colaborador no encontrado"];
         }
 
         $stmt = $this->db->prepare("
@@ -220,12 +216,10 @@ class RolPagoController {
 
         $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-        if(!$roles){
-            return ["mensaje"=>"No hay roles para este colaborador"];
+        if (!$roles) {
+            return ["mensaje" => "No hay roles para este colaborador"];
         }
 
-        generarPDFColaborador($colaborador,$roles,$id_trabajador);
-
+        generarPDFColaborador($colaborador, $roles, $id_trabajador);
     }
-
 }

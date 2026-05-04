@@ -9,7 +9,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'Tecnico') {
     header("Location: ../auth/login.php"); 
     exit();
 }
-
+// prueba final pr
 // 3. Control de páginas
 $page = $_GET['page'] ?? 'inicio';
 ?>

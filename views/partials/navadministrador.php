@@ -17,6 +17,9 @@
             <li class="nav-item">
                 <a href="#">Clientes</a>
             </li>
+            <li class="nav-item">
+                <a href="administrador.php?page=ver_roles">Mis Roles</a>
+            </li>
         </ul>
     </div>
 </aside>

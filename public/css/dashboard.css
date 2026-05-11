@@ -1,0 +1,90 @@
+:root {
+  --purple-700: #3b3086;
+  --purple-500: #845ef7;
+  --light-gray: #f4f7fe;
+  --white: #ffffff;
+  /* Tamaños de letra aumentados */
+  --font-size-title: 2.5rem; /* ~40px */
+  --font-size-user: 1.2rem;  /* ~19px */
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, sans-serif;
+  background-color: var(--light-gray);
+  font-size: 18px; /* Texto base más grande */
+}
+
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+}
+
+/* CONTENIDO PRINCIPAL */
+.main-content {
+  flex: 1;
+  padding: 30px;
+  display: flex;
+  flex-direction: column;
+}
+
+.content-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: var(--white);
+  padding: 20px 40px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin-bottom: 20px;
+}
+
+.content-header h1 {
+  font-size: var(--font-size-title);
+  color: var(--purple-700);
+  margin: 0;
+  text-transform: uppercase;
+}
+
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.user-name {
+  font-size: var(--font-size-user);
+  font-weight: 600;
+  color: #555;
+}
+
+.logout-btn {
+  background-color: #4361ee;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1.1rem;
+  transition: 0.3s;
+}
+
+.logout-btn:hover {
+  background-color: #3b3086;
+  transform: scale(1.05);
+}
+
+/* RESPONSIVO */
+@media (max-width: 992px) {
+  .dashboard-container {
+    flex-direction: column;
+  }
+  .content-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 15px;
+  }
+  .content-header h1 {
+    font-size: 1.8rem;
+  }
+}

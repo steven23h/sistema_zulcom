@@ -1,0 +1,175 @@
+/* ============================================================
+   ESTILOS SOPORTE TÉCNICO ZULCOM - ESTILO CLIENTES
+   ============================================================ */
+:root {
+    --morado-zulcom: #3b3086;
+    --morado-hover: #2a2263;
+    --verde-zulcom: #27ae60;
+    --verde-hover: #219150;
+    --azul-info: #4361ee;
+    --gris-cancel: #e2e8f0;
+    --bg-gris: #f8f9fc;
+}
+
+
+
+h2 {
+    font-size: 2.8rem;
+    color: var(--morado-zulcom);
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+/* ============================================================
+   SECCIÓN DE FILTROS (DONDE SE AGRANDA LA LETRA)
+   ============================================================ */
+.filters input, 
+.filters select {
+    font-size: 1.4rem !important; /* Letra agrandada para el filtro */
+    padding: 15px 20px !important;
+    border-radius: 15px !important;
+    border: 1px solid #ccc !important;
+    outline: none;
+    flex: 1; /* Para que crezcan parejos */
+    min-width: 200px; /* Evita que se hagan muy chiquitos */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+.filters {
+    display: flex; /* Cambiado a flex para mejor control de alineación */
+    gap: 20px;     /* ESTO SEPARA LOS CUADROS PARA QUE NO ESTÉN UNIDOS */
+    margin-bottom: 25px;
+    flex-wrap: wrap; /* Para que en celulares se pongan uno abajo de otro */
+}
+
+/* ============================================================
+   BOTÓN NUEVO (ESTILO RESALTE VERDE)
+   ============================================================ */
+.btn-new {
+    background-color: var(--verde-zulcom) !important;
+    color: white !important;
+    padding: 15px 30px;
+    border-radius: 12px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.3rem;
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 25px;
+    transition: 0.3s;
+    border: none;
+}
+.btn-new:hover { background-color: var(--verde-hover) !important; transform: translateY(-2px); }
+
+/* ============================================================
+   TABLA DE GESTIÓN (INDEX)
+   ============================================================ */
+.container-table {
+    background: #fff;
+    padding: 30px;
+    border-radius: 20px;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+}
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.2rem;
+}
+
+.table th {
+    background-color: #fafbfc;
+    color: var(--morado-zulcom);
+    padding: 20px;
+    text-align: left;
+    border-bottom: 3px solid #eee;
+    text-transform: uppercase;
+}
+
+.table td { padding: 18px 20px; border-bottom: 1px solid #f0f0f0; }
+
+/* ============================================================
+   FORMULARIOS (CREATE / EDIT)
+   ============================================================ */
+.card-form {
+    background: #fff;
+    padding: 45px;
+    border-radius: 25px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.field { margin-bottom: 25px; }
+.field label {
+    display: block;
+    font-size: 1.35rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #444;
+}
+
+.field input, .field select, .field textarea {
+    width: 100%;
+    padding: 18px;
+    font-size: 1.25rem;
+    border: 2px solid #ccc;
+    border-radius: 15px;
+    box-sizing: border-box;
+}
+
+.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
+.full { grid-column: 1 / -1; }
+
+/* BUSCADOR Y INFO CLIENTE */
+.search-box { display: flex; gap: 15px; }
+.search-box button {
+    background: var(--morado-zulcom);
+    color: white;
+    border: none;
+    padding: 0 35px;
+    border-radius: 15px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+
+.client-info {
+    background: #f0f7ff;
+    padding: 25px;
+    border-radius: 15px;
+    border-left: 6px solid var(--azul-info);
+    margin-bottom: 35px;
+}
+
+/* ============================================================
+   BOTONES DE ACCIÓN (GRANDES)
+   ============================================================ */
+.btn-save, .btn-cancel, .btn-back {
+    width: 100%;
+    padding: 22px;
+    font-size: 1.6rem;
+    font-weight: bold;
+    border-radius: 18px;
+    cursor: pointer;
+    text-align: center;
+    display: block;
+    text-decoration: none;
+    box-sizing: border-box;
+    transition: 0.3s;
+    border: none;
+    margin-bottom: 15px;
+}
+
+.btn-save { background: var(--morado-zulcom); color: white; }
+.btn-save:hover { background: var(--morado-hover); transform: translateY(-3px); }
+
+.btn-cancel { background: var(--gris-cancel); color: #475569; }
+.btn-back { background: #eee; color: #333; margin-top: 30px; }
+
+/* RESPONSIVO */
+@media (max-width: 768px) {
+    .grid { grid-template-columns: 1fr; }
+    .search-box { flex-direction: column; }
+    h2 { font-size: 2.2rem; }
+    .filters { grid-template-columns: 1fr; }
+}

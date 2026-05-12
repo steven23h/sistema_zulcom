@@ -1,0 +1,197 @@
+/* ============================================================
+   ESTILOS GENERALES Y CONTENEDORES
+   ============================================================ */
+.header-seccion {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #f0f2f5;
+}
+
+/* Títulos principales (Planes de Internet / Registrar Nuevo Plan) */
+.header-seccion h2, h2 {
+    font-size: 2.2rem; /* Letra muy grande para títulos */
+    color: #3b3086;
+    margin-bottom: 10px;
+}
+
+/* Subtítulos descriptivos */
+.header-seccion p {
+    font-size: 1.2rem;
+    color: #666;
+}
+
+/* ============================================================
+   BUSCADOR (Index)
+   ============================================================ */
+.search-input {
+    width: 100%;
+    padding: 16px 25px;
+    font-size: 1.2rem; /* Letra grande para búsqueda */
+    border: 1px solid #ddd;
+    border-radius: 12px;
+    margin-bottom: 25px;
+    outline: none;
+    transition: 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+}
+
+.search-input:focus {
+    border-color: #3b3086;
+    box-shadow: 0 0 10px rgba(59, 48, 134, 0.1);
+}
+
+/* ============================================================
+   TABLA DE PLANES (Index)
+   ============================================================ */
+.table-container {
+    background: #fff;
+    border-radius: 12px;
+    overflow-x: auto; /* Permite scroll horizontal en móviles */
+    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+}
+
+.zulcom-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 1.2rem; /* Tamaño de letra de la tabla */
+}
+
+.zulcom-table th {
+    background-color: #fafbfc;
+    color: #3b3086;
+    padding: 20px;
+    text-align: left;
+    border-bottom: 2px solid #eee;
+    font-weight: bold;
+}
+
+.zulcom-table td {
+    padding: 20px;
+    border-bottom: 1px solid #f0f0f0;
+    vertical-align: middle;
+}
+
+/* Badge de Megas (El cuadro azul de la velocidad) */
+.badge-megas {
+    background: #eef2ff;
+    color: #4361ee;
+    padding: 8px 16px;
+    border-radius: 8px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+/* Columna de Costo en verde */
+.costo {
+    color: #2ecc71;
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+
+/* ============================================================
+   BOTONES Y ACCIONES
+   ============================================================ */
+/* Botón "Nuevo Plan" */
+.btn-new {
+    background-color: #27ae60;
+    color: white;
+    padding: 14px 24px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    transition: 0.3s;
+}
+
+.actions {
+    display: flex;
+    gap: 12px;
+}
+
+/* Iconos de editar y eliminar */
+.btn-edit, .btn-delete {
+    padding: 10px 14px;
+    border-radius: 8px;
+    text-decoration: none;
+    transition: 0.2s;
+}
+
+.btn-edit { background: #e7f0ff; color: #4361ee; }
+.btn-delete { background: #ffe7e7; color: #e74c3c; }
+
+.btn-edit:hover { background: #4361ee; color: white; }
+.btn-delete:hover { background: #e74c3c; color: white; }
+
+/* ============================================================
+   FORMULARIOS (Create / Edit)
+   ============================================================ */
+.form-planes {
+    max-width: 800px;
+    background: #fff;
+    padding: 30px;
+    border-radius: 15px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 1.25rem; /* Etiqueta grande */
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #333;
+}
+
+.form-group input {
+    width: 100%;
+    padding: 16px;
+    font-size: 1.2rem;
+    border: 1.5px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+}
+
+.form-group input:focus {
+    border-color: #3b3086;
+}
+
+/* Botón de Guardar */
+.btn-save {
+    background: #3b3086;
+    color: white;
+    border: none;
+    padding: 20px;
+    width: 100%;
+    font-size: 1.4rem; /* Botón muy grande */
+    font-weight: bold;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+    text-transform: uppercase;
+}
+
+.btn-save:hover {
+    background: #2a2263;
+    transform: translateY(-2px);
+}
+
+/* ============================================================
+   RESPONSIVE (Ajustes para celulares)
+   ============================================================ */
+@media (max-width: 768px) {
+    .header-seccion {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 15px;
+    }
+
+    .zulcom-table th, .zulcom-table td {
+        padding: 12px;
+        font-size: 1rem;
+    }
+}

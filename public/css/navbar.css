@@ -1,4 +1,5 @@
 .sidebar {
+<<<<<<< HEAD
   width: 250px;
   background-color: var(--white);
   border-right: 1px solid var(--medium-gray);
@@ -38,15 +39,38 @@
   color: var(--blue-700);
   font-weight: 600;
   letter-spacing: 1px;
+=======
+  width: 300px; /* Más ancho para que quepa la letra grande */
+  background-color: var(--white);
+  border-right: 1px solid #e0e0e0;
+  display: flex;
+  flex-direction: column;
+}
+
+.logo-container {
+  padding: 40px 20px;
+  text-align: center;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.img-logo {
+  width: 140px; /* Logo más imponente */
+  height: auto;
+>>>>>>> master
 }
 
 .nav-list {
   list-style: none;
+<<<<<<< HEAD
   padding: 0;
+=======
+  padding: 20px 0;
+>>>>>>> master
   margin: 0;
 }
 
 .nav-item {
+<<<<<<< HEAD
   padding: 12px 20px;
   cursor: pointer;
   transition: all 0.2s;
@@ -150,4 +174,47 @@
   display: block;
   width: 100%;
   border: none; /* Asegurando que no tenga bordes */
+=======
+  border-bottom: 1px solid #f8f8f8;
+}
+
+.nav-item a {
+  display: block;
+  padding: 20px 30px;
+  color: #3b3086;
+  text-decoration: none;
+  font-size: 1.4rem; /* LETRAS MUY GRANDES */
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.nav-item a:hover {
+  background-color: #f0f4ff;
+  padding-left: 40px; /* Efecto de desplazamiento */
+  color: #4361ee;
+}
+
+/* Indicador de página activa */
+.nav-item a.active {
+  background-color: #eef2ff;
+  border-right: 5px solid #4361ee;
+  font-weight: bold;
+}
+
+/* MENÚ RESPONSIVO PARA MÓVILES */
+@media (max-width: 992px) {
+  .sidebar {
+    width: 100%;
+    min-height: auto;
+  }
+  .nav-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .nav-item a {
+    font-size: 1.1rem;
+    padding: 15px 20px;
+  }
+>>>>>>> master
 }

@@ -1,0 +1,177 @@
+/* RESET */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* CONTENEDOR REGISTRO */
+.container-form {
+    max-width: 900px; /* Un poco más ancho para que respire */
+    margin: auto;
+    padding: 20px;
+    animation: fadeIn 0.6s ease-in-out;
+}
+
+/* TITULO - MUCHO MÁS GRANDE */
+.container-form h2 {
+    text-align: center;
+    color: #1e3c72;
+    margin-bottom: 10px;
+    font-size: 2.2rem; /* Tamaño aumentado */
+}
+
+/* SUBTITULO */
+#form-desc {
+    text-align: center;
+    color: #555;
+    margin-bottom: 25px;
+    font-size: 1.3rem; /* Tamaño aumentado */
+}
+
+/* ALERTAS */
+.alert {
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-size: 1.1rem;
+}
+
+.alert-success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* BOTONES TOGGLE - MÁS GRANDES */
+.btn-toggle-container {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 30px;
+}
+
+.btn-mode {
+    flex: 1;
+    padding: 15px; /* Más alto */
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    background: #e0e0e0;
+    font-weight: bold;
+    font-size: 1.2rem; /* Letra más grande */
+    transition: 0.3s;
+}
+
+.btn-mode.active {
+    background: #1e3c72;
+    color: #fff;
+    box-shadow: 0 4px 10px rgba(30,60,114,0.3);
+}
+
+/* FORM */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px; /* Más espacio entre campos */
+}
+
+/* FILAS */
+.form-row {
+    display: flex;
+    gap: 15px;
+}
+
+.form-row input {
+    flex: 1;
+}
+
+/* INPUTS Y SELECTS - TAMAÑO GRANDE */
+input, select {
+    width: 100%;
+    padding: 16px; /* Más padding para que se vea imponente */
+    border: 1.5px solid #ccc;
+    border-radius: 10px;
+    outline: none;
+    transition: 0.3s;
+    font-size: 1.1rem; /* Letra más grande */
+    background: #fdfdfd;
+}
+
+input:focus, select:focus {
+    border-color: #1e3c72;
+    background: #fff;
+    box-shadow: 0 0 8px rgba(30,60,114,0.2);
+}
+
+/* Etiquetas de error debajo de inputs */
+small.error-text {
+    font-size: 1rem;
+    color: #dc3545;
+    margin-top: -10px;
+    display: block;
+}
+
+/* BOTON REGISTRAR - ESTILO DASHBOARD */
+.btn-register {
+    margin-top: 15px;
+    padding: 18px;
+    border: none;
+    border-radius: 10px;
+    background: #3b3086; /* Color acorde a tu sidebar */
+    color: white;
+    font-weight: bold;
+    font-size: 1.4rem; /* Letra bien grande */
+    cursor: pointer;
+    transition: 0.3s;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.btn-register:hover {
+    background: #1e3c72;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+}
+
+/* OCULTAR */
+.hidden {
+    display: none;
+}
+
+/* ANIMACION */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .form-row {
+        flex-direction: column;
+        gap: 18px;
+    }
+
+    .container-form h2 {
+        font-size: 1.8rem;
+    }
+    
+    .btn-mode {
+        font-size: 1rem;
+        padding: 12px;
+    }
+}

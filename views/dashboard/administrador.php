@@ -3,12 +3,20 @@
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
+<<<<<<< HEAD
 
+=======
+require_once '../../controllers/ClientesController.php';
+require_once '../../controllers/PlanesController.php';
+require_once '../../controllers/TicketsController.php';
+ // Se agrega para que las acciones de planes funcionen
+>>>>>>> master
 // 2. Bloqueo de seguridad
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Administracion') {
     header("Location: ../auth/login.php");
     exit();
 }
+<<<<<<< HEAD
 
 // 3. Controladores y Lógica
 require_once '../../controllers/AuthController.php';
@@ -23,6 +31,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
         $mensaje = "<div style='background:#f8d7da; color:#721c24; padding:15px; border-radius:5px; margin-bottom:20px; border:1px solid #f5c6cb;'>Error: $res</div>";
     }
 }
+=======
+>>>>>>> master
 ?>
 <!DOCTYPE html>
 <html lang="es">
@@ -38,7 +48,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
 
         <main class="main-content">
             <header class="content-header">
+<<<<<<< HEAD
                 <h1>PANEL DE CONTROL</h1>
+=======
+                <div class="header-left">
+                    <h1>PANEL DE CONTROL</h1>
+                </div>
+>>>>>>> master
                 <div class="user-actions">
                     <span class="user-name">Administrador: <?php echo $_SESSION['nombres']; ?></span>
                     <a href="../../logout.php" class="logout-btn" onclick="return confirm('¿Cerrar sesión?')">Cerrar Sesión</a>
@@ -51,11 +67,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
 
                 switch ($page) {
                     case 'registrar':
+<<<<<<< HEAD
                         echo $mensaje; 
+=======
+>>>>>>> master
                         define('ACCESO_PERMITIDO', true);
                         include '../auth/register.php'; 
                         break;
 
+<<<<<<< HEAD
                     case 'ver_planes':
                         // Ajustado a tu estructura: sube un nivel y entra a planes
                         include '../planes/index.php'; 
@@ -68,6 +88,52 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
                     default:
                         echo "<h3>Bienvenido al Sistema de Gestión Zulcom</h3>";
                         echo "<p>Selecciona una opción en el menú lateral para gestionar el sistema.</p>";
+=======
+                    case 'ver_clientes':
+                        include '../clientes/index.php';
+                        break;
+
+                    case 'crear_cliente':
+                        include '../clientes/create.php';
+                        break;
+
+                    case 'editar_cliente':
+                        include '../clientes/edit.php';
+                        break;
+
+                    case 'ver_planes':
+                        include '../planes/index.php'; 
+                        break;
+                        
+                    case 'crear_planes':
+                        include '../planes/create.php';
+                        break;   
+                    case 'editar_plan':
+                         include '../planes/edit.php';
+                         break; 
+                    case 'ver_tickets':
+                         include '../tickets/index.php';
+                        break;
+                    case 'crear_ticket':
+                        include '../tickets/create.php';
+                         break;
+                    case 'editar_ticket':
+                        include '../tickets/edit.php';
+                        break;
+                    case 'ver_ticket':
+                        include '../tickets/ver_ticket.php';
+                         break;
+                    case 'tecnico_tickets':
+                        include '../tecnico/index.php';
+                        break;
+
+                    case 'resolver_ticket':
+                        include '../tecnico/resolver.php';
+                        break;
+                    default:
+                        echo "<h3>Bienvenido al Sistema Zulcom</h3>";
+                        echo "<p>Seleccione1 una opción del menú lateral para gestionar el sistema.</p>";
+>>>>>>> master
                         break;
                 }
                 ?>

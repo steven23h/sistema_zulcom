@@ -1,7 +1,10 @@
 <?php
+<<<<<<< HEAD
 /**
  * VISTA DE REGISTRO - ZULCOM
  */
+=======
+>>>>>>> master
 require_once '../../controllers/AuthController.php';
 
 $mensaje = "";
@@ -12,17 +15,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
     $res = $auth->register($_POST, $_FILES);
 
     if ($res === "success") {
+<<<<<<< HEAD
         $mensaje = "¡Registro exitoso! Redirigiendo al inicio de sesión...";
         $tipo_alerta = "success";
         // Redirige al login después de 2 segundos para que el usuario vea el éxito
         header("refresh:2;url=login.php");
     } else {
         // Aquí se captura el mensaje "Código de empresa incorrecto" que definimos en el controlador
+=======
+        $mensaje = "¡Registro exitoso!";
+        $tipo_alerta = "success";
+    } else {
+>>>>>>> master
         $mensaje = $res;
         $tipo_alerta = "error";
     }
 }
 ?>
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -55,12 +65,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
         <h2 style="color: #333; margin: 0;">Registro de Usuario</h2>
         <p id="form-desc" style="color: #666; margin-bottom: 20px;">Tipo de cuenta: <strong>Persona Natural (Cliente)</strong></p>
         
+=======
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+
+
+<title>Registro</title>
+
+<link rel="stylesheet" href="../../public/css/register.css">
+</head>
+<body>
+
+
+    <!-- HEADER -->
+    <div class="container-form">
+
+        <h2>Registro</h2>
+        <p id="form-desc">Tipo: <strong>Cliente</strong></p>
+
+>>>>>>> master
         <?php if(!empty($mensaje)): ?>
             <div class="alert alert-<?php echo $tipo_alerta; ?>">
                 <?php echo $mensaje; ?>
             </div>
         <?php endif; ?>
 
+<<<<<<< HEAD
         <div class="btn-toggle-container">
             <button type="button" class="btn-mode active" id="btn-cliente" onclick="toggleForm('cliente')">Soy Cliente</button>
             <button type="button" class="btn-mode" id="btn-personal" onclick="toggleForm('personal')">Personal Empresa</button>
@@ -112,12 +145,52 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
                 <div style="margin-bottom: 15px;">
                     <label>Rol de Usuario</label>
                     <select name="role" id="role" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
+=======
+        <!-- BOTONES -->
+        <div class="btn-toggle-container">
+            <button type="button" class="btn-mode active" id="btn-cliente">Cliente</button>
+            <button type="button" class="btn-mode" id="btn-personal">Personal</button>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data">
+
+            <input type="hidden" name="tipo_registro" id="tipo_registro" value="cliente">
+
+            <div class="form-row">
+                <input type="text" name="nombres" placeholder="Nombres" required>
+                <input type="text" name="apellidos" placeholder="Apellidos" required>
+            </div>
+
+            <div class="form-row">
+                <input type="text" name="cedula" maxlength="10" placeholder="Cédula" required>
+                <input type="text" name="telefono" placeholder="Teléfono" required>
+            </div>
+
+            <div class="form-group">
+                <input type="email" name="email" placeholder="Correo" required>
+            </div>
+
+            <div class="form-group">
+                <input type="text" name="domicilio" placeholder="Domicilio" required>
+            </div>
+
+            <!-- PERSONAL -->
+            <div id="campos-personal" class="hidden">
+
+                <div class="box-personal">
+                    <input type="text" name="codigo_empresa" placeholder="Código Empresa">
+                </div>
+
+                <div class="form-group">
+                    <select name="role">
+>>>>>>> master
                         <option value="Tecnico">Técnico</option>
                         <option value="Gerente">Gerente</option>
                         <option value="Administracion">Administración</option>
                     </select>
                 </div>
 
+<<<<<<< HEAD
                 <div style="display: flex; gap: 20px; margin-bottom: 25px;">
                     <div style="flex: 1;">
                         <label>Copia Cédula (PDF)</label>
@@ -168,5 +241,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
         }
     }
     </script>
+=======
+                <div class="form-row">
+                    <input type="file" name="copia_cedula">
+                    <input type="file" name="record_policial">
+                </div>
+
+            </div>
+
+            <button type="submit" name="btn_registrar" class="btn-register">
+                REGISTRAR
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script src="../../public/js/register.js"></script>
+
+>>>>>>> master
 </body>
 </html>

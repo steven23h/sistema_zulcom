@@ -1,40 +1,63 @@
 <aside class="sidebar">
+<<<<<<< HEAD
 
+=======
+>>>>>>> master
     <div class="logo-container">
         <img src="../../public/img/logo.png" class="img-logo" alt="Logo Zulcom">
     </div>
 
     <div class="nav-section">
         <p class="nav-title">Menú Principal</p>
+<<<<<<< HEAD
 
         <ul class="nav-list">
 
             <!-- DASHBOARD -->
             <li class="nav-item <?php echo (!isset($_GET['page'])) ? 'active' : ''; ?>">
                 <a href="gerente.php">
+=======
+        <ul class="nav-list">
+            
+            <li class="nav-item <?php echo (basename($_SERVER['PHP_SELF']) == 'gerente.php') ? 'active' : ''; ?>">
+                <a href="../dashboard/gerente.php" style="text-decoration: none; color: inherit; display: flex; align-items: center; width: 100%; gap: 10px;">
+>>>>>>> master
                     Dashboard
                 </a>
             </li>
 
+<<<<<<< HEAD
             <!-- CLIENTES -->
             <li class="nav-item <?php echo ($_GET['page'] ?? '') == 'clientes' ? 'active' : ''; ?>">
                 <a href="gerente.php?page=clientes">
+=======
+            <li class="nav-item <?php echo (strpos($_SERVER['PHP_SELF'], 'clientes') !== false) ? 'active' : ''; ?>">
+                <a href="../clientes/index.php" style="text-decoration: none; color: inherit; display: flex; align-items: center; width: 100%; gap: 10px;">
+>>>>>>> master
                     Lista de Clientes
                 </a>
             </li>
 
+<<<<<<< HEAD
             <!-- REPORTES -->
             <li class="nav-item dropdown">
                 <a href="#">
                     Reportes de Ventas
                 </a>
 
+=======
+            <li class="nav-item dropdown">
+                <a href="#" style="text-decoration: none; color: inherit; display: flex; align-items: center; width: 100%; gap: 10px;">
+                    Reportes de Ventas
+                </a>
+>>>>>>> master
                 <ul class="submenu">
                     <li class="submenu-item">Reporte Diario</li>
                     <li class="submenu-item">Reporte Mensual</li>
                 </ul>
             </li>
 
+<<<<<<< HEAD
             <li class="nav-item dropdown">
 
                 <a href="gerente.php?page=roles_pago">
@@ -54,4 +77,10 @@
         </ul>
     </div>
 
+=======
+        </ul>
+    </div>
+
+
+>>>>>>> master
 </aside>

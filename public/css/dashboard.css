@@ -1,175 +1,325 @@
+/* =========================
+   VARIABLES
+========================= */
 :root {
 
-  /* Colores base */
-  --white: #ffffff;
-  --light-gray: #f8f9fa;
-  --medium-gray: #e9ecef;
-  --dark-gray: #495057;
-  
-  /* Azules */
-  --blue-100: #e7f5ff;
-  --blue-300: #74c0fc;
-  --blue-500: #339af0;
-  --blue-700: #1c7ed6;
-  --blue-900: #1864ab;
-  --blue-50: #f0f7ff;
-  /* Morados */
-  --purple-100: #f3f0ff;
-  --purple-300: #b197fc;
-  --purple-500: #845ef7;
-  --purple-700: #5f3dc4;
-  --purple-900: #3b3086;
-  
-  /* Tipografía */
-  --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  --font-title: 'Arial Rounded MT Bold', 'Arial', sans-serif;
+    /* COLORES */
+    --white: #ffffff;
+    --light-gray: #f4f7fe;
+    --medium-gray: #e9ecef;
+    --dark-gray: #495057;
 
-  --purple-700: #3b3086;
-  --purple-500: #845ef7;
-  --light-gray: #f4f7fe;
-  --white: #ffffff;
-  /* Tamaños de letra aumentados */
-  --font-size-title: 2.5rem; /* ~40px */
-  --font-size-user: 1.2rem;  /* ~19px */
+    /* AZULES */
+    --blue-50: #f0f7ff;
+    --blue-100: #e7f5ff;
+    --blue-300: #74c0fc;
+    --blue-500: #339af0;
+    --blue-700: #1c7ed6;
+    --blue-900: #1864ab;
 
+    /* MORADOS */
+    --purple-100: #f3f0ff;
+    --purple-300: #b197fc;
+    --purple-500: #845ef7;
+    --purple-700: #3b3086;
+    --purple-900: #2d1f6f;
+
+    /* TIPOGRAFÍA */
+    --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --font-title: 'Arial Rounded MT Bold', Arial, sans-serif;
+
+    /* TAMAÑOS */
+    --font-size-title: 2.5rem;
+    --font-size-user: 1.1rem;
 }
 
+/* =========================
+   BODY
+========================= */
 body {
-  margin: 0;
 
-  font-family: var(--font-main);
-  background-color: var(--white);
-  color: var(--dark-gray);
+    margin: 0;
 
-  font-family: 'Segoe UI', Tahoma, sans-serif;
-  background-color: var(--light-gray);
-  font-size: 18px; /* Texto base más grande */
+    padding: 0;
 
+    font-family: var(--font-main);
+
+    background-color: var(--light-gray);
+
+    color: var(--dark-gray);
+
+    font-size: 18px;
 }
 
+/* =========================
+   CONTENEDOR PRINCIPAL
+========================= */
 .dashboard-container {
-  display: flex;
-  min-height: 100vh;
+
+    display: flex;
+
+    width: 100%;
+
+    min-height: 100vh;
 }
 
+/* =========================
+   SIDEBAR
+========================= */
+.sidebar {
 
-.main-content {
-  flex: 1;
-  padding: 20px;
-  background-color: var(--light-gray);
+    width: 260px;
 
-/* CONTENIDO PRINCIPAL */
-.main-content {
-  flex: 1;
-  padding: 30px;
-  display: flex;
-  flex-direction: column;
+    min-height: 100vh;
 
+    background: var(--white);
+
+    border-right: 1px solid var(--medium-gray);
+
+    flex-shrink: 0;
 }
 
+/* =========================
+   MAIN CONTENT
+========================= */
+.main-content {
+
+    flex: 1;
+
+    width: 100%;
+
+    padding: 30px;
+
+    box-sizing: border-box;
+
+    background-color: var(--light-gray);
+
+    overflow-x: auto;
+}
+
+/* =========================
+   HEADER
+========================= */
 .content-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
 
-  margin-bottom: 25px;
-  padding: 15px 20px; /* Aumenté el padding para mejor espaciado */
-  border-bottom: 2px solid var(--purple-100);
-  background-color: var(--white); /* Esto ya estaba bien */
-  width: 100%; /* Asegura que ocupe todo el ancho disponible */
-  box-sizing: border-box; /* Incluye padding en el cálculo del ancho */
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    gap: 20px;
+
+    margin-bottom: 25px;
+
+    padding: 20px 30px;
+
+    background: var(--white);
+
+    border-radius: 14px;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+
+    width: 100%;
+
+    box-sizing: border-box;
 }
 
+/* =========================
+   TÍTULO
+========================= */
 .content-header h1 {
-  margin: 0;
-  font-family: var(--font-title);
-  color: var(--purple-700);
-  font-size: 1.8rem;
 
-  background: var(--white);
-  padding: 20px 40px;
-  border-radius: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-  margin-bottom: 20px;
+    margin: 0;
+
+    font-family: var(--font-title);
+
+    font-size: var(--font-size-title);
+
+    color: var(--purple-700);
+
+    text-transform: uppercase;
 }
 
-.content-header h1 {
-  font-size: var(--font-size-title);
-  color: var(--purple-700);
-  margin: 0;
-  text-transform: uppercase;
-
-}
-
+/* =========================
+   USUARIO
+========================= */
 .user-actions {
-  display: flex;
-  align-items: center;
 
-  gap: 15px;
+    display: flex;
+
+    align-items: center;
+
+    gap: 20px;
 }
 
 .user-name {
-  color: var(--purple-700);
-  font-weight: 600;
-  font-size: 0.95rem;
+
+    font-size: var(--font-size-user);
+
+    font-weight: 600;
+
+    color: #555;
 }
 
+/* =========================
+   BOTÓN LOGOUT
+========================= */
 .logout-btn {
-  background-color: var(--purple-500);
-  color: white;
-  border: none;
-  padding: 8px 15px;
-  border-radius: 20px;
-  cursor: pointer;
-  font-weight: 500;
-  transition: all 0.2s;
-  text-decoration: none;
-  font-size: 0.9rem;
-  display: inline-block;
+
+    background-color: #4361ee;
+
+    color: white;
+
+    padding: 12px 24px;
+
+    border-radius: 10px;
+
+    text-decoration: none;
+
+    font-weight: bold;
+
+    font-size: 1rem;
+
+    transition: 0.3s;
 }
 
 .logout-btn:hover {
-  background-color: var(--purple-700);
-  transform: translateY(-1px);
-  box-shadow: 0 2px 5px rgba(0,0,0,0.1);
 
-  gap: 20px;
+    background-color: var(--purple-700);
+
+    transform: scale(1.05);
 }
 
-.user-name {
-  font-size: var(--font-size-user);
-  font-weight: 600;
-  color: #555;
+/* =========================
+   CONTENIDO INTERNO
+========================= */
+.dashboard-content {
+
+    width: 100%;
+
+    background: var(--white);
+
+    border-radius: 14px;
+
+    padding: 30px;
+
+    box-sizing: border-box;
+
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+
+    min-height: 500px;
 }
 
-.logout-btn {
-  background-color: #4361ee;
-  color: white;
-  padding: 12px 24px;
-  border-radius: 8px;
-  text-decoration: none;
-  font-weight: bold;
-  font-size: 1.1rem;
-  transition: 0.3s;
+/* =========================
+   TARJETAS / FORMULARIOS
+========================= */
+.card-form,
+.form-container,
+.table-container {
+
+    width: 100%;
+
+    max-width: 100%;
+
+    box-sizing: border-box;
 }
 
-.logout-btn:hover {
-  background-color: #3b3086;
-  transform: scale(1.05);
+/* =========================
+   TABLAS
+========================= */
+table {
+
+    width: 100%;
+
+    border-collapse: collapse;
 }
 
-/* RESPONSIVO */
+.table-responsive {
+
+    width: 100%;
+
+    overflow-x: auto;
+}
+
+/* =========================
+   RESPONSIVE TABLET
+========================= */
 @media (max-width: 992px) {
-  .dashboard-container {
-    flex-direction: column;
-  }
-  .content-header {
-    flex-direction: column;
-    text-align: center;
-    gap: 15px;
-  }
-  .content-header h1 {
-    font-size: 1.8rem;
-  }
 
+    .dashboard-container {
+
+        flex-direction: column;
+    }
+
+    .sidebar {
+
+        width: 100%;
+
+        min-height: auto;
+    }
+
+    .main-content {
+
+        padding: 20px;
+    }
+
+    .content-header {
+
+        flex-direction: column;
+
+        text-align: center;
+    }
+
+    .content-header h1 {
+
+        font-size: 2rem;
+    }
+
+    .user-actions {
+
+        flex-direction: column;
+
+        gap: 12px;
+    }
+}
+
+/* =========================
+   RESPONSIVE MOBILE
+========================= */
+@media (max-width: 576px) {
+
+    .main-content {
+
+        padding: 15px;
+    }
+
+    .dashboard-content {
+
+        padding: 20px;
+    }
+
+    .content-header {
+
+        padding: 20px;
+    }
+
+    .content-header h1 {
+
+        font-size: 1.5rem;
+    }
+
+    .user-name {
+
+        font-size: 0.95rem;
+    }
+
+    .logout-btn {
+
+        width: 100%;
+
+        text-align: center;
+
+        padding: 12px;
+    }
 }

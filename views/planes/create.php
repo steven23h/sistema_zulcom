@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <div style="max-width: 600px;">
     <?php if (isset($_GET['status']) && $_GET['status'] == 'success'): ?>
         <div style="background: #d4edda; color: #155724; padding: 20px; border-radius: 8px; margin-bottom: 25px; border: 1px solid #c3e6cb; text-align: center;">
@@ -32,7 +32,7 @@
         <a href="administrador.php?page=ver_planes" style="margin-left:15px; color:#666; text-decoration:none;">
             Cancelar y Volver
         </a>
-=======
+
 <link rel="stylesheet" href="../../public/css/planes.css">
 
 <div class="header-seccion">
@@ -59,6 +59,6 @@
 
         <button type="submit" name="btn_guardar_plan" class="btn-save">💾 Guardar Plan</button>
         <a href="administrador.php?page=ver_planes" style="display:block; text-align:center; margin-top:15px; color:#666; text-decoration:none; font-size:1.1rem;">Cancelar</a>
->>>>>>> master
+
     </form>
 </div>

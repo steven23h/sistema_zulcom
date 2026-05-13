@@ -1,190 +1,36 @@
-<<<<<<< HEAD
-/* Variables de color */
+/* =========================
+   VARIABLES
+========================= */
 :root {
-  --primary-blue: #4a6bff;
-  --secondary-blue: #6a8eff;
-  --primary-purple: #9a4dff;
-  --secondary-purple: #b07dff;
-  --white: #ffffff;
-  --light-gray: #f5f5f5;
-  --dark-gray: #333333;
-  --error-color: #ff4d4d;
+    --primary-blue: #4a6bff;
+    --secondary-blue: #6a8eff;
+    --primary-purple: #7d5fff;
+    --secondary-purple: #b07dff;
+    --white: #ffffff;
+    --light-gray: #f5f5f5;
+    --dark-gray: #333333;
+    --error-color: #ff4d4d;
 }
 
-/* Estilos base */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-body.auth-page {
-  min-height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 20px;
-}
-
-/* Contenedor principal */
-.auth-container {
-  width: 100%;
-  max-width: 500px;
-}
-
-/* Tarjeta de autenticación */
-.auth-card {
-  background-color: var(--white);
-  border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  overflow: hidden;
-}
-
-/* Encabezado */
-.auth-header {
-  background: linear-gradient(to right, var(--primary-blue), var(--primary-purple));
-  color: var(--white);
-  padding: 20px;
-  text-align: center;
-}
-
-.auth-header h2 {
-  font-weight: 600;
-}
-
-/* Cuerpo */
-.auth-body {
-  padding: 30px;
-}
-
-/* Formulario */
-.auth-form {
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-.form-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.form-group label {
-  font-weight: 500;
-  color: var(--dark-gray);
-}
-
-.form-group input,
-.form-group select {
-  padding: 12px 15px;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 16px;
-  transition: all 0.3s;
-}
-
-.form-group input:focus,
-.form-group select:focus {
-  border-color: var(--primary-blue);
-  outline: none;
-  box-shadow: 0 0 0 2px rgba(74, 107, 255, 0.2);
-}
-
-/* Botón */
-.auth-button {
-  background: linear-gradient(to right, var(--primary-blue), var(--primary-purple));
-  color: var(--white);
-  border: none;
-  padding: 14px;
-  border-radius: 6px;
-  font-size: 16px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s;
-}
-
-.auth-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(74, 107, 255, 0.3);
-}
-
-/* Pie de página */
-.auth-footer {
-  margin-top: 20px;
-  text-align: center;
-}
-
-.auth-footer a {
-  color: var(--primary-blue);
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s;
-}
-
-.auth-footer a:hover {
-  color: var(--primary-purple);
-}
-
-/* Mensajes de error */
-.auth-error {
-  background-color: var(--error-color);
-  color: var(--white);
-  padding: 12px;
-  border-radius: 6px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-
-/* Estilos para el icono de mostrar contraseña */
-.password-toggle {
-  position: relative;
-}
-
-.password-toggle input {
-  padding-right: 35px;
-}
-
-.password-toggle .toggle-icon {
-  position: absolute;
-  right: 10px;
-  top: 50%;
-  transform: translateY(-50%);
-  
-  cursor: pointer;
-  color: var(--dark-gray);
-}
-
-/* Estilos para campos de solo lectura */
-input[readonly] {
-  background-color: var(--light-gray);
-  cursor: not-allowed;
-}
-/* Responsive */
-@media (max-width: 600px) {
-  .auth-body {
-    padding: 20px;
-  }
-  
-  .auth-header {
-    padding: 15px;
-  }
-=======
-/* RESET */
+/* =========================
+   RESET
+========================= */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* BODY CON IMAGEN */
+/* =========================
+   BODY LOGIN
+========================= */
 .login-body {
-    height: 100vh;
+    min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: Arial, sans-serif;
+
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
     background-image: url('../img/bg.png');
     background-size: cover;
@@ -192,37 +38,49 @@ input[readonly] {
     background-repeat: no-repeat;
 }
 
-
-/* CONTENEDOR */
+/* =========================
+   WRAPPER
+========================= */
 .login-wrapper {
     width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
+    padding: 20px;
 }
 
-/* CARD GRANDE */
+/* =========================
+   CARD LOGIN
+========================= */
 .glass-container {
     width: 520px;
-    padding: 70px;
+    padding: 60px;
 
     border-radius: 25px;
-    backdrop-filter: blur(20px);
-    background: rgba(255,255,255,0.18);
-    border: 1px solid rgba(255,255,255,0.4);
 
-    box-shadow: 0 15px 50px rgba(0,0,0,0.4);
+    backdrop-filter: blur(20px);
+    background: rgba(255, 255, 255, 0.15);
+
+    border: 1px solid rgba(255, 255, 255, 0.3);
+
+    box-shadow: 0 15px 50px rgba(0, 0, 0, 0.4);
+
     color: #fff;
     text-align: center;
 }
 
-/* TITULO GRANDE */
+/* =========================
+   TITULO
+========================= */
 .glass-container h2 {
     font-size: 38px;
     margin-bottom: 35px;
+    font-weight: bold;
 }
 
-/* INPUTS */
+/* =========================
+   INPUT GROUP
+========================= */
 .input-group {
     position: relative;
     margin-bottom: 30px;
@@ -231,11 +89,12 @@ input[readonly] {
 .input-group input {
     width: 100%;
     padding: 18px;
-    font-size: 20px;
+    font-size: 18px;
 
     background: transparent;
     border: none;
     border-bottom: 3px solid #fff;
+
     color: #fff;
     outline: none;
 }
@@ -245,46 +104,72 @@ input[readonly] {
     position: absolute;
     left: 0;
     top: 18px;
+
     font-size: 18px;
     color: #ddd;
+
     transition: 0.3s;
+    pointer-events: none;
 }
 
-/* ANIMACIÓN */
+/* ANIMACIÓN LABEL */
 .input-group input:focus ~ label,
 .input-group input:valid ~ label {
     top: -12px;
     font-size: 14px;
+    color: #fff;
 }
 
-/* BOTON GRANDE */
+/* =========================
+   BOTÓN
+========================= */
 .glass-container button {
     width: 100%;
-    padding: 18px;
-    font-size: 20px;
+    padding: 16px;
+
+    font-size: 18px;
+    font-weight: bold;
 
     border-radius: 30px;
     border: none;
-    background: #7d5fff;
+
+    background: linear-gradient(
+        to right,
+        var(--primary-blue),
+        var(--primary-purple)
+    );
+
     color: white;
     cursor: pointer;
+
     transition: 0.3s;
 }
 
 .glass-container button:hover {
-    background: #5f27cd;
+    transform: translateY(-2px);
+
+    box-shadow: 0 8px 20px rgba(74, 107, 255, 0.4);
 }
 
-/* ERROR */
+/* =========================
+   ERROR
+========================= */
 .auth-error {
-    background: rgba(255,0,0,0.3);
+    background: rgba(255, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
     padding: 12px;
     margin-bottom: 20px;
-    border-radius: 8px;
-    font-size: 16px;
+
+    border-radius: 10px;
+
+    color: #fff;
+    font-size: 15px;
 }
 
-/* LINK */
+/* =========================
+   LINKS
+========================= */
 .link {
     margin-top: 20px;
     font-size: 16px;
@@ -295,13 +180,22 @@ input[readonly] {
     font-weight: bold;
     text-decoration: none;
 }
-/* REGISTRO MÁS GRANDE */
+
+.link a:hover {
+    text-decoration: underline;
+}
+
+/* =========================
+   REGISTER BOX
+========================= */
 .register-box {
     width: 650px;
     padding: 60px;
 }
 
-/* FILAS */
+/* =========================
+   FORM ROW
+========================= */
 .form-row {
     display: flex;
     gap: 20px;
@@ -312,31 +206,51 @@ input[readonly] {
     flex: 1;
 }
 
-/* INPUTS REGISTRO */
+/* =========================
+   FORM INPUTS
+========================= */
 .form-group input,
 .form-group select,
 .form-row input {
     width: 100%;
     padding: 16px;
-    font-size: 18px;
+
+    font-size: 16px;
+
     border-radius: 10px;
     border: none;
+
     outline: none;
 }
 
-/* BOTON */
+/* =========================
+   REGISTER BUTTON
+========================= */
 .btn-register {
     width: 100%;
-    padding: 18px;
+    padding: 16px;
+
     font-size: 18px;
+    font-weight: bold;
+
     border-radius: 25px;
     border: none;
+
     background: #7d5fff;
     color: #fff;
+
     cursor: pointer;
+
+    transition: 0.3s;
 }
 
-/* TOGGLE */
+.btn-register:hover {
+    background: #5f27cd;
+}
+
+/* =========================
+   TOGGLE BUTTONS
+========================= */
 .btn-toggle-container {
     display: flex;
     gap: 10px;
@@ -345,47 +259,74 @@ input[readonly] {
 
 .btn-mode {
     flex: 1;
+
     padding: 12px;
+
     border-radius: 10px;
     border: 2px solid #7d5fff;
+
     background: transparent;
     color: #fff;
+
     cursor: pointer;
+
+    transition: 0.3s;
 }
 
 .btn-mode.active {
     background: #7d5fff;
 }
 
-/* PERSONAL BOX */
+/* =========================
+   BOX PERSONAL
+========================= */
 .box-personal {
-    background: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.15);
+
     padding: 15px;
+
     border-radius: 10px;
+
     margin-bottom: 15px;
 }
 
-/* ALERTAS */
+/* =========================
+   ALERTAS
+========================= */
 .alert-success {
     background: rgba(46,204,113,0.3);
+
     padding: 10px;
+
     border-radius: 8px;
+
     margin-bottom: 15px;
+
+    color: #fff;
 }
 
 .alert-error {
     background: rgba(231,76,60,0.3);
+
     padding: 10px;
+
     border-radius: 8px;
+
     margin-bottom: 15px;
+
+    color: #fff;
 }
 
-/* OCULTO */
+/* =========================
+   HIDDEN
+========================= */
 .hidden {
     display: none;
 }
 
-/* RESPONSIVE */
+/* =========================
+   RESPONSIVE TABLET
+========================= */
 @media (max-width: 768px) {
 
     .register-box {
@@ -398,26 +339,27 @@ input[readonly] {
     }
 }
 
-/* RESPONSIVE */
+/* =========================
+   RESPONSIVE MOBILE
+========================= */
 @media (max-width: 480px) {
 
     .glass-container {
-        width: 90%;
+        width: 95%;
         padding: 30px;
     }
 
     .glass-container h2 {
-        font-size: 24px;
+        font-size: 26px;
     }
 
     .input-group input {
         font-size: 16px;
-        padding: 12px;
+        padding: 14px;
     }
 
     .glass-container button {
         font-size: 16px;
         padding: 14px;
     }
->>>>>>> master
 }

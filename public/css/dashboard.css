@@ -1,5 +1,5 @@
 :root {
-<<<<<<< HEAD
+
   /* Colores base */
   --white: #ffffff;
   --light-gray: #f8f9fa;
@@ -23,7 +23,7 @@
   /* Tipografía */
   --font-main: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   --font-title: 'Arial Rounded MT Bold', 'Arial', sans-serif;
-=======
+
   --purple-700: #3b3086;
   --purple-500: #845ef7;
   --light-gray: #f4f7fe;
@@ -31,20 +31,20 @@
   /* Tamaños de letra aumentados */
   --font-size-title: 2.5rem; /* ~40px */
   --font-size-user: 1.2rem;  /* ~19px */
->>>>>>> master
+
 }
 
 body {
   margin: 0;
-<<<<<<< HEAD
+
   font-family: var(--font-main);
   background-color: var(--white);
   color: var(--dark-gray);
-=======
+
   font-family: 'Segoe UI', Tahoma, sans-serif;
   background-color: var(--light-gray);
   font-size: 18px; /* Texto base más grande */
->>>>>>> master
+
 }
 
 .dashboard-container {
@@ -52,26 +52,26 @@ body {
   min-height: 100vh;
 }
 
-<<<<<<< HEAD
+
 .main-content {
   flex: 1;
   padding: 20px;
   background-color: var(--light-gray);
-=======
+
 /* CONTENIDO PRINCIPAL */
 .main-content {
   flex: 1;
   padding: 30px;
   display: flex;
   flex-direction: column;
->>>>>>> master
+
 }
 
 .content-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-<<<<<<< HEAD
+
   margin-bottom: 25px;
   padding: 15px 20px; /* Aumenté el padding para mejor espaciado */
   border-bottom: 2px solid var(--purple-100);
@@ -85,7 +85,7 @@ body {
   font-family: var(--font-title);
   color: var(--purple-700);
   font-size: 1.8rem;
-=======
+
   background: var(--white);
   padding: 20px 40px;
   border-radius: 12px;
@@ -98,13 +98,13 @@ body {
   color: var(--purple-700);
   margin: 0;
   text-transform: uppercase;
->>>>>>> master
+
 }
 
 .user-actions {
   display: flex;
   align-items: center;
-<<<<<<< HEAD
+
   gap: 15px;
 }
 
@@ -132,7 +132,7 @@ body {
   background-color: var(--purple-700);
   transform: translateY(-1px);
   box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-=======
+
   gap: 20px;
 }
 
@@ -171,5 +171,5 @@ body {
   .content-header h1 {
     font-size: 1.8rem;
   }
->>>>>>> master
+
 }

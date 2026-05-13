@@ -1,5 +1,5 @@
 <?php
-<<<<<<< HEAD
+
 session_start();
 // Seguridad: Si no es Tecnico, redirigir al login
 if (!isset($_SESSION['role']) || $_SESSION['role'] != 'Tecnico') {
@@ -7,7 +7,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'Tecnico') {
     exit();
 }
 ?>
-=======
+
 // 1. Gestión de sesión
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -28,7 +28,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Tecnico') {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-<<<<<<< HEAD
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zulcom - Técnico</title>
     <link rel="stylesheet" href="../../public/css/navbar.css">

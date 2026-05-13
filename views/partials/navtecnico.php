@@ -1,6 +1,6 @@
 <aside class="sidebar">
     <div class="logo-container">
-<<<<<<< HEAD
+
         <img src="../../public/img/logo.png" class="img-logo" alt="Logo Zulcom">
     </div>
 
@@ -35,7 +35,7 @@
     </div>
 
     
-=======
+
         <img class="img-logo" src="../../public/img/logo.png" alt="Logo Zulcom">
     </div>
 
@@ -45,5 +45,5 @@
            <li class="nav-item"><a href="tecnico.php?page=tecnico_tickets">Mis Tickets</a></li>
         </ul>
     </div>
->>>>>>> master
+
 </aside>

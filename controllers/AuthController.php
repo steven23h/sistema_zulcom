@@ -3,10 +3,7 @@ require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../models/User.php';
 
 class AuthController {
-<<<<<<< HEAD
-=======
 
->>>>>>> master
     private $db;
     private $userModel;
 
@@ -15,33 +12,28 @@ class AuthController {
         $this->userModel = new User($this->db);
     }
 
+    // =========================
+    // LOGIN
+    // =========================
     public function login($username, $password) {
-<<<<<<< HEAD
+
         $username = trim($username);
         $password = trim($password);
+
         $user = $this->userModel->getByUsername($username);
-        
+
         if ($user && password_verify($password, $user['password'])) {
-            if (session_status() == PHP_SESSION_NONE) session_start();
-=======
 
-        $user = $this->userModel->getByUsername(trim($username));
+            if (session_status() == PHP_SESSION_NONE) {
+                session_start();
+            }
 
-        if ($user && password_verify(trim($password), $user['password'])) {
-
-            if (session_status() == PHP_SESSION_NONE) session_start();
-
->>>>>>> master
-            $_SESSION['user_id'] = $user['id'];
-            $_SESSION['nombres'] = $user['nombres'];
+            $_SESSION['user_id']   = $user['id'];
+            $_SESSION['nombres']   = $user['nombres'];
             $_SESSION['apellidos'] = $user['apellidos'];
-            $_SESSION['role'] = $user['role'];
+            $_SESSION['role']      = $user['role'];
 
-<<<<<<< HEAD
-            // Lógica de redirección según el rol de la base de datos
-=======
-            // redirección por rol
->>>>>>> master
+            // Redirección según rol
             if ($user['role'] == 'Administracion') {
                 $path = 'administrador.php';
             } elseif ($user['role'] == 'User') {
@@ -53,140 +45,115 @@ class AuthController {
             header("Location: ../dashboard/" . $path);
             exit();
         }
-<<<<<<< HEAD
-=======
 
->>>>>>> master
         return false;
     }
 
+    // =========================
+    // REGISTER
+    // =========================
     public function register($post, $files) {
-<<<<<<< HEAD
-        $tipo = $post['tipo_registro']; 
-        $cedula = trim($post['cedula']);
-        $codigoEmpresaCorrecto = "ZULCOM2024";
-
-        // 1. VALIDACIÓN: Cédula duplicada
-        $check = $this->db->prepare("SELECT id FROM users WHERE cedula = ?");
-        $check->execute([$cedula]);
-=======
 
         $tipo = $post['tipo_registro'];
         $cedula = trim($post['cedula']);
         $codigoEmpresaCorrecto = "ZULCOM2024";
 
-        // validar cédula duplicada
+        // Validar cédula duplicada
         $check = $this->db->prepare("SELECT id FROM users WHERE cedula = ?");
         $check->execute([$cedula]);
 
->>>>>>> master
         if ($check->rowCount() > 0) {
             return "La cédula ya existe.";
         }
 
-<<<<<<< HEAD
-        // 2. VALIDACIÓN: Rol por defecto 'User' (Persona Natural)
-        $rolFinal = 'User'; 
-=======
+        // Rol por defecto
         $rolFinal = 'User';
->>>>>>> master
+
         $cc = null;
         $rp = null;
 
+        // =========================
+        // REGISTRO DE PERSONAL
+        // =========================
         if ($tipo === 'personal') {
-<<<<<<< HEAD
-            if (trim($post['codigo_empresa']) !== $codigoEmpresaCorrecto) {
-                return "Código de empresa incorrecto. No tiene permisos para crear esta cuenta.";
-            }
-            $rolFinal = $post['role']; 
 
-            // Procesar Archivos
-            $dir = __DIR__ . '/../public/uploads/';
-            if (!file_exists($dir)) mkdir($dir, 0777, true);
-
-            if (!empty($files['copia_cedula']['name']) && !empty($files['record_policial']['name'])) {
-                $cc = time() . "_cc_" . $files['copia_cedula']['name'];
-                $rp = time() . "_rp_" . $files['record_policial']['name'];
-                move_uploaded_file($files['copia_cedula']['tmp_name'], $dir . $cc);
-                move_uploaded_file($files['record_policial']['tmp_name'], $dir . $rp);
-            } else {
-                return "Los documentos PDF son obligatorios para el personal.";
-            }
-        }
-
-        // 3. Preparar datos generales
-        $nombres = trim($post['nombres']);
-        $apellidos = trim($post['apellidos']);
-        
-        $partsNom = explode(' ', $nombres);
-        $partsApe = explode(' ', $apellidos);
-        $username = strtolower($partsNom[0] . "." . $partsApe[0]);
-        $passwordHash = password_hash($cedula, PASSWORD_BCRYPT);
-
-        $data = [
-            ':cedula' => $cedula, 
-            ':telefono' => trim($post['telefono']), 
-            ':domicilio' => trim($post['domicilio']),
-            ':nombres' => $nombres, 
-            ':apellidos' => $apellidos, 
-            ':email' => trim($post['email']),
-            ':username' => $username, 
-            ':password' => $passwordHash, 
-            ':role' => $rolFinal,
-            ':cc' => $cc, 
-            ':rp' => $rp
-        ];
-
-        return $this->userModel->create($data) ? "success" : "Error al guardar en la base de datos.";
-=======
-
-            // validar código empresa
+            // Validar código empresa
             if (trim($post['codigo_empresa']) !== $codigoEmpresaCorrecto) {
                 return "Código de empresa incorrecto.";
             }
 
-            $rolFinal = $post['role'];
+            $rolFinal = trim($post['role']);
 
+            // Crear carpeta uploads
             $dir = __DIR__ . '/../public/uploads/';
-            if (!file_exists($dir)) mkdir($dir, 0777, true);
 
-            // validar PDFs
-            if ($files['copia_cedula']['type'] !== "application/pdf" ||
-                $files['record_policial']['type'] !== "application/pdf") {
+            if (!file_exists($dir)) {
+                mkdir($dir, 0777, true);
+            }
+
+            // Validar PDFs
+            if (
+                empty($files['copia_cedula']['name']) ||
+                empty($files['record_policial']['name'])
+            ) {
+                return "Debe subir todos los documentos requeridos.";
+            }
+
+            if (
+                $files['copia_cedula']['type'] !== "application/pdf" ||
+                $files['record_policial']['type'] !== "application/pdf"
+            ) {
                 return "Solo se permiten archivos PDF.";
             }
 
-            $cc = time() . "_cc_" . $files['copia_cedula']['name'];
-            $rp = time() . "_rp_" . $files['record_policial']['name'];
+            // Guardar archivos
+            $cc = time() . "_cc_" . basename($files['copia_cedula']['name']);
+            $rp = time() . "_rp_" . basename($files['record_policial']['name']);
 
-            move_uploaded_file($files['copia_cedula']['tmp_name'], $dir . $cc);
-            move_uploaded_file($files['record_policial']['tmp_name'], $dir . $rp);
+            move_uploaded_file(
+                $files['copia_cedula']['tmp_name'],
+                $dir . $cc
+            );
+
+            move_uploaded_file(
+                $files['record_policial']['tmp_name'],
+                $dir . $rp
+            );
         }
 
-        // generar usuario
-        $partsNom = explode(' ', trim($post['nombres']));
-        $partsApe = explode(' ', trim($post['apellidos']));
+        // =========================
+        // GENERAR USUARIO
+        // =========================
+        $nombres = trim($post['nombres']);
+        $apellidos = trim($post['apellidos']);
+
+        $partsNom = explode(' ', $nombres);
+        $partsApe = explode(' ', $apellidos);
+
         $username = strtolower($partsNom[0] . "." . $partsApe[0]);
 
+        // Contraseña = cédula encriptada
         $passwordHash = password_hash($cedula, PASSWORD_BCRYPT);
 
+        // =========================
+        // DATOS
+        // =========================
         $data = [
-            ':cedula' => $cedula,
-            ':telefono' => trim($post['telefono']),
+            ':cedula'    => $cedula,
+            ':telefono'  => trim($post['telefono']),
             ':domicilio' => trim($post['domicilio']),
-            ':nombres' => trim($post['nombres']),
-            ':apellidos' => trim($post['apellidos']),
-            ':email' => trim($post['email']),
-            ':username' => $username,
-            ':password' => $passwordHash,
-            ':role' => $rolFinal,
-            ':cc' => $cc,
-            ':rp' => $rp
+            ':nombres'   => $nombres,
+            ':apellidos' => $apellidos,
+            ':email'     => trim($post['email']),
+            ':username'  => $username,
+            ':password'  => $passwordHash,
+            ':role'      => $rolFinal,
+            ':cc'        => $cc,
+            ':rp'        => $rp
         ];
 
         return $this->userModel->create($data)
             ? "success"
-            : "Error al guardar.";
->>>>>>> master
+            : "Error al guardar en la base de datos.";
     }
 }

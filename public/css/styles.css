@@ -5,7 +5,7 @@
 
 
 /* =========================================================
-   VARIABLES GLOBALES
+   1. VARIABLES GLOBALES
 ========================================================= */
 :root {
 
@@ -36,21 +36,6 @@
 
     --bg-gris: #f8f9fc;
 
-    /* AZULES */
-    --blue-50: #f0f7ff;
-    --blue-100: #e7f5ff;
-    --blue-300: #74c0fc;
-    --blue-500: #339af0;
-    --blue-700: #1c7ed6;
-    --blue-900: #1864ab;
-
-    /* MORADOS */
-    --purple-100: #f3f0ff;
-    --purple-300: #b197fc;
-    --purple-500: #845ef7;
-    --purple-700: #3b3086;
-    --purple-900: #2d1f6f;
-
     /* ALERTAS */
     --error-color: #ff4d4d;
 
@@ -65,7 +50,7 @@
 
 
 /* =========================================================
-   RESET GLOBAL
+   2. RESET GLOBAL
 ========================================================= */
 *{
     margin: 0;
@@ -75,7 +60,7 @@
 
 
 /* =========================================================
-   BODY GENERAL
+   3. BODY GENERAL
 ========================================================= */
 body{
     font-family: var(--font-main);
@@ -86,7 +71,7 @@ body{
 
 
 /* =========================================================
-   TITULOS GENERALES
+   4. TITULOS GENERALES
 ========================================================= */
 h2{
     font-size: 2.5rem;
@@ -97,11 +82,12 @@ h2{
 
 
 /* =========================================================
-   LOGIN / AUTH
+   5. LOGIN / AUTH
 ========================================================= */
 
 .login-body{
     min-height: 100vh;
+
     display: flex;
     justify-content: center;
     align-items: center;
@@ -114,32 +100,38 @@ h2{
 
 .login-wrapper{
     width: 100%;
+
     display: flex;
     justify-content: center;
     align-items: center;
+
     padding: 20px;
 }
 
 .glass-container{
     width: 520px;
+
     padding: 60px;
+
     border-radius: 25px;
 
     backdrop-filter: blur(20px);
+
     background: rgba(255,255,255,0.15);
 
     border: 1px solid rgba(255,255,255,0.3);
 
     box-shadow: 0 15px 50px rgba(0,0,0,0.4);
 
-    color: #fff;
+    color: white;
+
     text-align: center;
 }
 
 .glass-container h2{
     font-size: 38px;
-    margin-bottom: 35px;
     color: white;
+    margin-bottom: 35px;
 }
 
 .input-group{
@@ -149,44 +141,56 @@ h2{
 
 .input-group input{
     width: 100%;
+
     padding: 18px;
+
     font-size: 18px;
 
     background: transparent;
-    border: none;
-    border-bottom: 3px solid #fff;
 
-    color: #fff;
+    border: none;
+    border-bottom: 3px solid white;
+
+    color: white;
+
     outline: none;
 }
 
 .input-group label{
     position: absolute;
+
     left: 0;
     top: 18px;
 
     font-size: 18px;
+
     color: #ddd;
 
     transition: 0.3s;
+
     pointer-events: none;
 }
 
 .input-group input:focus ~ label,
 .input-group input:valid ~ label{
+
     top: -12px;
+
     font-size: 14px;
-    color: #fff;
+
+    color: white;
 }
 
 .glass-container button{
     width: 100%;
+
     padding: 16px;
 
     font-size: 18px;
     font-weight: bold;
 
     border-radius: 30px;
+
     border: none;
 
     background: linear-gradient(
@@ -196,6 +200,7 @@ h2{
     );
 
     color: white;
+
     cursor: pointer;
 
     transition: 0.3s;
@@ -203,12 +208,28 @@ h2{
 
 .glass-container button:hover{
     transform: translateY(-2px);
+
     box-shadow: 0 8px 20px rgba(74,107,255,0.4);
+}
+
+.link{
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.link a{
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.link a:hover{
+    text-decoration: underline;
 }
 
 
 /* =========================================================
-   ALERTAS
+   6. ALERTAS
 ========================================================= */
 
 .alert,
@@ -216,8 +237,11 @@ h2{
 .alert-error,
 .auth-error{
     padding: 15px;
+
     border-radius: 10px;
+
     margin-bottom: 20px;
+
     font-weight: bold;
 }
 
@@ -240,27 +264,7 @@ h2{
 
 
 /* =========================================================
-   LINKS
-========================================================= */
-
-.link{
-    margin-top: 20px;
-    font-size: 16px;
-}
-
-.link a{
-    color: white;
-    text-decoration: none;
-    font-weight: bold;
-}
-
-.link a:hover{
-    text-decoration: underline;
-}
-
-
-/* =========================================================
-   REGISTER
+   7. REGISTER
 ========================================================= */
 
 .register-box{
@@ -270,23 +274,73 @@ h2{
 
 .container-form{
     background: white;
+
     padding: 45px;
+
     border-radius: 20px;
+
     box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+
     max-width: 1100px;
+
     margin: auto;
 }
 
 #form-desc{
     text-align: center;
+
     color: #555;
+
     margin-bottom: 25px;
+
     font-size: 1.3rem;
+}
+
+.btn-toggle-container{
+    display: flex;
+    gap: 15px;
+
+    margin-bottom: 30px;
+}
+
+.btn-mode{
+    flex: 1;
+
+    padding: 15px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    background: #e0e0e0;
+
+    font-weight: bold;
+
+    font-size: 1.2rem;
+
+    transition: 0.3s;
+}
+
+.btn-mode.active{
+    background: var(--morado-zulcom);
+    color: white;
+}
+
+.box-personal{
+    background: rgba(255,255,255,0.15);
+
+    padding: 15px;
+
+    border-radius: 10px;
+
+    margin-bottom: 15px;
 }
 
 
 /* =========================================================
-   FORMULARIOS
+   8. FORMULARIOS GENERALES
 ========================================================= */
 
 form{
@@ -310,35 +364,78 @@ form{
 
 .form-group label{
     display: block;
+
     margin-bottom: 10px;
+
     font-size: 1.2rem;
+
     font-weight: 600;
+
     color: #444;
 }
+
+
+/* =========================================================
+   INPUTS CONTROLADOS
+   IMPORTANTE:
+   NO usar input{} global
+========================================================= */
 
 .form-group input,
 .form-group select,
 .form-group textarea,
-input,
-select,
-textarea{
+
+.form-row input,
+
+.field input,
+.field select,
+.field textarea,
+
+.glass-container input,
+.glass-container select,
+
+.container-form input,
+.container-form select,
+.container-form textarea{
+
     width: 100%;
+
     padding: 16px;
+
     font-size: 1.1rem;
 
     border: 1.5px solid #ccc;
+
     border-radius: 10px;
 
     outline: none;
+
     transition: 0.3s;
 
     background: #fff;
 }
 
-input:focus,
-select:focus,
-textarea:focus{
+
+/* =========================================================
+   FOCUS INPUTS
+========================================================= */
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus,
+
+.form-row input:focus,
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus,
+
+.container-form input:focus,
+.container-form select:focus,
+.container-form textarea:focus{
+
     border-color: var(--morado-zulcom);
+
     box-shadow: 0 0 8px rgba(30,60,114,0.2);
 }
 
@@ -348,7 +445,7 @@ textarea{
 
 
 /* =========================================================
-   BOTONES
+   9. BOTONES
 ========================================================= */
 
 .btn-save,
@@ -357,9 +454,13 @@ textarea{
 .btn-cancel,
 .btn-back{
     transition: 0.3s;
+
     cursor: pointer;
+
     font-weight: bold;
+
     text-decoration: none;
+
     border: none;
 }
 
@@ -372,25 +473,33 @@ textarea{
 .btn-save:hover,
 .btn-register:hover{
     background: var(--morado-hover);
+
     transform: translateY(-2px);
 }
 
 .btn-save{
     width: 100%;
+
     padding: 20px;
+
     border-radius: 12px;
+
     font-size: 1.4rem;
 }
 
 .btn-register{
     padding: 18px;
+
     border-radius: 10px;
+
     font-size: 1.3rem;
+
     text-transform: uppercase;
 }
 
 .btn-new{
     background: var(--verde-zulcom);
+
     color: white;
 
     padding: 14px 24px;
@@ -417,24 +526,30 @@ textarea{
 
 
 /* =========================================================
-   DASHBOARD
+   10. DASHBOARD
 ========================================================= */
 
 .dashboard-container{
     display: flex;
+
     width: 100%;
+
     min-height: 100vh;
 }
 
 .main-content{
     flex: 1;
+
     width: 100%;
+
     padding: 30px;
+
     overflow-x: auto;
 }
 
 .content-header{
     display: flex;
+
     justify-content: space-between;
     align-items: center;
 
@@ -453,8 +568,11 @@ textarea{
 
 .content-header h1{
     color: var(--purple-700);
+
     font-size: var(--font-size-title);
+
     font-family: var(--font-title);
+
     text-transform: uppercase;
 }
 
@@ -471,6 +589,7 @@ textarea{
 
 .logout-btn{
     background: #4361ee;
+
     color: white;
 
     padding: 12px 24px;
@@ -478,6 +597,7 @@ textarea{
     border-radius: 10px;
 
     text-decoration: none;
+
     font-weight: bold;
 }
 
@@ -499,11 +619,12 @@ textarea{
 
 
 /* =========================================================
-   SIDEBAR / NAVBAR
+   11. SIDEBAR / NAVBAR
 ========================================================= */
 
 .sidebar{
     width: 280px;
+
     min-height: 100vh;
 
     background: white;
@@ -518,12 +639,15 @@ textarea{
 
 .logo-container{
     padding: 30px 20px;
+
     text-align: center;
+
     border-bottom: 1px solid #f0f0f0;
 }
 
 .logo{
     font-size: 1.5rem;
+
     font-weight: bold;
 
     color: var(--morado-zulcom);
@@ -542,14 +666,18 @@ textarea{
 
 .img-logo{
     width: 120px;
+
     display: block;
+
     margin: auto;
 }
 
 .img-perfil{
     width: 60px;
-    margin: 10px auto;
+
     display: block;
+
+    margin: 10px auto;
 }
 
 .nav-section{
@@ -578,7 +706,9 @@ textarea{
 
 .nav-item a{
     display: flex;
+
     align-items: center;
+
     gap: 10px;
 
     padding: 16px 25px;
@@ -592,12 +722,13 @@ textarea{
 
 .nav-item a:hover{
     background: #f0f4ff;
+
     padding-left: 35px;
 }
 
 
 /* =========================================================
-   TABLAS
+   12. TABLAS
 ========================================================= */
 
 .table-container,
@@ -635,16 +766,18 @@ textarea{
 .zulcom-table td,
 .table td{
     padding: 18px 20px;
+
     border-bottom: 1px solid #f0f0f0;
 }
 
 
 /* =========================================================
-   SEARCH
+   13. SEARCH
 ========================================================= */
 
 .search-input{
     width: 100%;
+
     max-width: 550px;
 
     padding: 16px 25px;
@@ -666,13 +799,16 @@ textarea{
 
 
 /* =========================================================
-   BADGES
+   14. BADGES
 ========================================================= */
 
 .badge-status{
     padding: 10px 20px;
+
     border-radius: 30px;
+
     font-size: 1rem;
+
     font-weight: bold;
 }
 
@@ -688,6 +824,7 @@ textarea{
 
 .badge-megas{
     background: #eef2ff;
+
     color: #4361ee;
 
     padding: 8px 16px;
@@ -704,7 +841,7 @@ textarea{
 
 
 /* =========================================================
-   UTILIDADES
+   15. UTILIDADES
 ========================================================= */
 
 .hidden{
@@ -718,7 +855,7 @@ textarea{
 
 
 /* =========================================================
-   RESPONSIVE
+   16. RESPONSIVE
 ========================================================= */
 
 @media (max-width: 992px){
@@ -742,7 +879,6 @@ textarea{
         flex-wrap: wrap;
         justify-content: center;
     }
-
 }
 
 @media (max-width: 768px){
@@ -758,7 +894,6 @@ textarea{
     h2{
         font-size: 2rem;
     }
-
 }
 
 @media (max-width: 576px){
@@ -779,5 +914,4 @@ textarea{
     .glass-container h2{
         font-size: 26px;
     }
-
 }

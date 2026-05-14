@@ -100,14 +100,11 @@ class ComposerStaticInit175f515b2811e085f3258b59792b25af
         'P' =>
         array (
             'PhpOffice\\PhpWord\\' => 18,
+            'PhpOffice\\Math\\' => 15,
         ),
         'M' =>
         array (
             'Masterminds\\' => 12,
-        ),
-        'L' =>
-        array (
-            'Laminas\\Escaper\\' => 16,
         ),
         'F' =>
         array (
@@ -132,13 +129,13 @@ class ComposerStaticInit175f515b2811e085f3258b59792b25af
         array (
             0 => __DIR__ . '/..' . '/phpoffice/phpword/src/PhpWord',
         ),
+        'PhpOffice\\Math\\' =>
+        array (
+            0 => __DIR__ . '/..' . '/phpoffice/math/src/Math',
+        ),
         'Masterminds\\' =>
         array (
             0 => __DIR__ . '/..' . '/masterminds/html5/src',
-        ),
-        'Laminas\\Escaper\\' =>
-        array (
-            0 => __DIR__ . '/..' . '/laminas/laminas-escaper/src',
         ),
         'FontLib\\' =>
         array (

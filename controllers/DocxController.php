@@ -8,6 +8,8 @@ require_once __DIR__ . '/../models/Plan.php';
 
 use PhpOffice\PhpWord\TemplateProcessor;
 
+
+
 class DocxController {
     public function generateContract($id) {
         $database = new Database();

@@ -11,7 +11,8 @@ $planes = $planCtrl->index();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registrar Cliente - Zulcom</title>
-    <link rel="stylesheet" href="../../public/css/cliente.css">
+      <!-- CSS GLOBAL -->
+    <link rel="stylesheet" href="/zulcom/public/css/styles.css">
 </head>
 <body>
 

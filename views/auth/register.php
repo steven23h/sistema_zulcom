@@ -32,97 +32,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
 <head>
 
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Registro - ZULCOM</title>
 
-    <link rel="stylesheet" href="/zulcom/public/css/auth.css">
-
-    <style>
-
-        .hidden {
-            display: none;
-        }
-
-        .btn-toggle-container {
-            margin-bottom: 20px;
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn-mode {
-            flex: 1;
-
-            padding: 12px;
-
-            cursor: pointer;
-
-            border: 2px solid #7d5fff;
-
-            background: #fff;
-            color: #7d5fff;
-
-            border-radius: 6px;
-
-            font-weight: bold;
-
-            transition: 0.3s;
-        }
-
-        .btn-mode.active {
-            background: #7d5fff;
-            color: #fff;
-        }
-
-        .alert {
-            padding: 15px;
-            margin-bottom: 20px;
-
-            border-radius: 6px;
-
-            text-align: center;
-            font-weight: bold;
-        }
-
-        .alert-success {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-
-        .alert-error {
-            background: #f8d7da;
-            color: #721c24;
-            border: 1px solid #f5c6cb;
-        }
-
-    </style>
+    <!-- CSS GLOBAL -->
+    <link rel="stylesheet" href="/zulcom/public/css/styles.css">
 
 </head>
 
-<body class="auth-page">
+<body class="login-body">
 
-<div class="card-form"
-     style="
-        width:100%;
-        max-width:700px;
-        margin:40px auto;
-        background:#fff;
-        padding:30px;
-        border-radius:10px;
-        box-shadow:0 4px 10px rgba(0,0,0,0.1);
-     ">
+<div class="container-form">
 
-    <h2 style="margin-bottom:10px;">
-        Registro de Usuario
-    </h2>
+    <h2>Registro de Usuario</h2>
 
-    <p id="form-desc"
-       style="margin-bottom:20px;color:#666;">
-
+    <p id="form-desc">
         Tipo de cuenta:
         <strong>Persona Natural (Cliente)</strong>
-
     </p>
 
     <?php if (!empty($mensaje)): ?>
@@ -158,18 +86,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
 
     </div>
 
-    <hr style="margin-bottom:25px;">
+    <hr>
 
-    <!-- FORM -->
-    <form method="POST"
-          enctype="multipart/form-data">
+    <!-- FORMULARIO -->
+    <form method="POST" enctype="multipart/form-data">
 
         <input type="hidden"
                name="tipo_registro"
                id="tipo_registro"
                value="cliente">
 
-        <!-- FILA -->
+        <!-- NOMBRES -->
         <div class="form-row">
 
             <input type="text"
@@ -184,7 +111,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
 
         </div>
 
-        <!-- FILA -->
+        <!-- CÉDULA -->
         <div class="form-row">
 
             <input type="text"
@@ -221,7 +148,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
 
         </div>
 
-        <!-- PERSONAL -->
+        <!-- CAMPOS PERSONAL -->
         <div id="campos-personal" class="hidden">
 
             <div class="box-personal">
@@ -237,17 +164,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
 
                 <select name="role" id="role">
 
-                    <option value="Tecnico">
-                        Técnico
-                    </option>
+                    <option value="Tecnico">Técnico</option>
 
-                    <option value="Gerente">
-                        Gerente
-                    </option>
+                    <option value="Gerente">Gerente</option>
 
-                    <option value="Administracion">
-                        Administración
-                    </option>
+                    <option value="Administracion">Administración</option>
 
                 </select>
 
@@ -282,25 +203,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
 
 </div>
 
-<!-- SCRIPT -->
 <script>
 
 function toggleForm(tipo) {
 
     const camposPersonal = document.getElementById('campos-personal');
-
     const desc = document.getElementById('form-desc');
-
     const inputTipo = document.getElementById('tipo_registro');
 
     const btnCliente = document.getElementById('btn-cliente');
-
     const btnPersonal = document.getElementById('btn-personal');
 
     const codigoEmpresa = document.getElementById('codigo_empresa');
-
     const file1 = document.getElementById('file1');
-
     const file2 = document.getElementById('file2');
 
     if (tipo === 'personal') {
@@ -313,13 +228,10 @@ function toggleForm(tipo) {
         inputTipo.value = "personal";
 
         btnPersonal.classList.add('active');
-
         btnCliente.classList.remove('active');
 
         codigoEmpresa.required = true;
-
         file1.required = true;
-
         file2.required = true;
 
     } else {
@@ -332,13 +244,10 @@ function toggleForm(tipo) {
         inputTipo.value = "cliente";
 
         btnCliente.classList.add('active');
-
         btnPersonal.classList.remove('active');
 
         codigoEmpresa.required = false;
-
         file1.required = false;
-
         file2.required = false;
     }
 }

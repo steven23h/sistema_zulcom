@@ -234,6 +234,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
 
                 break;
 
+                 // =========================
+                // ROLES DE PAGO
+                // =========================
+                case 'crear_rol':
+
+                    include '../rolespago/roles_pago.php';
+
+                break;
+
+                case 'ver_roles':
+
+                    include '../rolespago/listar_roles.php';
+
+                break;
+
+                
+
                 // =========================
                 // DEFAULT
                 // =========================

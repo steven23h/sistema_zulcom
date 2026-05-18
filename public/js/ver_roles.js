@@ -2,8 +2,10 @@ function cargarMisRoles(){
 
     const mes = document.getElementById("filtro_mes")?.value || "";
 
-    fetch(`/zulcom/routes/rolpagoRoutes.php?action=listar&mes=${mes}`)
+    fetch(`/zulcom/views/rolespago/obtener_colaboradores.php?mes=${mes}`)
+
     .then(res => res.json())
+
     .then(data => {
 
         const tbody = document.getElementById("tablaMisRoles");
@@ -22,10 +24,12 @@ function cargarMisRoles(){
                 <td>$${r.total}</td>
                 <td>${r.estado}</td>
                 <td>
-                    <a href="/zulcom/routes/rolpagoRoutes.php?action=pdf&id_trabajador=${r.id_trabajador}" 
+                    <a href="/zulcom/views/rolespago/generar_pdf.php?id_trabajador=${r.id_trabajador}" 
                     target="_blank"
-                    class="btn btn-success btn-sm">
+                    class="btn-download">
+
                         PDF
+
                     </a>
                 </td>
             </tr>
@@ -36,5 +40,6 @@ function cargarMisRoles(){
         });
 
     })
+
     .catch(err => console.error(err));
 }

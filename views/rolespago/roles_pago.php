@@ -1,5 +1,5 @@
 
-<link rel="stylesheet" href="/zulcom/public/css/styles.css">
+
 <div class="dashboard-content">
 
     <!-- ===================================================== -->

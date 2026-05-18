@@ -76,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
 
     <link rel="stylesheet" href="../../public/css/navbar.css">
     <link rel="stylesheet" href="../../public/css/dashboard.css">
+    <link rel="stylesheet" href="/zulcom/public/css/styles.css">
 </head>
 
 <body>

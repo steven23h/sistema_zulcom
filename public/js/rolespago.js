@@ -41,7 +41,7 @@ function cargarColaboradores(){
 
 
 // ==========================
-// ENVIAR FORMULARIO + PDF
+// ENVIAR FORMULARIO
 // ==========================
 function activarFormularioRol(){
 
@@ -55,7 +55,7 @@ function activarFormularioRol(){
 
         const formData = new FormData(form);
 
-        fetch("/zulcom/routes/rolpagoRoutes.php?action=crear", {
+        fetch("/zulcom/views/rolespago/crear_rol.php", {
 
             method: "POST",
             body: formData
@@ -68,22 +68,22 @@ function activarFormularioRol(){
 
             alert(data.mensaje);
 
-            const id = formData.get("id_trabajador");
-
-            window.open(
-                "/zulcom/routes/rolpagoRoutes.php?action=pdf&id_trabajador=" + id
-            );
-
         })
 
-        .catch(error => console.error("Error:", error));
+        .catch(error => {
+
+            console.error("Error:", error);
+
+            alert("Error al generar rol");
+
+        });
 
     });
 }
 
 
 // ==========================
-// ASIGNAR PERIODO AUTOMÁTICO
+// ASIGNAR PERIODO
 // ==========================
 function asignarPeriodo(){
 

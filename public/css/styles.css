@@ -1455,7 +1455,155 @@ textarea{
         font-size: 26px;
     }
 }
-.roles-filter-group input{
+/* =========================================================
+   FILTROS ROLES
+========================================================= */
 
-    background: red !important;
+.roles-filters{
+
+    display: flex;
+
+    align-items: flex-end;
+
+    gap: 20px;
+
+    margin-bottom: 30px;
+
+    flex-wrap: wrap;
+}
+
+/* =========================================================
+   GRUPO
+========================================================= */
+
+.roles-filter-group{
+
+    flex: 1;
+
+    min-width: 250px;
+
+    display: flex;
+
+    flex-direction: column;
+}
+
+.roles-filter-group label{
+
+    margin-bottom: 10px;
+
+    font-size: 0.95rem;
+
+    font-weight: 600;
+
+    color: #444;
+}
+
+/* =========================================================
+   INPUTS Y SELECT
+========================================================= */
+
+.roles-filter-group input,
+.roles-filter-group select{
+
+    width: 100% !important;
+
+    height: 55px !important;
+
+    padding: 0 18px !important;
+
+    border: 1.5px solid #dcdcdc !important;
+
+    border-radius: 14px !important;
+
+    font-size: 1rem !important;
+
+    outline: none;
+
+    background: white !important;
+
+    color: #333 !important;
+
+    transition: 0.3s;
+}
+
+.roles-filter-group input:focus,
+.roles-filter-group select:focus{
+
+    border-color: var(--morado-zulcom) !important;
+
+    box-shadow: 0 0 12px rgba(59,48,134,0.15);
+}
+
+/* =========================================================
+   BOTÓN CONTENEDOR
+========================================================= */
+
+.roles-filter-btn{
+
+    display: flex;
+
+    align-items: flex-end;
+}
+
+/* =========================================================
+   BOTÓN FILTRAR
+========================================================= */
+
+.btn-filter{
+
+    height: 55px !important;
+
+    padding: 0 30px !important;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background: var(--morado-zulcom);
+
+    color: white;
+
+    font-size: 1rem;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+    white-space: nowrap;
+}
+
+.btn-filter:hover{
+
+    background: var(--morado-hover);
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 8px 20px rgba(59,48,134,0.25);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 768px){
+
+    .roles-filters{
+
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .roles-filter-group,
+    .roles-filter-btn{
+
+        width: 100%;
+    }
+
+    .btn-filter{
+
+        width: 100%;
+    }
 }

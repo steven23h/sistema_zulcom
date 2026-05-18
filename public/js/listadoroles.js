@@ -44,7 +44,7 @@ function cargarListadoRoles(){
     const mes =
         document.getElementById("filtro_mes")?.value || "";
 
-    fetch(`/zulcom/views/rolespago/obtener_colaboradores.php?colaborador=${colaborador}&mes=${mes}`)
+  fetch(`/zulcom/views/rolespago/obtener_roles.php?colaborador=${colaborador}&mes=${mes}`)
 
     .then(res => res.json())
 

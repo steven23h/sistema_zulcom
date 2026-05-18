@@ -24,9 +24,31 @@
 
     <div class="roles-table-card">
 
+        <!-- ===================================================== -->
         <!-- FILTROS -->
+        <!-- ===================================================== -->
 
         <div class="roles-filters">
+
+            <!-- COLABORADOR -->
+
+            <div class="roles-filter-group">
+
+                <label for="filtro_colaborador">
+                    Colaborador
+                </label>
+
+                <select id="filtro_colaborador">
+
+                    <option value="">
+                        Todos
+                    </option>
+
+                </select>
+
+            </div>
+
+            <!-- MES -->
 
             <div class="roles-filter-group">
 
@@ -41,10 +63,12 @@
 
             </div>
 
+            <!-- BOTÓN -->
+
             <div class="roles-filter-btn">
 
                 <button 
-                    onclick="cargarMisRoles()"
+                    onclick="cargarListadoRoles()"
                     class="btn-filter"
                 >
 
@@ -56,7 +80,9 @@
 
         </div>
 
+        <!-- ===================================================== -->
         <!-- TABLA -->
+        <!-- ===================================================== -->
 
         <div class="roles-table-wrapper">
 
@@ -65,6 +91,8 @@
                 <thead>
                     <tr>
                         <th>ID</th>
+                        <th>Nombre</th>
+                        <th>Cargo</th>
                         <th>Periodo</th>
                         <th>Salario</th>
                         <th>Total</th>
@@ -73,7 +101,7 @@
                     </tr>
                 </thead>
 
-                <tbody id="tablaMisRoles">
+                <tbody id="tablaRoles">
 
                 </tbody>
 
@@ -85,13 +113,15 @@
 
 </div>
 
-<script src="/zulcom/public/js/ver_roles.js"></script>
+<script src="/zulcom/public/js/listadoroles.js"></script>
 
 <script>
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    cargarMisRoles();
+    cargarColaboradoresFiltro();
+
+    cargarListadoRoles();
 
 });
 

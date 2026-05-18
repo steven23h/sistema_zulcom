@@ -79,7 +79,7 @@ function cargarListadoRoles(){
 
                 <td>
 
-                    <a href="/zulcom/views/rolespago/generar_pdf.php?id_trabajador=${r.id_trabajador}" 
+                   <a href="/zulcom/views/rolespago/generar_pdf.php?id_trabajador=${r.id_trabajador}"
                     target="_blank"
                     class="btn-download">
 

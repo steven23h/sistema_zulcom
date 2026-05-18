@@ -39,28 +39,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
     if ($res === "success") {
 
         $mensaje = "
-        <div style='
-            background:#d4edda;
-            color:#155724;
-            padding:15px;
-            border-radius:5px;
-            margin-bottom:20px;
-            border:1px solid #c3e6cb;
-        '>
+        <div class='alert-success'>
             ¡Usuario registrado con éxito!
         </div>";
 
     } else {
 
         $mensaje = "
-        <div style='
-            background:#f8d7da;
-            color:#721c24;
-            padding:15px;
-            border-radius:5px;
-            margin-bottom:20px;
-            border:1px solid #f5c6cb;
-        '>
+        <div class='alert-error'>
             Error: $res
         </div>";
     }
@@ -71,56 +57,58 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
 <html lang="es">
 
 <head>
+
     <meta charset="UTF-8">
+
     <title>ZULCOM - Panel de Control</title>
 
-    <link rel="stylesheet" href="../../public/css/navbar.css">
-    <link rel="stylesheet" href="../../public/css/dashboard.css">
+    <!-- SOLO CSS GLOBAL -->
     <link rel="stylesheet" href="/zulcom/public/css/styles.css">
+
 </head>
 
 <body>
 
 <div class="dashboard-container">
 
-    <!-- NAVBAR -->
+    <!-- SIDEBAR -->
     <?php include '../partials/navadministrador.php'; ?>
 
-    <!-- CONTENIDO -->
+    <!-- MAIN -->
     <main class="main-content">
 
         <!-- HEADER -->
         <header class="content-header">
 
             <div class="header-left">
+
                 <h1>PANEL DE CONTROL</h1>
+
             </div>
 
             <div class="user-actions">
+
                 <span class="user-name">
+
                     Administrador:
                     <?php echo $_SESSION['nombres']; ?>
+
                 </span>
 
                 <a href="../../logout.php"
                    class="logout-btn"
                    onclick="return confirm('¿Cerrar sesión?')">
+
                     Cerrar Sesión
+
                 </a>
+
             </div>
 
         </header>
 
-        <!-- CONTENIDO DINÁMICO -->
-        <div class="dashboard-content"
-             style="
-                background:#fff;
-                padding:30px;
-                border-radius:8px;
-                min-height:500px;
-                margin-top:20px;
-                box-shadow:0 4px 6px rgba(0,0,0,0.05);
-             ">
+        <!-- CONTENIDO -->
+        <div class="dashboard-content">
 
             <?php
 
@@ -235,7 +223,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
 
                 break;
 
-                 // =========================
+                // =========================
                 // ROLES DE PAGO
                 // =========================
                 case 'crear_rol':
@@ -249,8 +237,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
                     include '../rolespago/listar_roles.php';
 
                 break;
-
-                
 
                 // =========================
                 // DEFAULT

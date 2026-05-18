@@ -852,45 +852,77 @@ textarea{
     display: flex;
     gap: 12px;
 }
+
 /* =========================================================
    ROLES DE PAGO
 ========================================================= */
 
 .page-header{
-    margin-bottom: 25px;
+    margin-bottom: 30px;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    gap: 20px;
 }
 
 .page-title{
     color: var(--morado-zulcom);
-    font-size: 2.2rem;
+
+    font-size: 2.3rem;
+
     font-weight: 700;
-    margin-bottom: 8px;
+
+    margin-bottom: 10px;
+
+    display: flex;
+    align-items: center;
+    gap: 12px;
 }
 
 .page-subtitle{
     color: #666;
-    font-size: 1rem;
+
+    font-size: 1.05rem;
+
+    line-height: 1.5;
 }
+
+/* =========================================================
+   CARD
+========================================================= */
 
 .form-card{
+
     background: white;
 
-    padding: 35px;
+    padding: 40px;
 
-    border-radius: 18px;
+    border-radius: 22px;
 
-    box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+
+    border: 1px solid #f0f0f0;
+
+    max-width: 100%;
 }
+
+/* =========================================================
+   FORMULARIO
+========================================================= */
 
 .zul-form{
     display: flex;
     flex-direction: column;
-    gap: 22px;
+
+    gap: 24px;
 }
 
 .zul-form .form-row{
     display: flex;
-    gap: 20px;
+
+    gap: 25px;
 }
 
 .zul-form .form-group{
@@ -900,15 +932,24 @@ textarea{
     flex-direction: column;
 }
 
+/* =========================================================
+   LABELS
+========================================================= */
+
 .zul-form .form-group label{
+
     margin-bottom: 10px;
+
+    font-size: 1rem;
 
     font-weight: 600;
 
     color: #444;
-
-    font-size: 1rem;
 }
+
+/* =========================================================
+   INPUTS
+========================================================= */
 
 .zul-form input,
 .zul-form select,
@@ -916,18 +957,26 @@ textarea{
 
     width: 100%;
 
-    padding: 15px 18px;
-
-    border: 1.5px solid #dcdcdc;
-
-    border-radius: 10px;
+    padding: 16px 18px;
 
     font-size: 1rem;
 
-    transition: 0.3s;
+    border: 1.5px solid #dcdcdc;
+
+    border-radius: 12px;
+
+    outline: none;
+
+    transition: all 0.3s ease;
 
     background: #fff;
+
+    color: #333;
 }
+
+/* =========================================================
+   FOCUS
+========================================================= */
 
 .zul-form input:focus,
 .zul-form select:focus,
@@ -935,14 +984,73 @@ textarea{
 
     border-color: var(--morado-zulcom);
 
-    box-shadow: 0 0 8px rgba(59,48,134,0.15);
+    box-shadow: 0 0 10px rgba(59,48,134,0.15);
 
-    outline: none;
+    transform: translateY(-1px);
 }
+
+/* =========================================================
+   READONLY
+========================================================= */
+
+.zul-form input[readonly]{
+
+    background: #f5f7fb;
+
+    color: #666;
+
+    cursor: not-allowed;
+}
+
+/* =========================================================
+   FULL WIDTH
+========================================================= */
 
 .full-width{
     width: 100%;
 }
+
+/* =========================================================
+   BOTÓN
+========================================================= */
+
+.btn-save{
+
+    width: 100%;
+
+    padding: 18px;
+
+    border-radius: 14px;
+
+    font-size: 1.15rem;
+
+    font-weight: bold;
+
+    background: var(--morado-zulcom);
+
+    color: white;
+
+    border: none;
+
+    cursor: pointer;
+
+    transition: 0.3s;
+
+    margin-top: 10px;
+}
+
+.btn-save:hover{
+
+    background: var(--morado-hover);
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 10px 25px rgba(59,48,134,0.25);
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
 
 @media (max-width: 768px){
 
@@ -951,7 +1059,11 @@ textarea{
     }
 
     .form-card{
-        padding: 20px;
+        padding: 25px;
+    }
+
+    .page-title{
+        font-size: 1.7rem;
     }
 
 }

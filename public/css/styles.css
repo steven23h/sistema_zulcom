@@ -1607,3 +1607,42 @@ textarea{
         width: 100%;
     }
 }
+/* ========================================
+   FILTROS ROLES TECNICO
+======================================== */
+
+.filter-container{
+    display: flex;
+    align-items: end;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.filter-group{
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.filter-group label{
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--dark-gray);
+}
+
+.form-input{
+    min-width: 220px;
+    padding: 12px 14px;
+    border-radius: 12px;
+    border: 1px solid #dcdcdc;
+    background: #fff;
+    font-size: 14px;
+    transition: all .2s ease;
+}
+
+.form-input:focus{
+    outline: none;
+    border-color: var(--blue-500);
+    box-shadow: 0 0 0 3px rgba(51,154,240,.15);
+}

@@ -6,44 +6,108 @@ if (session_status() === PHP_SESSION_NONE) {
 
 ?>
 
-<div class="content-card">
+<div class="dashboard-content">
 
-    <div class="card-header">
+    <!-- ===================================================== -->
+    <!-- HEADER -->
+    <!-- ===================================================== -->
 
-        <h2 class="section-title">
-            Mis Roles de Pago
-        </h2>
+    <div class="page-header">
+
+        <div>
+
+            <h2 class="page-title">
+                📄 Mis Roles de Pago
+            </h2>
+
+            <p class="page-subtitle">
+                Consulta y descarga tus roles de pago generados.
+            </p>
+
+        </div>
 
     </div>
 
-    <div class="table-responsive">
+    <!-- ===================================================== -->
+    <!-- CARD TABLA -->
+    <!-- ===================================================== -->
 
-        <table class="data-table">
+    <div class="roles-table-card">
 
-            <thead>
+        <!-- ===================================================== -->
+        <!-- FILTROS -->
+        <!-- ===================================================== -->
 
-                <tr>
-                    <th>#</th>
-                    <th>Periodo</th>
-                    <th>Salario</th>
-                    <th>Total</th>
-                    <th>Estado</th>
-                    <th>PDF</th>
-                </tr>
+        <div class="roles-filters">
 
-            </thead>
+            <!-- MES -->
 
-            <tbody id="tablaMisRoles">
+            <div class="roles-filter-group">
 
-                <tr>
-                    <td colspan="6">
-                        Cargando roles...
-                    </td>
-                </tr>
+                <label for="filtro_mes">
+                    Filtrar por mes
+                </label>
 
-            </tbody>
+                <input 
+                    type="month"
+                    id="filtro_mes"
+                >
 
-        </table>
+            </div>
+
+            <!-- BOTÓN -->
+
+            <div class="roles-filter-btn">
+
+                <button 
+                    onclick="cargarMisRoles()"
+                    class="btn-filter"
+                >
+
+                    🔍 Filtrar
+
+                </button>
+
+            </div>
+
+        </div>
+
+        <!-- ===================================================== -->
+        <!-- TABLA -->
+        <!-- ===================================================== -->
+
+        <div class="roles-table-wrapper">
+
+            <table class="roles-table">
+
+                <thead>
+
+                    <tr>
+                        <th>ID</th>
+                        <th>Periodo</th>
+                        <th>Salario</th>
+                        <th>Total</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+
+                </thead>
+
+                <tbody id="tablaMisRoles">
+
+                    <tr>
+
+                        <td colspan="6">
+                            Cargando roles...
+                        </td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </div>
 
     </div>
 
@@ -53,7 +117,7 @@ if (session_status() === PHP_SESSION_NONE) {
 
 <script>
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", function () {
 
     cargarMisRoles();
 

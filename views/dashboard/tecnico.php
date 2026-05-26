@@ -21,8 +21,7 @@ require_once '../../controllers/TicketsController.php';
 
     <title>ZULCOM - Panel Técnico</title>
 
-    <!-- CSS GLOBAL -->
-    <link rel="stylesheet" href="../../public/css/styles.css">
+    <link rel="stylesheet" href="/zulcom/public/css/styles.css">
 
 </head>
 

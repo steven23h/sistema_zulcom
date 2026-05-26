@@ -1,127 +1,142 @@
 <?php
 
 // controllers/PlanesController.php
-require_once __DIR__ . '/../models/Plan.php';
-
-class PlanesController {
-    private $planModel;
-
-    public function __construct() {
-        $this->planModel = new Plan();
-    }
-    
-// Cambia el nombre del método aquí
-public function listarPlanes() {
-    return $this->planModel->findAll();
-}
-
-  public function store() {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $success = $this->planModel->create($_POST);
-        if ($success) {
-            // Cambiamos la ruta para que regrese al formulario de creación
-            header("Location: ../views/dashboard/administrador.php?page=crear_plan&status=success");
-        } else {
-            header("Location: ../views/dashboard/administrador.php?page=crear_plan&status=error");
-        }
-        exit();
-    }
-}
-}
-
-// IMPORTANTE: Esta parte activa el proceso
-if (isset($_POST['btn_guardar_plan'])) {
-    $controller = new PlanesController();
-    $controller->store();
 
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../models/Plan.php';
 
 class PlanesController {
+
     private $db;
     private $planModel;
 
     public function __construct() {
+
         $this->db = Database::connect();
-        $this->planModel = new Plan($this->db);
+
+        $this->planModel = new Plan();
     }
 
-    public function index() {
+    // LISTAR PLANES
+    public function listarPlanes() {
+
         return $this->planModel->getAll();
     }
 
+    // OBTENER POR ID
     public function obtenerPorId($id) {
-        // Validar que el ID sea numérico
+
         $id = filter_var($id, FILTER_VALIDATE_INT);
-        return $id ? $this->planModel->getById($id) : null;
+
+        return $id
+            ? $this->planModel->getById($id)
+            : null;
     }
 
+    // CREAR PLAN
     public function store() {
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
             $success = $this->planModel->create($_POST);
+
             if ($success) {
+
                 echo "<script>
                     alert('¡Plan registrado con éxito!');
-                    window.location.href = '../views/dashboard/administrador.php?page=ver_planes';
+                    window.location.href =
+                    '../views/dashboard/administrador.php?page=ver_planes';
                 </script>";
+
             } else {
-                echo "<script>alert('Error al guardar el plan.');</script>";
+
+                echo "<script>
+                    alert('Error al guardar el plan.');
+                </script>";
             }
+
+            exit();
         }
     }
 
+    // ELIMINAR PLAN
     public function destroy($id) {
+
         $id = filter_var($id, FILTER_VALIDATE_INT);
+
         if ($id) {
+
             $res = $this->planModel->delete($id);
+
             if ($res) {
+
                 echo "<script>
                     alert('Plan eliminado correctamente');
-                    window.location.href = '../views/dashboard/administrador.php?page=ver_planes';
+                    window.location.href =
+                    '../views/dashboard/administrador.php?page=ver_planes';
                 </script>";
+
             } else {
+
                 echo "<script>
                     alert('Error al eliminar: Es posible que el plan esté asignado a clientes.');
-                    window.location.href = '../views/dashboard/administrador.php?page=ver_planes';
+                    window.location.href =
+                    '../views/dashboard/administrador.php?page=ver_planes';
                 </script>";
             }
         }
     }
 
+    // ACTUALIZAR PLAN
     public function update() {
+
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
             $success = $this->planModel->update($_POST);
+
             if ($success) {
+
                 echo "<script>
                     alert('¡Plan actualizado correctamente!');
-                    window.location.href = '../views/dashboard/administrador.php?page=ver_planes';
+                    window.location.href =
+                    '../views/dashboard/administrador.php?page=ver_planes';
                 </script>";
+
             } else {
-                echo "<script>alert('Error al actualizar el plan.');</script>";
+
+                echo "<script>
+                    alert('Error al actualizar el plan.');
+                </script>";
             }
+
+            exit();
         }
     }
 }
 
-// LÓGICA DE PROCESAMIENTO
+// ============================
+// PROCESAMIENTO DE ACCIONES
+// ============================
+
 $controller = new PlanesController();
 
+// GUARDAR
 if (isset($_POST['btn_guardar_plan'])) {
+
     $controller->store();
 }
 
+// ACTUALIZAR
 if (isset($_POST['btn_actualizar_plan'])) {
+
     $controller->update();
 }
 
-if (isset($_GET['action']) && $_GET['action'] === 'eliminar_plan') {
-
-    $controller->destroy($_GET['id']);
-
-}
+// ELIMINAR
+if (
+    isset($_GET['action']) &&
+    $_GET['action'] === 'eliminar_plan'
+) {
 
     $controller->destroy($_GET['id'] ?? null);
 }
-
-// He eliminado la llave extra que estaba aquí
-

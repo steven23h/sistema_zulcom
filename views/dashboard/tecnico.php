@@ -76,7 +76,7 @@ require_once '../../controllers/TicketsController.php';
                         include '../tecnico/resolver.php';
                         break;
                     case 'ver_roles_pago':
-                        include '../rolespago/ver_roles.php';
+                        include '../rolespago/ver_roles_tecnico.php';
                         break;
                     default:
                 ?>

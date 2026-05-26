@@ -178,4 +178,6 @@ function generarPDFColaborador($colaborador,$roles,$id){
     $pdf->Cell(60,10,t('Firma Gerente'));
 
     $pdf->Output('D', "rol_pago_$id.pdf");
+
+    
 }

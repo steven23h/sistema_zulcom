@@ -234,7 +234,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
 
                 case 'ver_roles':
 
-                    include '../rolespago/listar_roles.php';
+                    include '../rolespago/ver_roles.php';
 
                 break;
 

@@ -22,6 +22,13 @@
                 </a>
             </li>
 
+            <!-- VER ROLES -->
+            <li class="nav-item <?php echo (strpos($_SERVER['REQUEST_URI'], 'ver_roles_pago') !== false) ? 'active' : ''; ?>">
+                <a href="../dashboard/tecnico.php?page=ver_roles_pago">
+                    Ver Roles de Pago
+                </a>
+            </li>
+
         </ul>
 
     </div>

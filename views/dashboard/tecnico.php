@@ -50,8 +50,8 @@ require_once '../../controllers/TicketsController.php';
                     </span>
 
                     <a href="../../logout.php"
-                       class="logout-btn"
-                       onclick="return confirm('¿Cerrar sesión?')">
+                        class="logout-btn"
+                        onclick="return confirm('¿Cerrar sesión?')">
                         Cerrar Sesión
                     </a>
 
@@ -70,31 +70,33 @@ require_once '../../controllers/TicketsController.php';
 
                     case 'tecnico_tickets':
                         include '../tecnico/index.php';
-                    break;
+                        break;
 
                     case 'resolver_ticket':
                         include '../tecnico/resolver.php';
-                    break;
-
+                        break;
+                    case 'ver_roles_pago':
+                        include '../rolespago/ver_roles.php';
+                        break;
                     default:
                 ?>
 
-                    <div class="welcome-card">
+                        <div class="welcome-card">
 
-                        <h3>
-                            Gestión de Instalaciones y Reparaciones
-                        </h3>
+                            <h3>
+                                Gestión de Instalaciones y Reparaciones
+                            </h3>
 
-                        <p>
-                            Bienvenido. Aquí podrás revisar tus tickets asignados,
-                            reportar instalaciones finalizadas y gestionar
-                            el mantenimiento de la red.
-                        </p>
+                            <p>
+                                Bienvenido. Aquí podrás revisar tus tickets asignados,
+                                reportar instalaciones finalizadas y gestionar
+                                el mantenimiento de la red.
+                            </p>
 
-                    </div>
+                        </div>
 
                 <?php
-                    break;
+                        break;
                 }
                 ?>
 

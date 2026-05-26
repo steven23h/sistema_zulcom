@@ -15,6 +15,16 @@ class ClientesController {
         return $this->clienteModel->getAll();
     }
 
+    // --- MÉTODOS PARA FILTRADO DE PAGOS ---
+    public function listarPagados() {
+        return $this->clienteModel->obtenerNoDeudores();
+    }
+
+    public function listarDeudores() {
+        return $this->clienteModel->obtenerDeudores();
+    }
+    // --------------------------------------
+
     public function obtenerPorId($id) {
         return $this->clienteModel->getById($id);
     }
@@ -32,33 +42,32 @@ class ClientesController {
             }
         }
     }
-    public function destroy($id) {
-    if ($id) {
-        $res = $this->clienteModel->delete($id);
-        if ($res) {
-            echo "<script>
-                alert('Cliente eliminado correctamente');
-                window.location.href = 'administrador.php?page=ver_clientes';
-            </script>";
-        } else {
-            echo "<script>alert('Error al eliminar el cliente');</script>";
-        }
-    }
-}
 
-    // NUEVA FUNCIÓN PARA ACTUALIZAR
     public function update() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $success = $this->clienteModel->update($_POST); // Asegúrate que tu modelo Cliente tenga el método update
+            $success = $this->clienteModel->update($_POST);
             
             if ($success) {
-                // Esto evita el error de conversión y hace la redirección limpia
                 echo "<script>
                     alert('¡Datos actualizados correctamente!');
                     window.location.href = '../views/dashboard/administrador.php?page=ver_clientes';
                 </script>";
             } else {
                 echo "Error al actualizar los datos del cliente.";
+            }
+        }
+    }
+
+    public function destroy($id) {
+        if ($id) {
+            $res = $this->clienteModel->delete($id);
+            if ($res) {
+                echo "<script>
+                    alert('Cliente eliminado correctamente');
+                    window.location.href = 'administrador.php?page=ver_clientes';
+                </script>";
+            } else {
+                echo "<script>alert('Error al eliminar el cliente');</script>";
             }
         }
     }
@@ -74,7 +83,7 @@ if (isset($_POST['btn_guardar_cliente'])) {
 if (isset($_POST['btn_actualizar_cliente'])) {
     $controller->update();
 }
-// Este es el "escuchador" que busca el action de tu enlace
+
 if (isset($_GET['action']) && $_GET['action'] === 'eliminar_cliente') {
     $controller->destroy($_GET['id']);
 }

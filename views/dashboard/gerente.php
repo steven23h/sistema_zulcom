@@ -1,25 +1,24 @@
 <?php
 session_start();
-<<<<<<< HEAD
+
 
 // Seguridad
-=======
+
 // Seguridad: Si no es Gerente, redirigir al login
->>>>>>> master
+
 if (!isset($_SESSION['role']) || $_SESSION['role'] != 'Gerente') {
     header("Location: ../auth/login.php"); 
     exit();
 }
-<<<<<<< HEAD
+
 
 $page = $_GET['page'] ?? 'dashboard';
-=======
->>>>>>> master
+
 ?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<<<<<<< HEAD
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zulcom - Gerente</title>
@@ -92,7 +91,7 @@ switch($page){
 </main>
 </div>
 
-=======
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zulcom - Gerente</title>
@@ -130,6 +129,6 @@ switch($page){
 
         </main>
     </div>
->>>>>>> master
+
 </body>
 </html>

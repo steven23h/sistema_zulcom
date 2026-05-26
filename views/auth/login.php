@@ -1,6 +1,6 @@
 <?php
 require_once '../../controllers/AuthController.php';
-<<<<<<< HEAD
+
 $error = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -65,7 +65,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             </div>
         </div>
     </div>
-=======
+
 
 $error = "";
 
@@ -140,6 +140,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 </div>
 
->>>>>>> master
+
 </body>
 </html>

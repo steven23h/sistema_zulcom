@@ -1,10 +1,9 @@
 <?php
-<<<<<<< HEAD
+
 /**
  * VISTA DE REGISTRO - ZULCOM
  */
-=======
->>>>>>> master
+
 require_once '../../controllers/AuthController.php';
 
 $mensaje = "";
@@ -15,24 +14,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
     $res = $auth->register($_POST, $_FILES);
 
     if ($res === "success") {
-<<<<<<< HEAD
+
         $mensaje = "¡Registro exitoso! Redirigiendo al inicio de sesión...";
         $tipo_alerta = "success";
         // Redirige al login después de 2 segundos para que el usuario vea el éxito
         header("refresh:2;url=login.php");
     } else {
         // Aquí se captura el mensaje "Código de empresa incorrecto" que definimos en el controlador
-=======
+
         $mensaje = "¡Registro exitoso!";
         $tipo_alerta = "success";
     } else {
->>>>>>> master
+
         $mensaje = $res;
         $tipo_alerta = "error";
     }
 }
 ?>
-<<<<<<< HEAD
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -65,7 +64,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
         <h2 style="color: #333; margin: 0;">Registro de Usuario</h2>
         <p id="form-desc" style="color: #666; margin-bottom: 20px;">Tipo de cuenta: <strong>Persona Natural (Cliente)</strong></p>
         
-=======
+
 
 <!DOCTYPE html>
 <html lang="es">
@@ -86,14 +85,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
         <h2>Registro</h2>
         <p id="form-desc">Tipo: <strong>Cliente</strong></p>
 
->>>>>>> master
+
         <?php if(!empty($mensaje)): ?>
             <div class="alert alert-<?php echo $tipo_alerta; ?>">
                 <?php echo $mensaje; ?>
             </div>
         <?php endif; ?>
 
-<<<<<<< HEAD
+
         <div class="btn-toggle-container">
             <button type="button" class="btn-mode active" id="btn-cliente" onclick="toggleForm('cliente')">Soy Cliente</button>
             <button type="button" class="btn-mode" id="btn-personal" onclick="toggleForm('personal')">Personal Empresa</button>
@@ -145,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
                 <div style="margin-bottom: 15px;">
                     <label>Rol de Usuario</label>
                     <select name="role" id="role" style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px;">
-=======
+
         <!-- BOTONES -->
         <div class="btn-toggle-container">
             <button type="button" class="btn-mode active" id="btn-cliente">Cliente</button>
@@ -183,14 +182,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
 
                 <div class="form-group">
                     <select name="role">
->>>>>>> master
+
                         <option value="Tecnico">Técnico</option>
                         <option value="Gerente">Gerente</option>
                         <option value="Administracion">Administración</option>
                     </select>
                 </div>
 
-<<<<<<< HEAD
+
                 <div style="display: flex; gap: 20px; margin-bottom: 25px;">
                     <div style="flex: 1;">
                         <label>Copia Cédula (PDF)</label>
@@ -241,7 +240,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
         }
     }
     </script>
-=======
+
                 <div class="form-row">
                     <input type="file" name="copia_cedula">
                     <input type="file" name="record_policial">
@@ -261,6 +260,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
 
 <script src="../../public/js/register.js"></script>
 
->>>>>>> master
+
 </body>
 </html>

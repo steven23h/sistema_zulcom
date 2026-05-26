@@ -3,10 +3,10 @@ require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../models/User.php';
 
 class AuthController {
-<<<<<<< HEAD
-=======
 
->>>>>>> master
+
+
+
     private $db;
     private $userModel;
 
@@ -16,14 +16,14 @@ class AuthController {
     }
 
     public function login($username, $password) {
-<<<<<<< HEAD
+
         $username = trim($username);
         $password = trim($password);
         $user = $this->userModel->getByUsername($username);
         
         if ($user && password_verify($password, $user['password'])) {
             if (session_status() == PHP_SESSION_NONE) session_start();
-=======
+
 
         $user = $this->userModel->getByUsername(trim($username));
 
@@ -31,17 +31,17 @@ class AuthController {
 
             if (session_status() == PHP_SESSION_NONE) session_start();
 
->>>>>>> master
+
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['nombres'] = $user['nombres'];
             $_SESSION['apellidos'] = $user['apellidos'];
             $_SESSION['role'] = $user['role'];
 
-<<<<<<< HEAD
+
             // Lógica de redirección según el rol de la base de datos
-=======
+
             // redirección por rol
->>>>>>> master
+
             if ($user['role'] == 'Administracion') {
                 $path = 'administrador.php';
             } elseif ($user['role'] == 'User') {
@@ -53,15 +53,15 @@ class AuthController {
             header("Location: ../dashboard/" . $path);
             exit();
         }
-<<<<<<< HEAD
-=======
 
->>>>>>> master
+
+
+
         return false;
     }
 
     public function register($post, $files) {
-<<<<<<< HEAD
+
         $tipo = $post['tipo_registro']; 
         $cedula = trim($post['cedula']);
         $codigoEmpresaCorrecto = "ZULCOM2024";
@@ -69,7 +69,7 @@ class AuthController {
         // 1. VALIDACIÓN: Cédula duplicada
         $check = $this->db->prepare("SELECT id FROM users WHERE cedula = ?");
         $check->execute([$cedula]);
-=======
+
 
         $tipo = $post['tipo_registro'];
         $cedula = trim($post['cedula']);
@@ -79,22 +79,22 @@ class AuthController {
         $check = $this->db->prepare("SELECT id FROM users WHERE cedula = ?");
         $check->execute([$cedula]);
 
->>>>>>> master
+
         if ($check->rowCount() > 0) {
             return "La cédula ya existe.";
         }
 
-<<<<<<< HEAD
+
         // 2. VALIDACIÓN: Rol por defecto 'User' (Persona Natural)
         $rolFinal = 'User'; 
-=======
+
         $rolFinal = 'User';
->>>>>>> master
+
         $cc = null;
         $rp = null;
 
         if ($tipo === 'personal') {
-<<<<<<< HEAD
+
             if (trim($post['codigo_empresa']) !== $codigoEmpresaCorrecto) {
                 return "Código de empresa incorrecto. No tiene permisos para crear esta cuenta.";
             }
@@ -138,7 +138,7 @@ class AuthController {
         ];
 
         return $this->userModel->create($data) ? "success" : "Error al guardar en la base de datos.";
-=======
+
 
             // validar código empresa
             if (trim($post['codigo_empresa']) !== $codigoEmpresaCorrecto) {
@@ -187,6 +187,6 @@ class AuthController {
         return $this->userModel->create($data)
             ? "success"
             : "Error al guardar.";
->>>>>>> master
+
     }
 }

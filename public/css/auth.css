@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 /* Variables de color */
 :root {
   --primary-blue: #4a6bff;
@@ -170,7 +170,7 @@ input[readonly] {
   .auth-header {
     padding: 15px;
   }
-=======
+
 /* RESET */
 * {
     margin: 0;
@@ -419,5 +419,5 @@ input[readonly] {
         font-size: 16px;
         padding: 14px;
     }
->>>>>>> master
+
 }

@@ -1,5 +1,5 @@
 <?php
-<<<<<<< HEAD
+
 // models/Plan.php
 require_once __DIR__ . '/../config/database.php';
 
@@ -25,7 +25,7 @@ class Plan {
         $stmt = $this->db->prepare("SELECT * FROM planes ORDER BY id_plan ASC");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
-=======
+
 class Plan {
     private $db;
 
@@ -72,6 +72,6 @@ class Plan {
         } catch (PDOException $e) {
             return false;
         }
->>>>>>> master
+
     }
 }

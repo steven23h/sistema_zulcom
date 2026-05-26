@@ -1,5 +1,5 @@
 <?php
-<<<<<<< HEAD
+
 session_start();
 
 // Seguridad
@@ -10,7 +10,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] != 'Tecnico') {
 
 // Control de páginas
 $page = $_GET['page'] ?? 'inicio';
-=======
+
 // 1. Gestión de sesión
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
@@ -24,29 +24,28 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Tecnico') {
     header("Location: ../auth/login.php");
     exit();
 }
->>>>>>> master
+
 ?>
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-<<<<<<< HEAD
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Zulcom - Técnico</title>
 
-=======
+
     <title>ZULCOM - Panel Técnico</title>
->>>>>>> master
+
     <link rel="stylesheet" href="../../public/css/navbar.css">
     <link rel="stylesheet" href="../../public/css/dashboard.css">
 </head>
 
 <body>
-<<<<<<< HEAD
 
-=======
->>>>>>> master
+
+
 <div class="dashboard-container">
 
     <?php include '../partials/navtecnico.php'; ?>
@@ -54,7 +53,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Tecnico') {
     <main class="main-content">
 
         <header class="content-header">
-<<<<<<< HEAD
+
             <h1>PANEL TÉCNICO</h1>
 
             <div class="user-actions">
@@ -63,7 +62,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Tecnico') {
                 </span>
 
                 <a href="../../logout.php" class="logout-btn">
-=======
+
             <div class="header-left">
                 <h1>PANEL TÉCNICO</h1>
             </div>
@@ -74,13 +73,13 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Tecnico') {
                 </span>
 
                 <a href="../../logout.php" class="logout-btn" onclick="return confirm('¿Cerrar sesión?')">
->>>>>>> master
+
                     Cerrar Sesión
                 </a>
             </div>
         </header>
 
-<<<<<<< HEAD
+
         <div class="dashboard-content">
 
         <?php
@@ -111,7 +110,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Tecnico') {
         break;
         }
         ?>
-=======
+
         <div class="dashboard-content" style="background:#fff; padding:30px; border-radius:8px; min-height:500px; margin-top:20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
             
             <?php 
@@ -136,16 +135,15 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Tecnico') {
                 break;
             }
             ?>
->>>>>>> master
+
 
         </div>
 
     </main>
 
 </div>
-<<<<<<< HEAD
 
-=======
->>>>>>> master
+
+
 </body>
 </html>

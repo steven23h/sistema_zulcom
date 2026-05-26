@@ -1,5 +1,5 @@
 <?php
-<<<<<<< HEAD
+
 // Cargamos el controlador y obtenemos los datos reales
 require_once '../../controllers/PlanesController.php';
 $controller = new PlanesController();
@@ -48,7 +48,7 @@ $planes = $controller->listarPlanes();
         </table>
     </div>
 </div>
-=======
+
 require_once '../../controllers/PlanesController.php';
 $planCtrl = new PlanesController();
 $planes = $planCtrl->index();
@@ -100,4 +100,4 @@ $planes = $planCtrl->index();
 </div>
 
 <script src="../../public/js/planes.js"></script>
->>>>>>> master
+

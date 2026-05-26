@@ -67,26 +67,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </div>
 
 
-$error = "";
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-
-    $auth = new AuthController();
-
-    $user = trim($_POST['username'] ?? "");
-    $pass = trim($_POST['password'] ?? "");
-
-    if ($user && $pass) {
-        $res = $auth->login($user, $pass);
-
-        if ($res !== true) {
-            $error = "Credenciales incorrectas";
-        }
-    } else {
-        $error = "Complete todos los campos";
-    }
-}
-?>
 
 <!DOCTYPE html>
 <html lang="es">

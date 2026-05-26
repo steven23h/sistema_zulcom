@@ -1,5 +1,5 @@
 /* ============================================================
-   ESTILOS SOPORTE TÉCNICO ZULCOM - ESTILO CLIENTES
+   ESTILOS SOPORTE TÉCNICO ZULCOM - ESTILO MAESTRO
    ============================================================ */
 :root {
     --morado-zulcom: #3b3086;
@@ -12,7 +12,6 @@
 }
 
 
-
 h2 {
     font-size: 2.8rem;
     color: var(--morado-zulcom);
@@ -21,24 +20,27 @@ h2 {
 }
 
 /* ============================================================
-   SECCIÓN DE FILTROS (DONDE SE AGRANDA LA LETRA)
+   SECCIÓN DE FILTROS Y BUSCADORES (LETRA AGRANDADA Y SEPARADA)
    ============================================================ */
+.filters {
+    display: flex;
+    gap: 20px; /* Separa los cuadros perfectamente */
+    margin-bottom: 25px;
+    flex-wrap: wrap;
+}
+
 .filters input, 
-.filters select {
-    font-size: 1.4rem !important; /* Letra agrandada para el filtro */
+.filters select,
+.form-control {
+    font-size: 1.4rem !important; /* Letra agrandada */
     padding: 15px 20px !important;
     border-radius: 15px !important;
     border: 1px solid #ccc !important;
     outline: none;
-    flex: 1; /* Para que crezcan parejos */
-    min-width: 200px; /* Evita que se hagan muy chiquitos */
+    flex: 1;
+    min-width: 200px;
     box-shadow: 0 2px 5px rgba(0,0,0,0.02);
-}
-.filters {
-    display: flex; /* Cambiado a flex para mejor control de alineación */
-    gap: 20px;     /* ESTO SEPARA LOS CUADROS PARA QUE NO ESTÉN UNIDOS */
-    margin-bottom: 25px;
-    flex-wrap: wrap; /* Para que en celulares se pongan uno abajo de otro */
+    box-sizing: border-box;
 }
 
 /* ============================================================
@@ -88,7 +90,7 @@ h2 {
 .table td { padding: 18px 20px; border-bottom: 1px solid #f0f0f0; }
 
 /* ============================================================
-   FORMULARIOS (CREATE / EDIT)
+   FORMULARIOS (CREATE / EDIT / RECIBOS)
    ============================================================ */
 .card-form {
     background: #fff;
@@ -120,8 +122,12 @@ h2 {
 .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
 .full { grid-column: 1 / -1; }
 
-/* BUSCADOR Y INFO CLIENTE */
-.search-box { display: flex; gap: 15px; }
+/* BUSCADOR Y TARJETAS DE INFORMACIÓN DE CLIENTE */
+.search-box { 
+    display: flex; 
+    gap: 15px; 
+    margin-bottom: 25px;
+}
 .search-box button {
     background: var(--morado-zulcom);
     color: white;
@@ -133,12 +139,28 @@ h2 {
     font-size: 1.2rem;
 }
 
-.client-info {
+.client-info, .client-card {
     background: #f0f7ff;
     padding: 25px;
     border-radius: 15px;
     border-left: 6px solid var(--azul-info);
     margin-bottom: 35px;
+    display: none; /* Se maneja dinámicamente con JS */
+}
+
+.client-card p {
+    margin: 8px 0;
+    font-size: 1.3rem;
+    color: #333;
+}
+
+.plan-tag {
+    background: var(--morado-zulcom);
+    color: white;
+    padding: 4px 10px;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
 }
 
 /* ============================================================
@@ -163,7 +185,7 @@ h2 {
 .btn-save { background: var(--morado-zulcom); color: white; }
 .btn-save:hover { background: var(--morado-hover); transform: translateY(-3px); }
 
-.btn-cancel { background: var(--gris-cancel); color: #475569; }
+.btn-cancel { background: var(--gris-cancel); color: #475569; text-align: center; }
 .btn-back { background: #eee; color: #333; margin-top: 30px; }
 
 /* RESPONSIVO */
@@ -171,5 +193,5 @@ h2 {
     .grid { grid-template-columns: 1fr; }
     .search-box { flex-direction: column; }
     h2 { font-size: 2.2rem; }
-    .filters { grid-template-columns: 1fr; }
+    .filters { flex-direction: column; }
 }

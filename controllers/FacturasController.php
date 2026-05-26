@@ -1,21 +1,16 @@
 <?php
-// 1. Las declaraciones "use" SIEMPRE van al inicio
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require_once 'models/Factura.php';
-require_once 'controllers/GenerarPdfController.php';
-
-// 2. Esta es la ruta clave: salimos de 'controllers' para buscar 'vendor'
+require_once __DIR__ . '/../models/Factura.php';
+require_once __DIR__ . '/GenerarPdfController.php';
 require_once __DIR__ . '/../vendor/autoload.php';
 
 class FacturasController {
-
+    
     public function store() {
         if ($_POST) {
             $facturaModel = new Factura();
-            
-            // Generar número correlativo (REC-0001...)
             $ultimo = $facturaModel->obtenerUltimoId();
             $nuevoNumero = "REC-" . str_pad($ultimo + 1, 4, "0", STR_PAD_LEFT);
 
@@ -24,30 +19,23 @@ class FacturasController {
                 'numero_recibo' => $nuevoNumero,
                 'monto'         => $_POST['monto'],
                 'forma_pago'    => $_POST['forma_pago'],
-                'concepto'      => "Pago mensual de Internet Zulcom - " . date('F Y')
+                'concepto'      => $_POST['concepto']
             ];
 
-            // Guardar en la base de datos
-            $id_factura = $facturaModel->guardar($data);
-
-            if ($id_factura) {
-                // Generar PDF (Asegúrate de tener la carpeta public/uploads/facturas)
+            $id = $facturaModel->guardar($data);
+            
+            if ($id) {
                 $pdfRepo = new GenerarPdfController();
-                $rutaPdf = $pdfRepo->generar($id_factura);
+                $rutaPdf = $pdfRepo->generar($id);
 
-                // Llamar al envío de correo
-                $this->enviarPorEmail(
-                    $_POST['email_cliente'], 
-                    $_POST['nombre_cliente'], 
-                    $rutaPdf, 
-                    $nuevoNumero
-                );
+                // Enviamos el correo usando los datos del POST
+                $this->enviarPorEmail($_POST['email_cliente'], $_POST['nombre_cliente'], $rutaPdf, $nuevoNumero);
 
-                // Redirección directa al listado
-                echo "<script>
-                    alert('Recibo generado y enviado correctamente.');
-                    window.location.href = 'index.php?controller=Facturas&action=index';
-                </script>";
+              // Cambia la redirección para incluir ?page=crear_factura
+echo "<script>
+    alert('Recibo enviado correctamente.'); 
+    window.location.href='../views/dashboard/administrador.php?page=crear_factura';
+</script>";
             }
         }
     }
@@ -55,33 +43,30 @@ class FacturasController {
     private function enviarPorEmail($destinatario, $nombre, $rutaPdf, $numRecibo) {
         $mail = new PHPMailer(true);
         try {
-            // Configuración SMTP de tu Gmail personal
             $mail->isSMTP();
-            $mail->Host       = 'smtp.gmail.com';
-            $mail->SMTPAuth   = true;
-            $mail->Username   = 'jorgelincango017@gmail.com'; 
-            $mail->Password   = 'hedampvapjefszez'; // Tu clave de 16 letras
+            $mail->Host = 'smtp.gmail.com';
+            $mail->SMTPAuth = true;
+            $mail->Username = 'jorgelincango017@gmail.com';
+            $mail->Password = 'hedampvapjefszez'; 
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $mail->Port       = 587;
+            $mail->Port = 587;
 
             $mail->setFrom('jorgelincango017@gmail.com', 'Zulcom Internet');
             $mail->addAddress($destinatario, $nombre);
-            
-            // Adjuntar PDF si existe
-            if (file_exists($rutaPdf)) {
-                $mail->addAttachment($rutaPdf, "Recibo_Zulcom_$numRecibo.pdf");
-            }
+            $mail->addAttachment($rutaPdf, "Recibo_Zulcom_$numRecibo.pdf");
 
             $mail->isHTML(true);
             $mail->CharSet = 'UTF-8';
-            $mail->Subject = "Comprobante de Pago No. $numRecibo - Zulcom";
-            $mail->Body    = "<h3>¡Hola, $nombre!</h3><p>Adjuntamos tu recibo de pago oficial. Gracias por preferir Zulcom.</p>";
+            $mail->Subject = "Recibo de Pago No. $numRecibo - Zulcom Internet";
+            $mail->Body = "<h3>¡Hola, $nombre!</h3><p>Adjuntamos tu recibo de pago por el servicio de internet. Gracias por preferir Zulcom.</p>";
 
             $mail->send();
-            return true;
-        } catch (Exception $e) {
-            // Si el correo falla, no detenemos el sistema
-            return false;
-        }
+        } catch (Exception $e) { /* Manejo de errores */ }
     }
+}
+
+// Escuchador de botón
+$fController = new FacturasController();
+if (isset($_POST['btn_guardar_factura'])) {
+    $fController->store();
 }

@@ -51,7 +51,50 @@ public function delete($id) {
         $stmt->execute([$id]);
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+// ==========================================
+// CLIENTES QUE YA PAGARON ESTE MES (NO DEUDORES)
+// ==========================================
+public function obtenerNoDeudores() {
+    $mesActual = date('m');
+    $anioActual = date('Y');
+    
+    // Filtra los clientes que SI tienen una factura registrada en el mes y año actuales
+    $query = "SELECT c.*, p.nombre_plan, f.fecha_pago 
+              FROM clientes c
+              INNER JOIN planes p ON c.id_plan = p.id_plan
+              INNER JOIN facturas f ON c.id_cliente = f.id_cliente
+              WHERE MONTH(f.fecha_pago) = :mes 
+              AND YEAR(f.fecha_pago) = :anio 
+              AND c.estado = 'Activo'
+              GROUP BY c.id_cliente"; // El group by evita que se duplique si tiene varias facturas
+              
+    $stmt = $this->db->prepare($query);
+    $stmt->execute(['mes' => $mesActual, 'anio' => $anioActual]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
+// ==========================================
+// CLIENTES QUE NO HAN PAGADO ESTE MES (DEUDORES)
+// ==========================================
+public function obtenerDeudores() {
+    $mesActual = date('m');
+    $anioActual = date('Y');
+    
+    // Selecciona los clientes activos cuyo ID NO EXISTE en las facturas de este mes
+    $query = "SELECT c.*, p.nombre_plan 
+              FROM clientes c
+              INNER JOIN planes p ON c.id_plan = p.id_plan
+              WHERE c.id_cliente NOT IN (
+                  SELECT id_cliente 
+                  FROM facturas 
+                  WHERE MONTH(fecha_pago) = :mes 
+                  AND YEAR(fecha_pago) = :anio
+              ) AND c.estado = 'Activo'";
+              
+    $stmt = $this->db->prepare($query);
+    $stmt->execute(['mes' => $mesActual, 'anio' => $anioActual]);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
     // El método create se queda igual porque está bien
     public function create($data) {
         $sql = "INSERT INTO clientes (

@@ -1,5 +1,5 @@
 <?php
-<<<<<<< HEAD
+
 // controllers/PlanesController.php
 require_once __DIR__ . '/../models/Plan.php';
 
@@ -33,7 +33,7 @@ public function listarPlanes() {
 if (isset($_POST['btn_guardar_plan'])) {
     $controller = new PlanesController();
     $controller->store();
-=======
+
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../models/Plan.php';
 
@@ -51,7 +51,9 @@ class PlanesController {
     }
 
     public function obtenerPorId($id) {
-        return $this->planModel->getById($id);
+        // Validar que el ID sea numérico
+        $id = filter_var($id, FILTER_VALIDATE_INT);
+        return $id ? $this->planModel->getById($id) : null;
     }
 
     public function store() {
@@ -69,17 +71,18 @@ class PlanesController {
     }
 
     public function destroy($id) {
+        $id = filter_var($id, FILTER_VALIDATE_INT);
         if ($id) {
             $res = $this->planModel->delete($id);
             if ($res) {
                 echo "<script>
                     alert('Plan eliminado correctamente');
-                    window.location.href = 'administrador.php?page=ver_planes';
+                    window.location.href = '../views/dashboard/administrador.php?page=ver_planes';
                 </script>";
             } else {
                 echo "<script>
                     alert('Error al eliminar: Es posible que el plan esté asignado a clientes.');
-                    window.location.href = 'administrador.php?page=ver_planes';
+                    window.location.href = '../views/dashboard/administrador.php?page=ver_planes';
                 </script>";
             }
         }
@@ -100,21 +103,25 @@ class PlanesController {
     }
 }
 
-// LÓGICA DE PROCESAMIENTO (Igual que en ClientesController)
+// LÓGICA DE PROCESAMIENTO
 $controller = new PlanesController();
 
-// Escuchar creación
 if (isset($_POST['btn_guardar_plan'])) {
     $controller->store();
 }
 
-// Escuchar actualización
 if (isset($_POST['btn_actualizar_plan'])) {
     $controller->update();
 }
 
-// Escuchar eliminación (vía GET)
 if (isset($_GET['action']) && $_GET['action'] === 'eliminar_plan') {
+
     $controller->destroy($_GET['id']);
->>>>>>> master
+
 }
+
+    $controller->destroy($_GET['id'] ?? null);
+}
+
+// He eliminado la llave extra que estaba aquí
+

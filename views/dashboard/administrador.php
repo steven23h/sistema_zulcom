@@ -142,6 +142,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
                     case 'editar_cliente':
                         include '../clientes/edit.php';
                         break;
+                     case 'clientes_deudores':
+                        include '../clientes/deudores.php';
+                        break;
+
+                    case 'clientes_nodeudores':
+                        include '../clientes/pagados.php';
+                        break;
 
                     case 'ver_planes':
                         include '../planes/index.php'; 
@@ -171,6 +178,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
 
                     case 'resolver_ticket':
                         include '../tecnico/resolver.php';
+                        break;
+                    case 'crear_factura':
+                        include '../facturas/create.php';
                         break;
                     default:
                         echo "<h3>Bienvenido al Sistema Zulcom</h3>";

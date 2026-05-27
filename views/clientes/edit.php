@@ -11,7 +11,7 @@ if (!isset($_GET['id'])) {
 }
 
 $cliente = $clienteCtrl->obtenerPorId($_GET['id']);
-$planes = $planCtrl->index();
+$planes = $planCtrl->listarPlanes();
 
 if (!$cliente) {
     echo "Cliente no encontrado";

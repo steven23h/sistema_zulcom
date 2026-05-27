@@ -45,7 +45,7 @@ class PlanesController {
                 echo "<script>
                     alert('¡Plan registrado con éxito!');
                     window.location.href =
-                    '../views/dashboard/administrador.php?page=ver_planes';
+                    '/zulcom2/views/dashboard/administrador.php?page=ver_planes';
                 </script>";
 
             } else {
@@ -73,7 +73,7 @@ class PlanesController {
                 echo "<script>
                     alert('Plan eliminado correctamente');
                     window.location.href =
-                    '../views/dashboard/administrador.php?page=ver_planes';
+                    '/zulcom2/views/dashboard/administrador.php?page=ver_planes';
                 </script>";
 
             } else {
@@ -81,9 +81,11 @@ class PlanesController {
                 echo "<script>
                     alert('Error al eliminar: Es posible que el plan esté asignado a clientes.');
                     window.location.href =
-                    '../views/dashboard/administrador.php?page=ver_planes';
+                    '/zulcom2/views/dashboard/administrador.php?page=ver_planes';
                 </script>";
             }
+
+            exit();
         }
     }
 
@@ -99,7 +101,7 @@ class PlanesController {
                 echo "<script>
                     alert('¡Plan actualizado correctamente!');
                     window.location.href =
-                    '../views/dashboard/administrador.php?page=ver_planes';
+                    '/zulcom2/views/dashboard/administrador.php?page=ver_planes';
                 </script>";
 
             } else {

@@ -2,7 +2,7 @@
 require_once '../../controllers/PlanesController.php';
 
 $planCtrl = new PlanesController();
-$planes = $planCtrl->index();
+$planes = $planCtrl->listarPlanes();
 ?>
 
 <!DOCTYPE html>

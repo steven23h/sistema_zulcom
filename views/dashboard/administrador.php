@@ -93,13 +93,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
 
             <div class="card">
 
-               <?php 
+                <?php
                 $page = isset($_GET['page']) ? $_GET['page'] : 'inicio';
 
                 switch ($page) {
                     case 'registrar':
                         define('ACCESO_PERMITIDO', true);
-                        include '../auth/register.php'; 
+                        include '../auth/register.php';
                         break;
 
                     case 'ver_clientes':
@@ -113,7 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
                     case 'editar_cliente':
                         include '../clientes/edit.php';
                         break;
-                     case 'clientes_deudores':
+                    case 'clientes_deudores':
                         include '../clientes/deudores.php';
                         break;
 
@@ -122,28 +122,28 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
                         break;
 
                     case 'ver_planes':
-                        include '../planes/index.php'; 
+                        include '../planes/index.php';
                         break;
-                        
+
                     case 'crear_plan':
                         include '../planes/create.php';
-                        break;   
+                        break;
                     case 'editar_plan':
-                         include '../planes/edit.php';
-                         break; 
+                        include '../planes/edit.php';
+                        break;
                     case 'ver_tickets':
-                         include '../tickets/index.php';
+                        include '../tickets/index.php';
                         break;
                     case 'crear_ticket':
                         include '../tickets/create.php';
-                         break;
+                        break;
                     case 'editar_ticket':
                         include '../tickets/edit.php';
                         break;
-                        
+
                     case 'ver_ticket':
                         include '../tickets/ver_ticket.php';
-                         break;
+                        break;
                     case 'tecnico_tickets':
                         include '../tecnico/index.php';
                         break;
@@ -154,6 +154,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
                     case 'crear_factura':
                         include '../facturas/create.php';
                         break;
+
+                    case 'ver_roles':
+                        include '../rolespago/index.php';
+                        break;
+
+                    case 'crear_rol':
+                        include '../rolespago/create.php';
+                        break;
+
+                    case 'ver_rol':
+                        include '../rolespago/ver_rol.php';
+                        break;
+
                     default:
                         echo "<h3>Bienvenido al Sistema Zulcom</h3>";
                         echo "<p>Seleccione1 una opción del menú lateral para gestionar el sistema.</p>";
@@ -161,8 +174,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
                 }
                 ?>
 
-                       
-            
+
+
 
             </div>
 

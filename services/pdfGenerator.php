@@ -1,6 +1,6 @@
 <?php
 
-require_once __DIR__ . '/fpdf/fpdf.php';
+require_once __DIR__ . '/fpdf.php';
 $logoPath = __DIR__ . '/../public/img/logo.png';
 
 function toNumber($value){
@@ -178,4 +178,6 @@ function generarPDFColaborador($colaborador,$roles,$id){
     $pdf->Cell(60,10,t('Firma Gerente'));
 
     $pdf->Output('D', "rol_pago_$id.pdf");
+
+    
 }

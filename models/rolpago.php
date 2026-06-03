@@ -1,94 +1,170 @@
 <?php
 
-class RolPago {
+require_once __DIR__ . '/../config/database.php';
+require_once __DIR__ . '/../services/pdfGenerator.php';
+
+class RolPagoController
+{
 
     private $db;
-    private $table = "roles_pago";
 
-    public function __construct($db){
-        $this->db = $db;
+    public function __construct()
+    {
+        $this->db = Database::connect();
     }
 
     // ==============================
     // CREAR ROL DE PAGO
     // ==============================
-    public function create($data){
+    public function crearRolPago($post)
+    {
 
-        $sql = "INSERT INTO {$this->table}
-        (id_trabajador, horas_extra, decimos, bonos, descuentos, salario,
-        aporte_iess, aporte_empleador, total, periodo, estado, created_at)
-        VALUES (:id_trabajador, :horas_extra, :decimos, :bonos, :descuentos, :salario,
-        :aporte_iess, :aporte_empleador, :total, :periodo, :estado, NOW())";
+        try {
 
-        $stmt = $this->db->prepare($sql);
+            $id_trabajador = $post['id_trabajador'];
+            $salario = $post['salario'];
+            $horas_extra = $post['horas_extra'] ?? 0;
+            $decimos = $post['decimos'] ?? 0;
+            $bonos = $post['bonos'] ?? 0;
+            $descuentos = $post['descuentos'] ?? 0;
+            $periodo = $post['periodo'];
 
-        return $stmt->execute([
-            ':id_trabajador' => $data['id_trabajador'],
-            ':horas_extra' => $data['horas_extra'],
-            ':decimos' => $data['decimos'],
-            ':bonos' => $data['bonos'],
-            ':descuentos' => $data['descuentos'],
-            ':salario' => $data['salario'],
-            ':aporte_iess' => $data['aporte_iess'],
-            ':aporte_empleador' => $data['aporte_empleador'],
-            ':total' => $data['total'],
-            ':periodo' => $data['periodo'],
-            ':estado' => $data['estado']
-        ]);
+            if (!$salario || !is_numeric($salario)) {
+                return ["mensaje" => "Salario inválido"];
+            }
+
+            $salarioNum = floatval($salario);
+            $horasExtrasNum = floatval($horas_extra);
+
+            $horasTrabajadasAlMes = 240;
+            $valorHoraNormal = $salarioNum / $horasTrabajadasAlMes;
+
+            // pago horas extras 150%
+            $pagoHorasExtra = $horasExtrasNum * $valorHoraNormal * 1.5;
+
+            // aportes
+            $aporte_iess = round($salarioNum * 0.0945, 2);
+            $aporte_empleador = round($salarioNum * 0.1115, 2);
+
+            // total
+            $total =
+                $salarioNum +
+                $pagoHorasExtra +
+                floatval($decimos) +
+                floatval($bonos) -
+                floatval($descuentos) -
+                $aporte_iess;
+
+            $stmt = $this->db->prepare("
+
+                INSERT INTO roles_pago
+                (id_trabajador,periodo,salario,horas_extra,valor_horas_extras,
+                decimos,aporte_iess,aporte_empleador,bonos,descuentos,total,estado)
+
+                VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
+
+            ");
+
+            $stmt->execute([
+                $id_trabajador,
+                $periodo,
+                $salarioNum,
+                $horasExtrasNum,
+                round($pagoHorasExtra, 2),
+                floatval($decimos),
+                $aporte_iess,
+                $aporte_empleador,
+                floatval($bonos),
+                floatval($descuentos),
+                round($total, 2),
+                "generado"
+            ]);
+
+            return ["mensaje" => "Rol generado correctamente"];
+        } catch (Exception $e) {
+
+            return ["mensaje" => "Error al generar rol"];
+        }
     }
 
-    // ==============================
-    // OBTENER TODOS LOS ROLES
-    // ==============================
-    public function getAll(){
 
-        $sql = "SELECT * FROM {$this->table} ORDER BY id DESC";
-        $stmt = $this->db->prepare($sql);
+
+    // ==============================
+    // LISTAR COLABORADORES
+    // ==============================
+    public function listarColaboradores()
+    {
+
+        $stmt = $this->db->prepare("
+
+            SELECT 
+            id AS id_trabajador,
+            nombres,
+            apellidos,
+            role AS cargo
+
+            FROM users
+
+            WHERE role IN ('Tecnico','Administracion')
+
+            ORDER BY nombres ASC
+
+        ");
+
         $stmt->execute();
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // ==============================
-    // OBTENER POR TRABAJADOR
-    // ==============================
-    public function getByTrabajador($id_trabajador){
 
-        $sql = "SELECT * FROM {$this->table}
-                WHERE id_trabajador = ?
-                ORDER BY id DESC";
-
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([$id_trabajador]);
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
-    }
 
     // ==============================
-    // FILTROS (MES / COLABORADOR)
+    // LISTAR ROLES DE PAGO
     // ==============================
-    public function getWithFilters($mes = null, $colaborador = null){
+    public function listarRolesPago($mes = null, $colaborador = null)
+    {
+
+        session_start();
 
         $query = "
+
         SELECT r.*, u.nombres, u.apellidos, u.role AS cargo
+
         FROM roles_pago r
+
         JOIN users u ON r.id_trabajador = u.id
+
         ";
 
         $where = [];
         $params = [];
 
-        if($colaborador){
-            $where[] = "r.id_trabajador = ?";
-            $params[] = $colaborador;
+        if (isset($_SESSION['user_id'])) {
+
+            $rol = $_SESSION['role'];
+
+            if ($rol == 'Tecnico' || $rol == 'Administracion') {
+
+                $where[] = "r.id_trabajador = ?";
+                $params[] = $_SESSION['user_id'];
+            }
+        } else {
+
+            if ($colaborador) {
+
+                $where[] = "r.id_trabajador = ?";
+                $params[] = $colaborador;
+            }
         }
 
-        if($mes){
+        if ($mes) {
+
             $where[] = "r.periodo = ?";
             $params[] = $mes;
         }
 
-        if(count($where) > 0){
+        if (count($where) > 0) {
+
             $query .= " WHERE " . implode(" AND ", $where);
         }
 
@@ -100,4 +176,50 @@ class RolPago {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+
+
+    // ==============================
+    // GENERAR PDF
+    // ==============================
+    public function generarPDF($id_trabajador)
+    {
+
+        $stmt = $this->db->prepare("
+
+        SELECT id,nombres,apellidos,cedula,role AS cargo, fecha_ingreso
+         FROM users
+         WHERE id=?
+
+        ");
+
+        $stmt->execute([$id_trabajador]);
+
+        $colaborador = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if (!$colaborador) {
+            return ["mensaje" => "Colaborador no encontrado"];
+        }
+
+        $stmt = $this->db->prepare("
+
+        SELECT *
+
+        FROM roles_pago
+
+        WHERE id_trabajador=?
+
+        ORDER BY id DESC
+
+        ");
+
+        $stmt->execute([$id_trabajador]);
+
+        $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        if (!$roles) {
+            return ["mensaje" => "No hay roles para este colaborador"];
+        }
+
+        generarPDFColaborador($colaborador, $roles, $id_trabajador);
+    }
 }

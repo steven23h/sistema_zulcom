@@ -3,8 +3,8 @@
     <div class="logo-container">
 
         <img class="img-logo"
-             src="../../public/img/logo.png"
-             alt="Logo Zulcom">
+            src="../../public/img/logo.png"
+            alt="Logo Zulcom">
 
     </div>
 
@@ -38,7 +38,13 @@
 
             <li class="nav-item">
                 <a href="administrador.php?page=ver_roles">
-                    Mis Roles
+                    Roles de Pago
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="administrador.php?page=crear_rol">
+                    Generar Rol
                 </a>
             </li>
 

@@ -2,6 +2,8 @@
 
 require_once __DIR__ . '/../config/database.php';
 require_once __DIR__ . '/../services/pdfGenerator.php';
+require_once __DIR__ . '/../models/rolpago.php';
+
 
 class RolPagoController
 {
@@ -18,76 +20,81 @@ class RolPagoController
     // ==============================
     public function crearRolPago($post)
     {
-
+        
         try {
 
-            $id_trabajador = $post['id_trabajador'];
-            $salario = $post['salario'];
-            $horas_extra = $post['horas_extra'] ?? 0;
-            $decimos = $post['decimos'] ?? 0;
-            $bonos = $post['bonos'] ?? 0;
-            $descuentos = $post['descuentos'] ?? 0;
-            $periodo = $post['periodo'];
+            $id_trabajador = intval($post['id_trabajador']);
+            $salario = floatval($post['salario']);
 
-            if (!$salario || !is_numeric($salario)) {
-                return ["mensaje" => "Salario inválido"];
-            }
+            $horas_extra = floatval($post['horas_extra'] ?? 0);
+            $decimos = floatval($post['decimos'] ?? 0);
+            $bonos = floatval($post['bonos'] ?? 0);
+            $descuentos = floatval($post['descuentos'] ?? 0);
 
-            $salarioNum = floatval($salario);
-            $horasExtrasNum = floatval($horas_extra);
+            $periodo = trim($post['periodo']);
 
-            $horasTrabajadasAlMes = 240;
-            $valorHoraNormal = $salarioNum / $horasTrabajadasAlMes;
+            $valorHoraNormal = $salario / 240;
+            $pagoHorasExtra = $horas_extra * $valorHoraNormal * 1.5;
 
-            // pago horas extras 150%
-            $pagoHorasExtra = $horasExtrasNum * $valorHoraNormal * 1.5;
+            $aporte_iess = round($salario * 0.0945, 2);
+            $aporte_empleador = round($salario * 0.1115, 2);
 
-            // aportes
-            $aporte_iess = round($salarioNum * 0.0945, 2);
-            $aporte_empleador = round($salarioNum * 0.1115, 2);
-
-            // total
             $total =
-                $salarioNum +
+                $salario +
                 $pagoHorasExtra +
-                floatval($decimos) +
-                floatval($bonos) -
-                floatval($descuentos) -
+                $decimos +
+                $bonos -
+                $descuentos -
                 $aporte_iess;
 
             $stmt = $this->db->prepare("
-
-                INSERT INTO roles_pago
-                (id_trabajador,periodo,salario,horas_extra,valor_horas_extras,
-                decimos,aporte_iess,aporte_empleador,bonos,descuentos,total,estado)
-
-                VALUES (?,?,?,?,?,?,?,?,?,?,?,?)
-
-            ");
+            INSERT INTO roles_pago
+            (
+                id_trabajador,
+                periodo,
+                salario,
+                horas_extra,
+                valor_horas_extras,
+                decimos,
+                aporte_iess,
+                aporte_empleador,
+                bonos,
+                descuentos,
+                total,
+                estado
+            )
+            VALUES
+            (
+                ?,?,?,?,?,?,?,?,?,?,?,?
+            )
+        ");
 
             $stmt->execute([
                 $id_trabajador,
                 $periodo,
-                $salarioNum,
-                $horasExtrasNum,
+                $salario,
+                $horas_extra,
                 round($pagoHorasExtra, 2),
-                floatval($decimos),
+                $decimos,
                 $aporte_iess,
                 $aporte_empleador,
-                floatval($bonos),
-                floatval($descuentos),
+                $bonos,
+                $descuentos,
                 round($total, 2),
-                "generado"
+                'generado'
             ]);
 
-            return ["mensaje" => "Rol generado correctamente"];
+            return [
+                "mensaje" => "✅ Rol de pago generado correctamente"
+            ];
         } catch (Exception $e) {
 
-            return ["mensaje" => "Error al generar rol"];
+            return [
+                "success" => false,
+                "mensaje" => $e->getMessage()
+            ];
         }
     }
-
-
 
     // ==============================
     // LISTAR COLABORADORES

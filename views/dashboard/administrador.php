@@ -50,7 +50,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
     <title>ZULCOM - Panel de Control</title>
 
     <!-- CSS GLOBAL -->
-    <link rel="stylesheet" href="/zulcom2/public/css/styles.css">
+    <link rel="stylesheet" href="/zulcom2/css/styles.css">
 
     <!-- CSS EXTRA -->
     <link rel="stylesheet" href="/zulcom2/public/css/navbar.css">

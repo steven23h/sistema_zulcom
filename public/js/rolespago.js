@@ -1,80 +1,47 @@
 // ==========================
-// CARGAR COLABORADORES
+// ACTIVAR FORMULARIO
 // ==========================
-function cargarColaboradores(){
-
-    fetch("/zulcom/routes/rolpagoRoutes.php?action=colaboradores")
-    .then(res => res.json())
-    .then(data => {
-
-        const select = document.getElementById("colaborador");
-
-        if(!select) return;
-
-        select.innerHTML = '<option value="">Seleccione colaborador</option>';
-
-        data.forEach(col => {
-
-            let option = document.createElement("option");
-            option.value = col.id_trabajador;
-            option.textContent = col.nombres + " " + col.apellidos + " - " + col.cargo;
-
-            select.appendChild(option);
-
-        });
-
-    })
-    .catch(error => console.error("Error:", error));
-}
-
-
-// ==========================
-// ENVIAR FORMULARIO + PDF
-// ==========================
-function activarFormularioRol(){
+function activarFormularioRol() {
 
     const form = document.getElementById("formRol");
 
-    if(!form) return;
+    if (!form) return;
 
-    form.addEventListener("submit", function(e){
-
-        e.preventDefault();
+    form.addEventListener("submit", function () {
 
         const formData = new FormData(form);
 
-        fetch("/zulcom/routes/rolpagoRoutes.php?action=crear", {
-            method: "POST",
-            body: formData
-        })
-        .then(res => res.json())
-        .then(data => {
+        console.log("=== DATOS ENVIADOS ===");
 
-            alert(data.mensaje);
+        for (const [key, value] of formData.entries()) {
+            console.log(key, value);
+        }
 
-            const id = formData.get("id_trabajador");
-
-            window.open("/zulcom/routes/rolpagoRoutes.php?action=pdf&id_trabajador=" + id);
-
-        })
-        .catch(error => console.error("Error:", error));
+        // NO usamos e.preventDefault()
+        // NO usamos fetch()
+        // El formulario se envía directamente a PHP
 
     });
+
 }
 
 
 // ==========================
-// ASIGNAR PERIODO AUTOMÁTICO
+// ASIGNAR PERIODO
 // ==========================
-function asignarPeriodo(){
+function asignarPeriodo() {
 
     const inputPeriodo = document.getElementById("periodo");
 
-    if(!inputPeriodo) return;
+    if (!inputPeriodo) return;
 
     const hoy = new Date();
+
     const year = hoy.getFullYear();
-    const month = String(hoy.getMonth() + 1).padStart(2, '0');
+
+    const month = String(
+        hoy.getMonth() + 1
+    ).padStart(2, "0");
 
     inputPeriodo.value = `${year}-${month}`;
 }

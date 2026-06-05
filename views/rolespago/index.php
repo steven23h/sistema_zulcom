@@ -1,5 +1,5 @@
 <div class="dashboard-content">
-
+<link rel="stylesheet" href="../../public/css/styles.css">
 <h2 class="mb-4">Listado de Roles de Pago</h2>
 
 <!-- =========================

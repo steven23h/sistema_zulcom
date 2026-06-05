@@ -416,3 +416,73 @@ tr:hover {
 .btn-success-custom:hover{
     background:#15803d;
 }
+/* ============================================================
+   LISTADO DE ROLES
+   ============================================================ */
+
+.roles-header{
+    margin-bottom:25px;
+}
+
+.roles-header h2{
+    font-size:2.2rem;
+    color:#3b3086;
+    margin-bottom:10px;
+}
+
+.roles-header p{
+    color:#666;
+    font-size:1.1rem;
+}
+
+.roles-filter{
+    background:#fff;
+    padding:25px;
+    border-radius:12px;
+    margin-bottom:25px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.05);
+}
+
+.roles-table-container{
+    background:#fff;
+    border-radius:12px;
+    overflow-x:auto;
+    box-shadow:0 4px 15px rgba(0,0,0,0.05);
+}
+
+.roles-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.roles-table th{
+    background:#fafbfc;
+    color:#3b3086;
+    padding:18px;
+    text-align:left;
+    border-bottom:2px solid #eee;
+    font-weight:bold;
+}
+
+.roles-table td{
+    padding:18px;
+    border-bottom:1px solid #f0f0f0;
+}
+
+.roles-table tr:hover{
+    background:#fafafa;
+}
+
+.btn-filtrar{
+    background:#3b3086;
+    color:white;
+    border:none;
+    border-radius:10px;
+    padding:14px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.btn-filtrar:hover{
+    background:#2a2263;
+}

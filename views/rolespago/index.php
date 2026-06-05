@@ -1,62 +1,71 @@
+<link rel="stylesheet" href="../../css/styles.css">
 <div class="dashboard-content">
-<link rel="stylesheet" href="../../public/css/styles.css">
-<h2 class="mb-4">Listado de Roles de Pago</h2>
 
-<!-- =========================
-     FILTROS
-========================= -->
-<div class="row mb-3">
+    <div class="roles-header">
+        <h2>Listado de Roles de Pago</h2>
+        <p>
+            Consulta, filtra y administra los roles de pago generados.
+        </p>
+    </div>
 
-<div class="col-md-4">
-<label>Colaborador</label>
-<select id="filtro_colaborador" class="form-control"></select>
-</div>
+    <!-- FILTROS -->
+    <div class="roles-filter">
 
-<div class="col-md-4">
-<label>Mes</label>
-<input type="month" id="filtro_mes" class="form-control">
-</div>
+        <div class="row">
 
-<div class="col-md-4 d-flex align-items-end">
-<button onclick="cargarListadoRoles()" class="btn btn-primary w-100">
-    Filtrar
-</button>
-</div>
+            <div class="col-md-4">
+                <label>Colaborador</label>
+                <select id="filtro_colaborador" class="form-control"></select>
+            </div>
 
-</div>
+            <div class="col-md-4">
+                <label>Mes</label>
+                <input type="month"
+                       id="filtro_mes"
+                       class="form-control">
+            </div>
 
-<!-- =========================
-     TABLA
-========================= -->
-<div class="table-responsive">
+            <div class="col-md-4 d-flex align-items-end">
+                <button onclick="cargarListadoRoles()"
+                        class="btn-filtrar w-100">
+                    Filtrar
+                </button>
+            </div>
 
-<table class="table table-bordered table-hover">
+        </div>
 
-<thead class="table-dark">
-<tr>
-<th>ID</th>
-<th>Nombre</th>
-<th>Cargo</th>
-<th>Periodo</th>
-<th>Salario</th>
-<th>Total</th>
-<th>Estado</th>
-<th>Acciones</th>
-</tr>
-</thead>
+    </div>
 
-<tbody id="tablaRoles"></tbody>
+    <!-- TABLA -->
+    <div class="roles-table-container">
 
-</table>
+        <table class="roles-table">
 
-</div>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Cargo</th>
+                    <th>Periodo</th>
+                    <th>Salario</th>
+                    <th>Total</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+
+            <tbody id="tablaRoles"></tbody>
+
+        </table>
+
+    </div>
 
 </div>
 
 <script src="/zulcom/public/js/listadoroles.js"></script>
 
 <script>
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
     cargarColaboradoresFiltro();
     cargarListadoRoles();
 });

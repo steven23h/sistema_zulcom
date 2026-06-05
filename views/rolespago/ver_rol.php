@@ -6,45 +6,52 @@ if (session_status() === PHP_SESSION_NONE) {
 
 <div class="dashboard-content">
 
-<h2 class="mb-4">Mis Roles de Pago</h2>
+    <div class="roles-header">
+        <h2>Mis Roles de Pago</h2>
+        <p>
+            Consulta y descarga tus roles de pago generados.
+        </p>
+    </div>
 
-<!-- FILTRO -->
-<div class="row mb-3">
+    <div class="roles-filter">
 
-<div class="col-md-6">
-<label>Filtrar por Mes</label>
-<input type="month" id="filtroMes" class="form-control">
-</div>
+        <div class="filter-group">
+            <label>Filtrar por Mes</label>
+            <input type="month" id="filtroMes">
+        </div>
 
-<div class="col-md-6 d-flex align-items-end">
-<button onclick="cargarMisRoles()" class="btn btn-primary w-100">
-Filtrar
-</button>
-</div>
+        <div class="filter-button">
+            <button onclick="cargarMisRoles()" class="btn-filtrar">
+                Buscar
+            </button>
+        </div>
 
-</div>
+    </div>
 
-<!-- TABLA -->
-<div class="table-responsive">
+    <div class="roles-table-container">
 
-<table class="table table-bordered table-hover">
+        <div class="table-responsive">
 
-<thead class="table-dark">
-<tr>
-<th>ID</th>
-<th>Periodo</th>
-<th>Salario</th>
-<th>Total</th>
-<th>Estado</th>
-<th>Acciones</th>
-</tr>
-</thead>
+            <table class="roles-table">
 
-<tbody id="tablaMisRoles"></tbody>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Periodo</th>
+                        <th>Salario</th>
+                        <th>Total</th>
+                        <th>Estado</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
 
-</table>
+                <tbody id="tablaMisRoles"></tbody>
 
-</div>
+            </table>
+
+        </div>
+
+    </div>
 
 </div>
 

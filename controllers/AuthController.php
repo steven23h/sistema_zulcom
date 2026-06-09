@@ -14,16 +14,11 @@ class AuthController {
 
     public function login($username, $password) {
 
-        $username = trim($username);
-        $password = trim($password);
+        $user = $this->userModel->getByUsername(trim($username));
 
-        $user = $this->userModel->getByUsername($username);
+        if ($user && password_verify(trim($password), $user['password'])) {
 
-        if ($user && password_verify($password, $user['password'])) {
-
-            if (session_status() == PHP_SESSION_NONE) {
-                session_start();
-            }
+            if (session_status() == PHP_SESSION_NONE) session_start();
 
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['nombres'] = $user['nombres'];
@@ -60,9 +55,7 @@ class AuthController {
             return "La cédula ya existe.";
         }
 
-        // rol por defecto
         $rolFinal = 'User';
-
         $cc = null;
         $rp = null;
 
@@ -76,16 +69,11 @@ class AuthController {
             $rolFinal = $post['role'];
 
             $dir = __DIR__ . '/../public/uploads/';
-
-            if (!file_exists($dir)) {
-                mkdir($dir, 0777, true);
-            }
+            if (!file_exists($dir)) mkdir($dir, 0777, true);
 
             // validar PDFs
-            if (
-                $files['copia_cedula']['type'] !== "application/pdf" ||
-                $files['record_policial']['type'] !== "application/pdf"
-            ) {
+            if ($files['copia_cedula']['type'] !== "application/pdf" ||
+                $files['record_policial']['type'] !== "application/pdf") {
                 return "Solo se permiten archivos PDF.";
             }
 

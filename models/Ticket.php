@@ -21,9 +21,8 @@ class Ticket {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // 🔥 CREAR (solo agrego horaVisita)
+    // 🔥 CREAR
     public function create($data) {
-
         $sqlNum = "SELECT COUNT(*) as total FROM tickets";
         $stmtNum = $this->db->query($sqlNum);
         $total = $stmtNum->fetch(PDO::FETCH_ASSOC)['total'] + 1;
@@ -31,17 +30,18 @@ class Ticket {
         $numero_ticket = "TICK-" . str_pad($total, 4, "0", STR_PAD_LEFT);
 
         $sql = "INSERT INTO tickets 
-                (numero_ticket, id_cliente, id_tecnico, tipo_problema, descripcion, horaVisita, estado, fecha_creacion)
+                (numero_ticket, id_cliente, id_tecnico, descripcion, tiene_costo, horaVisita, estado, fecha_creacion)
                 VALUES (?, ?, ?, ?, ?, ?, ?, NOW())";
 
         $stmt = $this->db->prepare($sql);
+        $tiene_costo = isset($data['tiene_costo']) ? intval($data['tiene_costo']) : 0;
 
         return $stmt->execute([
             $numero_ticket,
             $data['id_cliente'],
             $data['id_tecnico'],
-            $data['tipo_problema'],
             $data['descripcion'],
+            $tiene_costo,
             $data['horaVisita'],
             'Pendiente'
         ]);
@@ -54,16 +54,14 @@ class Ticket {
         return $stmt->execute([$id]);
     }
 
-    // =====================================
-    // 🔥 LO NUEVO (AQUÍ ESTÁ LO QUE TE FALTABA)
-    // =====================================
-
-    // 🔥 OBTENER POR ID (para editar y ver)
+    // 🔥 OBTENER POR ID (para editar y ver con soporte a los nuevos campos)
     public function getById($id) {
         $sql = "SELECT t.*, 
-                       c.nombre, c.apellido, c.cedula, c.telefono1, c.direccion, c.correo
+                       c.nombre, c.apellido, c.cedula, c.telefono1, c.direccion, c.correo, c.ciudad, c.provincia, c.referencias,
+                       u.nombres AS tecnico_nombre, u.apellidos AS tecnico_apellido
                 FROM tickets t
                 LEFT JOIN clientes c ON t.id_cliente = c.id_cliente
+                LEFT JOIN users u ON t.id_tecnico = u.id
                 WHERE t.id = ?";
 
         $stmt = $this->db->prepare($sql);
@@ -76,18 +74,19 @@ class Ticket {
         $sql = "UPDATE tickets SET
                     id_cliente = ?,
                     id_tecnico = ?,
-                    tipo_problema = ?,
                     descripcion = ?,
+                    tiene_costo = ?,
                     horaVisita = ?
                 WHERE id = ?";
 
         $stmt = $this->db->prepare($sql);
+        $tiene_costo = isset($data['tiene_costo']) ? intval($data['tiene_costo']) : 0;
 
         return $stmt->execute([
             $data['id_cliente'],
             $data['id_tecnico'],
-            $data['tipo_problema'],
             $data['descripcion'],
+            $tiene_costo,
             $data['horaVisita'],
             $data['id']
         ]);
@@ -107,10 +106,13 @@ class Ticket {
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
-    // 🔥 RESOLVER TICKET (TECNICO)
+    // 🔥 RESOLVER TICKET MODIFICADO (Con soporte completo a Materiales y Evidencias)
     public function resolver($id, $data) {
         $sql = "UPDATE tickets SET 
                     solucion = ?, 
+                    materiales = ?,
+                    foto_antes = ?,
+                    foto_despues = ?,
                     estado = ?, 
                     fecha_solucion = ?, 
                     hora_solucion = ?
@@ -120,6 +122,9 @@ class Ticket {
 
         return $stmt->execute([
             $data['solution'],
+            $data['materiales'] ?? null,
+            $data['foto_antes'] ?? null,
+            $data['foto_despues'] ?? null,
             $data['status'],
             $data['solutionDate'],
             $data['solutionTime'],
@@ -127,3 +132,4 @@ class Ticket {
         ]);
     }
 }
+?>

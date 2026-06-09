@@ -78,14 +78,14 @@ class AuthController {
             return "La cédula ingresada no es válida para el territorio ecuatoriano.";
         }
 
-        // 3. Validar si la cédula ya existe
+        // 3. Validar si la cédula ya existe (Prevención temprana)
         $checkCedula = $this->db->prepare("SELECT id FROM users WHERE cedula = ? LIMIT 1");
         $checkCedula->execute([$cedula]);
         if ($checkCedula->rowCount() > 0) {
             return "El número de cédula ya se encuentra registrado en el sistema.";
         }
 
-        // 4. Validar si el correo ya existe
+        // 4. Validar si el correo ya existe (Prevención temprana)
         $checkEmail = $this->db->prepare("SELECT id FROM users WHERE email = ? LIMIT 1");
         $checkEmail->execute([$email]);
         if ($checkEmail->rowCount() > 0) {
@@ -104,13 +104,11 @@ class AuthController {
 
             $rolFinal = isset($post['role']) ? trim($post['role']) : 'Tecnico';
 
-            // Validar que los archivos existan y no tengan errores de subida
             if (!isset($files['copia_cedula']) || $files['copia_cedula']['error'] !== UPLOAD_ERR_OK ||
                 !isset($files['record_policial']) || $files['record_policial']['error'] !== UPLOAD_ERR_OK) {
                 return "Los archivos requeridos para el personal son obligatorios.";
             }
 
-            // Validar formatos MIME permitidos (solo PDF en este caso para asegurar uniformidad)
             $allowedTypes = ["application/pdf"];
             if (!in_array($files['copia_cedula']['type'], $allowedTypes) || !in_array($files['record_policial']['type'], $allowedTypes)) {
                 return "Solo se permiten archivos en formato PDF para los documentos del personal.";
@@ -135,7 +133,6 @@ class AuthController {
         $partsApe = explode(' ', trim($post['apellidos']));
         $usernameBase = strtolower($partsNom[0] . "." . $partsApe[0]);
         
-        // Verificar si el username base existe para evitar colisiones
         $checkUser = $this->db->prepare("SELECT id FROM users WHERE username = ? LIMIT 1");
         $checkUser->execute([$usernameBase]);
         $username = ($checkUser->rowCount() > 0) ? $usernameBase . rand(10, 99) : $usernameBase;
@@ -156,6 +153,29 @@ class AuthController {
             ':rp' => $rp
         ];
 
-        return $this->userModel->create($data) ? "success" : "Error crítico al registrar los datos en la base de datos.";
+        // 7. Intento de persistencia controlado por Catch de restricciones Unique (Cédula, Teléfono, Correo)
+        try {
+            if ($this->userModel->create($data)) {
+                return "success";
+            } else {
+                return "Error crítico al registrar los datos.";
+            }
+        } catch (PDOException $e) {
+            // Capturar violación de restricción única SQLSTATE 23000 o código de error 1062
+            if ($e->getCode() == 23000 || strpos($e->getMessage(), '1062') !== false) {
+                if (strpos($e->getMessage(), 'telefono') !== false) {
+                    return "El número de teléfono ya se encuentra registrado por otro usuario.";
+                }
+                if (strpos($e->getMessage(), 'cedula') !== false) {
+                    return "El número de cédula ya se encuentra registrado en el sistema.";
+                }
+                if (strpos($e->getMessage(), 'email') !== false) {
+                    return "El correo electrónico ya se encuentra registrado.";
+                }
+                return "Uno de los datos únicos provistos ya se encuentra en uso.";
+            }
+            return "Error de persistencia en la base de datos: " . $e->getMessage();
+        }
     }
 }
+?>

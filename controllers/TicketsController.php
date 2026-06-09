@@ -11,7 +11,7 @@ class TicketsController {
         $this->ticketModel = new Ticket($this->db);
     }
 
-    // 🔥 LISTAR TODOS (ADMIN)
+    // 🔥 LISTAR TODOS (ADMIN) ejemplos
     public function index() {
         return $this->ticketModel->getAll();
     }

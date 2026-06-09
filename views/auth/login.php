@@ -34,11 +34,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 <body class="login-body">
 
-<!-- ❌ VIDEO DESACTIVADO
-<video autoplay muted loop class="bg-video">
-    <source src="../../public/video/bg.mp4" type="video/mp4">
-</video>
--->
+
 
 <div class="login-wrapper">
 

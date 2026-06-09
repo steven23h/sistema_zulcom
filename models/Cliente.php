@@ -6,7 +6,7 @@ class Cliente {
         $this->db = $db;
     }
 
-    // Obtener todos los clientes con el nombre de su plan (CORREGIDO)
+    // Obtener todos los clientes con el nombre de su plan. (CORREGIDO)
     public function getAll() {
         // Usamos un LEFT JOIN para traer el nombre del plan desde la otra tabla
         $sql = "SELECT c.*, p.nombre_plan 

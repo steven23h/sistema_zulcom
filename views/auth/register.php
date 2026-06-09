@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
     $res = $auth->register($_POST, $_FILES);
 
     if ($res === "success") {
-        $mensaje = "¡Registro exitoso!";
+        $mensaje = "¡Registro exitoso! Su usuario ha sido creado correctamente.";
         $tipo_alerta = "success";
     } else {
         $mensaje = $res;
@@ -21,17 +21,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
 <!DOCTYPE html>
 <html lang="es">
 <head>
-<meta charset="UTF-8">
-
-
-<title>Registro</title>
-
-<link rel="stylesheet" href="../../public/css/register.css">
+    <meta charset="UTF-8">
+    <title>Registro</title>
+    <link rel="stylesheet" href="../../public/css/register.css">
 </head>
 <body>
 
-
-    <!-- HEADER -->
     <div class="container-form">
 
         <h2>Registro</h2>
@@ -39,17 +34,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
 
         <?php if(!empty($mensaje)): ?>
             <div class="alert alert-<?php echo $tipo_alerta; ?>">
-                <?php echo $mensaje; ?>
+                <?php echo htmlspecialchars($mensaje, ENT_QUOTES, 'UTF-8'); ?>
             </div>
         <?php endif; ?>
 
-        <!-- BOTONES -->
         <div class="btn-toggle-container">
             <button type="button" class="btn-mode active" id="btn-cliente">Cliente</button>
             <button type="button" class="btn-mode" id="btn-personal">Personal</button>
         </div>
 
-        <form method="POST" enctype="multipart/form-data">
+        <form method="POST" enctype="multipart/form-data" id="main-form">
 
             <input type="hidden" name="tipo_registro" id="tipo_registro" value="cliente">
 
@@ -64,21 +58,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
             </div>
 
             <div class="form-group">
-                <input type="email" name="email" placeholder="Correo" required>
+                <input type="email" name="email" placeholder="Correo electrónico" required>
             </div>
 
             <div class="form-group">
                 <input type="text" name="domicilio" placeholder="Domicilio" required>
             </div>
 
-            <!-- PERSONAL -->
             <div id="campos-personal" class="hidden">
 
-                <div class="box-personal">
+                <div class="box-personal" style="margin-bottom: 18px;">
                     <input type="text" name="codigo_empresa" placeholder="Código Empresa">
                 </div>
 
-                <div class="form-group">
+                <div class="form-group" style="margin-bottom: 18px;">
                     <select name="role">
                         <option value="Tecnico">Técnico</option>
                         <option value="Gerente">Gerente</option>
@@ -101,9 +94,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
 
     </div>
 
-</div>
-
-<script src="../../public/js/register.js"></script>
-
+    <script src="../../public/js/register.js"></script>
 </body>
 </html>

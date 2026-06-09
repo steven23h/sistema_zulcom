@@ -1,4 +1,6 @@
 <link rel="stylesheet" href="../../css/styles.css">
+   <link rel="stylesheet" href="../../public/css/navbar.css">
+
 <div class="dashboard-content">
 
     <div class="roles-header">

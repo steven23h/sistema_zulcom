@@ -79,13 +79,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
 
                     </span>
 
-                    <a href="../../logout.php"
-                        class="btn-logout"
-                        onclick="return confirm('¿Cerrar sesión?')">
-
-                        Cerrar Sesión
-
-                    </a>
+                <a href="../../logout.php" class="logout-btn" onclick="return confirm('¿Cerrar sesión?')">
+                    Cerrar Sesión
+                </a>
 
                 </div>
 

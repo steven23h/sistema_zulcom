@@ -18,23 +18,26 @@ function buscarCliente() {
     if (!cliente) {
         alert('Cliente no encontrado en el sistema');
         info.classList.add('hidden');
+        info.style.display = "none"; // Forzado extra de seguridad visual
         return;
     }
 
-    // Mostramos el cuadro de información
+    // Mostramos el cuadro de información eliminando clases de ocultación
     info.classList.remove('hidden');
+    info.style.display = "block";
 
-    // Llenamos los datos (ajusta 'nombres' o 'apellido' según tu DB)
-    document.getElementById('nombre_info').textContent = (cliente.nombres || cliente.nombre || '') + ' ' + (cliente.apellidos || cliente.apellido || '');
+    // Llenamos los datos correspondientes
+    document.getElementById('nombre_info').textContent = (cliente.nombre || '') + ' ' + (cliente.apellido || '');
     document.getElementById('telefono_info').textContent = cliente.telefono1 || 'N/A';
     document.getElementById('direccion_info').textContent = cliente.direccion || 'N/A';
     document.getElementById('correo_info').textContent = cliente.correo || 'N/A';
 
-    // Asignamos el ID al input oculto para el formulario
+    // Asignamos el ID correcto al input oculto del formulario
     document.getElementById('id_cliente').value = cliente.id_cliente || cliente.id;
 }
+
 // ================================
-// FILTROS
+// FILTROS DINÁMICOS
 // ================================
 document.addEventListener("DOMContentLoaded", function () {
 
@@ -86,5 +89,4 @@ document.addEventListener("DOMContentLoaded", function () {
         el?.addEventListener("input", filtrar);
         el?.addEventListener("change", filtrar);
     });
-
 });

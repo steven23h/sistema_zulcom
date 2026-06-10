@@ -11,7 +11,7 @@
             <li class="nav-item"><a href="administrador.php?page=ver_clientes">Lista de Clientes</a></li>
             <li class="nav-item"><a href="administrador.php?page=ver_tickets">Soporte Técnico</a></li>
              <li class="nav-item"><a href="administrador.php?page=crear_factura">Factura</a></li>
-             <li class="nav-item"><a href="administrador.php?page=clientes_deudores">deudores</a></li>
+             <li class="nav-item"><a href="administrador.php?page=clientes_deudores">Deudores</a></li>
              
             <li class="nav-item">
                 <a href="administrador.php?page=ver_roles">

@@ -5,7 +5,8 @@ if (session_status() === PHP_SESSION_NONE) {
 ?>
 
 <div class="dashboard-content">
-
+    <link rel="stylesheet" href="../../css/styles.css">
+   <link rel="stylesheet" href="../../public/css/navbar.css">
     <div class="roles-header">
         <h2>Mis Roles de Pago</h2>
         <p>

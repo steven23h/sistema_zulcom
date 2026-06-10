@@ -102,4 +102,26 @@ class RolPago
 
         return $stmt->execute([$id]);
     }
+    public function listarColaboradores()
+{
+    $stmt = $this->db->prepare("
+
+        SELECT
+        id AS id_trabajador,
+        nombres,
+        apellidos,
+        role AS cargo
+
+        FROM users
+
+        WHERE role IN ('Tecnico','Administracion')
+
+        ORDER BY nombres ASC
+
+    ");
+
+    $stmt->execute();
+
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 }

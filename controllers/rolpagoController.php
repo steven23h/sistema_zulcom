@@ -96,31 +96,11 @@ class RolPagoController
         }
     }
 
-    // ==============================
-    // LISTAR COLABORADORES
-    // ==============================
     public function listarColaboradores()
     {
+        $rolModel = new RolPago();
 
-        $stmt = $this->db->prepare("
-
-            SELECT 
-            id AS id_trabajador,
-            nombres,
-            apellidos,
-            role AS cargo
-
-            FROM users
-
-            WHERE role IN ('Tecnico','Administracion')
-
-            ORDER BY nombres ASC
-
-        ");
-
-        $stmt->execute();
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $rolModel->listarColaboradores();
     }
 
 
@@ -131,9 +111,9 @@ class RolPagoController
     public function listarRolesPago($mes = null, $colaborador = null)
     {
 
-       if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
 
         $query = "
 
@@ -156,9 +136,6 @@ class RolPagoController
 
                 $where[] = "r.id_trabajador = ?";
                 $params[] = $_SESSION['user_id'];
-
-
-                
             }
         } else {
 
@@ -236,13 +213,12 @@ class RolPagoController
     }
 
     // ==============================
-// ELIMINAR ROL
-// ==============================
-public function eliminarRol($id)
-{
-    $rolModel = new RolPago();
+    // ELIMINAR ROL
+    // ==============================
+    public function eliminarRol($id)
+    {
+        $rolModel = new RolPago();
 
-    return $rolModel->eliminar($id);
+        return $rolModel->eliminar($id);
+    }
 }
-}
-

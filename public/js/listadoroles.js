@@ -1,71 +1,82 @@
-function cargarColaboradoresFiltro(){
+let roles = window.roles || [];
 
-    fetch("/zulcom/routes/rolpagoRoutes.php?action=colaboradores")
-    .then(res => res.json())
-    .then(data => {
+// ================================
+// CARGAR TABLA
+// ================================
+function cargarListadoRoles() {
 
-        const select = document.getElementById("filtro_colaborador");
+    const tbody = document.getElementById("tablaRoles");
+    if (!tbody) return;
 
-        if(!select) return;
+    tbody.innerHTML = "";
 
-        select.innerHTML = '<option value="">Todos</option>';
+    roles.forEach(r => {
 
-        data.forEach(col => {
+        tbody.innerHTML += `
+        <tr>
+            <td>${r.id}</td>
+            <td>${r.nombres} ${r.apellidos}</td>
+            <td>${r.cargo}</td>
+            <td>${r.periodo}</td>
+            <td>$${r.salario}</td>
+            <td>$${r.total}</td>
+            <td>${r.estado}</td>
+            <td>
+                <a href="administrador.php?page=ver_rol&id=${r.id}"
+                   class="btn btn-success btn-sm">
+                   Ver
+                </a>
 
-            let option = document.createElement("option");
-            option.value = col.id_trabajador;
-            option.textContent = col.nombres + " " + col.apellidos;
-
-            select.appendChild(option);
-
-        });
-
-    })
-    .catch(err => console.error(err));
+                <a href="administrador.php?page=pdf_rol&id_trabajador=${r.id_trabajador}"
+                   class="btn btn-primary btn-sm">
+                   PDF
+                </a>
+            </td>
+        </tr>
+        `;
+    });
 }
 
-
-
-function cargarListadoRoles(){
+// ================================
+// FILTROS
+// ================================
+function filtrarRoles() {
 
     const colaborador = document.getElementById("filtro_colaborador")?.value || "";
     const mes = document.getElementById("filtro_mes")?.value || "";
 
-    fetch(`/zulcom/routes/rolpagoRoutes.php?action=listar&colaborador=${colaborador}&mes=${mes}`)
-    .then(res => res.json())
-    .then(data => {
+    const tbody = document.getElementById("tablaRoles");
+    tbody.innerHTML = "";
 
-        const tbody = document.getElementById("tablaRoles");
+    let filtrados = roles;
 
-        if(!tbody) return;
+    if (colaborador) {
+        filtrados = filtrados.filter(r => r.id_trabajador == colaborador);
+    }
 
-        tbody.innerHTML = "";
+    if (mes) {
+        filtrados = filtrados.filter(r => r.periodo == mes);
+    }
 
-        data.forEach(r => {
+    filtrados.forEach(r => {
 
-            let fila = `
-            <tr>
-                <td>${r.id}</td>
-                <td>${r.nombres} ${r.apellidos}</td>
-                <td>${r.cargo}</td>
-                <td>${r.periodo}</td>
-                <td>$${r.salario}</td>
-                <td>$${r.total}</td>
-                <td>${r.estado}</td>
-                <td>
-                    <a href="/zulcom/routes/rolpagoRoutes.php?action=pdf&id_trabajador=${r.id_trabajador}" 
-                    target="_blank" 
-                    class="btn btn-success btn-sm">
-                        PDF
-                    </a>
-                </td>
-            </tr>
-            `;
+        tbody.innerHTML += `
+        <tr>
+            <td>${r.id}</td>
+            <td>${r.nombres} ${r.apellidos}</td>
+            <td>${r.cargo}</td>
+            <td>${r.periodo}</td>
+            <td>$${r.salario}</td>
+            <td>$${r.total}</td>
+            <td>${r.estado}</td>
+            <td>
+                <a href="administrador.php?page=ver_rol&id=${r.id}"
+                   class="btn btn-success btn-sm">Ver</a>
 
-            tbody.innerHTML += fila;
-
-        });
-
-    })
-    .catch(err => console.error(err));
+                <a href="administrador.php?page=pdf_rol&id_trabajador=${r.id_trabajador}"
+                   class="btn btn-primary btn-sm">PDF</a>
+            </td>
+        </tr>
+        `;
+    });
 }

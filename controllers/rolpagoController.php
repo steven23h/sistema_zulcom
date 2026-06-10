@@ -20,7 +20,7 @@ class RolPagoController
     // ==============================
     public function crearRolPago($post)
     {
-        
+
         try {
 
             $id_trabajador = intval($post['id_trabajador']);
@@ -131,7 +131,9 @@ class RolPagoController
     public function listarRolesPago($mes = null, $colaborador = null)
     {
 
-        session_start();
+       if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
         $query = "
 
@@ -145,15 +147,18 @@ class RolPagoController
 
         $where = [];
         $params = [];
-
         if (isset($_SESSION['user_id'])) {
 
             $rol = $_SESSION['role'];
 
-            if ($rol == 'Tecnico' || $rol == 'Administracion') {
+            // Solo el técnico ve sus propios roles
+            if ($rol == 'Tecnico') {
 
                 $where[] = "r.id_trabajador = ?";
                 $params[] = $_SESSION['user_id'];
+
+
+                
             }
         } else {
 

@@ -64,7 +64,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Tecnico') {
                 break;
                  // 🔥 MIS ROLES
             case 'mis_roles':
-                include '../rolespago/ver_roles_tecnico.php';
+                include '../rolespago/ver_rol.php';
             break;
 
 

@@ -20,7 +20,6 @@ class RolPagoController
     // ==============================
     public function crearRolPago($post)
     {
-
         try {
 
             $id_trabajador = intval($post['id_trabajador']);
@@ -47,42 +46,24 @@ class RolPagoController
                 $descuentos -
                 $aporte_iess;
 
-            $stmt = $this->db->prepare("
-            INSERT INTO roles_pago
-            (
-                id_trabajador,
-                periodo,
-                salario,
-                horas_extra,
-                valor_horas_extras,
-                decimos,
-                aporte_iess,
-                aporte_empleador,
-                bonos,
-                descuentos,
-                total,
-                estado
-            )
-            VALUES
-            (
-                ?,?,?,?,?,?,?,?,?,?,?,?
-            )
-        ");
+            $datos = [
+                'id_trabajador'      => $id_trabajador,
+                'periodo'            => $periodo,
+                'salario'            => $salario,
+                'horas_extra'        => $horas_extra,
+                'valor_horas_extras' => round($pagoHorasExtra, 2),
+                'decimos'            => $decimos,
+                'aporte_iess'        => $aporte_iess,
+                'aporte_empleador'   => $aporte_empleador,
+                'bonos'              => $bonos,
+                'descuentos'         => $descuentos,
+                'total'              => round($total, 2),
+                'estado'             => 'generado'
+            ];
 
-            $stmt->execute([
-                $id_trabajador,
-                $periodo,
-                $salario,
-                $horas_extra,
-                round($pagoHorasExtra, 2),
-                $decimos,
-                $aporte_iess,
-                $aporte_empleador,
-                $bonos,
-                $descuentos,
-                round($total, 2),
-                'generado'
-            ]);
+            $rolModel = new RolPago();
+
+            $rolModel->crear($datos);
 
             return [
                 "mensaje" => "✅ Rol de pago generado correctamente"
@@ -118,38 +99,15 @@ class RolPagoController
     // ==============================
     public function generarPDF($id_trabajador)
     {
+        $rolModel = new RolPago();
 
-        $stmt = $this->db->prepare("
-
-        SELECT id,nombres,apellidos,cedula,role AS cargo, fecha_ingreso
-         FROM users
-         WHERE id=?
-
-        ");
-
-        $stmt->execute([$id_trabajador]);
-
-        $colaborador = $stmt->fetch(PDO::FETCH_ASSOC);
+        $colaborador = $rolModel->obtenerColaborador($id_trabajador);
 
         if (!$colaborador) {
             return ["mensaje" => "Colaborador no encontrado"];
         }
 
-        $stmt = $this->db->prepare("
-
-        SELECT *
-
-        FROM roles_pago
-
-        WHERE id_trabajador=?
-
-        ORDER BY id DESC
-
-        ");
-
-        $stmt->execute([$id_trabajador]);
-
-        $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $roles = $rolModel->obtenerRolesTrabajador($id_trabajador);
 
         if (!$roles) {
             return ["mensaje" => "No hay roles para este colaborador"];

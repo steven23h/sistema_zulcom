@@ -129,7 +129,7 @@ class RolPago
         if (session_status() === PHP_SESSION_NONE) {
             session_start();
         }
-        
+
 
         $query = "
 
@@ -177,6 +177,43 @@ class RolPago
 
         $stmt = $this->db->prepare($query);
         $stmt->execute($params);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    // ==========================
+    // OBTENER COLABORADOR
+    // ==========================
+    public function obtenerColaborador($id_trabajador)
+    {
+        $stmt = $this->db->prepare("
+        SELECT
+            id,
+            nombres,
+            apellidos,
+            cedula,
+            role AS cargo,
+            fecha_ingreso
+        FROM users
+        WHERE id = ?
+    ");
+
+        $stmt->execute([$id_trabajador]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    // ==========================
+    // OBTENER ROLES DEL TRABAJADOR
+    // ==========================
+    public function obtenerRolesTrabajador($id_trabajador)
+    {
+        $stmt = $this->db->prepare("
+        SELECT *
+        FROM roles_pago
+        WHERE id_trabajador = ?
+        ORDER BY id DESC
+    ");
+
+        $stmt->execute([$id_trabajador]);
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

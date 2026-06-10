@@ -162,6 +162,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
                     case 'ver_rol':
                         include '../rolespago/ver_rol.php';
                         break;
+                        
 
                     default:
                         echo "<h3>Bienvenido al Sistema Zulcom</h3>";

@@ -234,4 +234,26 @@ class RolPagoController
 
         generarPDFColaborador($colaborador, $roles, $id_trabajador);
     }
+
+    // ==============================
+// ELIMINAR ROL
+// ==============================
+public function eliminarRol($id)
+{
+    try {
+
+        $stmt = $this->db->prepare("
+            DELETE FROM roles_pago
+            WHERE id = ?
+        ");
+
+        $stmt->execute([$id]);
+
+        return true;
+
+    } catch (Exception $e) {
+
+        return false;
+    }
+}
 }

@@ -23,11 +23,11 @@ class AuthController {
             $_SESSION['apellidos'] = $user['apellidos'];
             $_SESSION['role'] = $user['role'];
 
+            // Redirección limpia para los únicos dos roles existentes
             if ($user['role'] == 'Administracion') {
                 $path = 'administrador.php';
-            } elseif ($user['role'] == 'User') {
-                $path = 'user_dashboard.php';
             } else {
+                // Envía a tecnico.php
                 $path = strtolower($user['role']) . '.php';
             }
 
@@ -63,7 +63,6 @@ class AuthController {
     }
 
     public function register($post, $files) {
-        $tipo = isset($post['tipo_registro']) ? trim($post['tipo_registro']) : 'cliente';
         $cedula = isset($post['cedula']) ? trim($post['cedula']) : '';
         $email = isset($post['email']) ? trim($post['email']) : '';
         $codigoEmpresaCorrecto = "ZULCOM2024";
@@ -92,43 +91,40 @@ class AuthController {
             return "El correo electrónico ya se encuentra registrado.";
         }
 
-        $rolFinal = 'User';
-        $cc = null;
-        $rp = null;
-
-        // 5. Validaciones específicas para Personal
-        if ($tipo === 'personal') {
-            if (!isset($post['codigo_empresa']) || trim($post['codigo_empresa']) !== $codigoEmpresaCorrecto) {
-                return "Código de empresa incorrecto o no proporcionado.";
-            }
-
-            $rolFinal = isset($post['role']) ? trim($post['role']) : 'Tecnico';
-
-            if (!isset($files['copia_cedula']) || $files['copia_cedula']['error'] !== UPLOAD_ERR_OK ||
-                !isset($files['record_policial']) || $files['record_policial']['error'] !== UPLOAD_ERR_OK) {
-                return "Los archivos requeridos para el personal son obligatorios.";
-            }
-
-            $allowedTypes = ["application/pdf"];
-            if (!in_array($files['copia_cedula']['type'], $allowedTypes) || !in_array($files['record_policial']['type'], $allowedTypes)) {
-                return "Solo se permiten archivos en formato PDF para los documentos del personal.";
-            }
-
-            $dir = __DIR__ . '/../public/uploads/';
-            if (!file_exists($dir)) {
-                mkdir($dir, 0777, true);
-            }
-
-            $cc = time() . "_cc_" . basename($files['copia_cedula']['name']);
-            $rp = time() . "_rp_" . basename($files['record_policial']['name']);
-
-            if (!move_uploaded_file($files['copia_cedula']['tmp_name'], $dir . $cc) ||
-                !move_uploaded_file($files['record_policial']['tmp_name'], $dir . $rp)) {
-                return "Error al subir y guardar los documentos en el servidor.";
-            }
+        // 5. Validaciones de código de empresa (Ahora obligatorio para todos)
+        if (!isset($post['codigo_empresa']) || trim($post['codigo_empresa']) !== $codigoEmpresaCorrecto) {
+            return "Código de empresa incorrecto o no proporcionado.";
         }
 
-        // 6. Generar el nombre de usuario único básico
+        // Definición estricta de roles permitidos
+        $rolPost = isset($post['role']) ? trim($post['role']) : 'Tecnico';
+        $rolFinal = ($rolPost === 'Administracion') ? 'Administracion' : 'Tecnico';
+
+        // 6. Validar archivos PDF obligatorios
+        if (!isset($files['copia_cedula']) || $files['copia_cedula']['error'] !== UPLOAD_ERR_OK ||
+            !isset($files['record_policial']) || $files['record_policial']['error'] !== UPLOAD_ERR_OK) {
+            return "Los archivos requeridos (Copia de Cédula y Récord Policial) son obligatorios.";
+        }
+
+        $allowedTypes = ["application/pdf"];
+        if (!in_array($files['copia_cedula']['type'], $allowedTypes) || !in_array($files['record_policial']['type'], $allowedTypes)) {
+            return "Solo se permiten archivos en formato PDF para los documentos.";
+        }
+
+        $dir = __DIR__ . '/../public/uploads/';
+        if (!file_exists($dir)) {
+            mkdir($dir, 0777, true);
+        }
+
+        $cc = time() . "_cc_" . basename($files['copia_cedula']['name']);
+        $rp = time() . "_rp_" . basename($files['record_policial']['name']);
+
+        if (!move_uploaded_file($files['copia_cedula']['tmp_name'], $dir . $cc) ||
+            !move_uploaded_file($files['record_policial']['tmp_name'], $dir . $rp)) {
+            return "Error al subir y guardar los documentos en el servidor.";
+        }
+
+        // 7. Generar el nombre de usuario único básico
         $partsNom = explode(' ', trim($post['nombres']));
         $partsApe = explode(' ', trim($post['apellidos']));
         $usernameBase = strtolower($partsNom[0] . "." . $partsApe[0]);
@@ -153,7 +149,7 @@ class AuthController {
             ':rp' => $rp
         ];
 
-        // 7. Intento de persistencia controlado por Catch de restricciones Unique (Cédula, Teléfono, Correo)
+        // 8. Intento de persistencia
         try {
             if ($this->userModel->create($data)) {
                 return "success";
@@ -161,7 +157,6 @@ class AuthController {
                 return "Error crítico al registrar los datos.";
             }
         } catch (PDOException $e) {
-            // Capturar violación de restricción única SQLSTATE 23000 o código de error 1062
             if ($e->getCode() == 23000 || strpos($e->getMessage(), '1062') !== false) {
                 if (strpos($e->getMessage(), 'telefono') !== false) {
                     return "El número de teléfono ya se encuentra registrado por otro usuario.";

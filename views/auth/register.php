@@ -9,7 +9,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
     $res = $auth->register($_POST, $_FILES);
 
     if ($res === "success") {
-        $mensaje = "¡Registro exitoso! Su usuario ha sido creado correctamente.";
+        $mensaje = "¡Registro exitoso! El usuario del personal ha sido creado correctamente.";
         $tipo_alerta = "success";
     } else {
         $mensaje = $res;
@@ -22,15 +22,15 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Registro</title>
+    <title>Registro de Personal</title>
     <link rel="stylesheet" href="../../public/css/register.css">
 </head>
 <body>
 
     <div class="container-form">
 
-        <h2>Registro</h2>
-        <p id="form-desc">Tipo: <strong>Cliente</strong></p>
+        <h2>Registro de Personal</h2>
+        <p id="form-desc">Acceso restringido para colaboradores autorizados.</p>
 
         <?php if(!empty($mensaje)): ?>
             <div class="alert alert-<?php echo $tipo_alerta; ?>">
@@ -38,14 +38,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
             </div>
         <?php endif; ?>
 
-        <div class="btn-toggle-container">
-            <button type="button" class="btn-mode active" id="btn-cliente">Cliente</button>
-            <button type="button" class="btn-mode" id="btn-personal">Personal</button>
-        </div>
-
         <form method="POST" enctype="multipart/form-data" id="main-form">
-
-            <input type="hidden" name="tipo_registro" id="tipo_registro" value="cliente">
 
             <div class="form-row">
                 <input type="text" name="nombres" placeholder="Nombres" required>
@@ -65,25 +58,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
                 <input type="text" name="domicilio" placeholder="Domicilio" required>
             </div>
 
-            <div id="campos-personal" class="hidden">
+            <div class="box-personal">
+                <input type="text" name="codigo_empresa" placeholder="Código Empresa" required>
+            </div>
 
-                <div class="box-personal" style="margin-bottom: 18px;">
-                    <input type="text" name="codigo_empresa" placeholder="Código Empresa">
-                </div>
+            <div class="form-group">
+                <select name="role" required>
+                    <option value="Tecnico">Técnico</option>
+                    <option value="Administracion">Administración</option>
+                </select>
+            </div>
 
-                <div class="form-group" style="margin-bottom: 18px;">
-                    <select name="role">
-                        <option value="Tecnico">Técnico</option>
-                        <option value="Gerente">Gerente</option>
-                        <option value="Administracion">Administración</option>
-                    </select>
-                </div>
-
-                <div class="form-row">
-                    <input type="file" name="copia_cedula">
-                    <input type="file" name="record_policial">
-                </div>
-
+            <div class="form-row">
+                <input type="file" name="copia_cedula" accept="application/pdf" required>
+                <input type="file" name="record_policial" accept="application/pdf" required>
             </div>
 
             <button type="submit" name="btn_registrar" class="btn-register">

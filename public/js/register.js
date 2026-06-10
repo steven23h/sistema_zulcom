@@ -1,46 +1,13 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const btnCliente = document.getElementById("btn-cliente");
-    const btnPersonal = document.getElementById("btn-personal");
-    const camposPersonal = document.getElementById("campos-personal");
-    const desc = document.getElementById("form-desc");
-    const tipoInput = document.getElementById("tipo_registro");
     const form = document.getElementById("main-form");
-
-    // Inputs dinámicos
     const inputCodigo = document.querySelector('input[name="codigo_empresa"]');
     const fileCedula = document.querySelector('input[name="copia_cedula"]');
     const fileRecord = document.querySelector('input[name="record_policial"]');
 
-    // ================================
-    // LOGICA DE REMUTACIÓN DE VISTA (TOGGLE)
-    // ================================
-    function toggleForm(tipo) {
-        btnCliente.classList.toggle("active", tipo === "cliente");
-        btnPersonal.classList.toggle("active", tipo === "personal");
-        
-        if (tipo === "personal") {
-            camposPersonal.classList.remove("hidden");
-            desc.innerHTML = "Tipo: <strong>Personal</strong>";
-            tipoInput.value = "personal";
-            
-            // Hacer obligatorios en HTML dinámicamente si es personal
-            if(inputCodigo) inputCodigo.required = true;
-            if(fileCedula) fileCedula.required = true;
-            if(fileRecord) fileRecord.required = true;
-        } else {
-            camposPersonal.classList.add("hidden");
-            desc.innerHTML = "Tipo: <strong>Cliente</strong>";
-            tipoInput.value = "cliente";
-            
-            // Quitar obligaciones y limpiar estados de error de campos de personal
-            if(inputCodigo) { inputCodigo.required = false; removeMessage(inputCodigo); inputCodigo.classList.remove("input-error"); }
-            if(fileCedula) { fileCedula.required = false; removeMessage(fileCedula); fileCedula.classList.remove("input-error"); }
-            if(fileRecord) { fileRecord.required = false; removeMessage(fileRecord); fileRecord.classList.remove("input-error"); }
-        }
-    }
-
-    btnCliente.addEventListener("click", () => toggleForm("cliente"));
-    btnPersonal.addEventListener("click", () => toggleForm("personal"));
+    // Asignar obligatoriedad fija desde JS
+    if(inputCodigo) inputCodigo.required = true;
+    if(fileCedula) fileCedula.required = true;
+    if(fileRecord) fileRecord.required = true;
 
     // ================================
     // ALGORITMO COMPLETO CÉDULA ECUADOR
@@ -76,11 +43,11 @@ document.addEventListener("DOMContentLoaded", () => {
         telefono: { test: v => /^[0-9]{9,10}$/.test(v.trim()), msg: "Número telefónico inválido (9 o 10 dígitos)" },
         email: { test: v => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()), msg: "Estructura de correo no válida" },
         domicilio: { test: v => v.trim().length >= 5, msg: "La dirección provista es demasiado corta" },
-        codigo_empresa: { test: v => tipoInput.value === 'cliente' || v.trim() === "ZULCOM2024", msg: "Código institucional no válido" }
+        codigo_empresa: { test: v => v.trim() === "ZULCOM2024", msg: "Código institucional no válido" }
     };
 
     // ================================
-    // MANIPULACIÓN DEL DOM / MENSAJES DE ERROR
+    // MANIPULACIÓN DEL DOM / ERRORES
     // ================================
     function setError(input, msg) {
         input.classList.add("input-error");
@@ -104,17 +71,13 @@ document.addEventListener("DOMContentLoaded", () => {
         if (msg) msg.remove();
     }
 
-    // Validar subida de ficheros del Personal
+    // Validar subida de ficheros PDF
     const validarFile = (fileInput) => {
-        if (tipoInput.value === "cliente") return true;
         const file = fileInput.files[0];
         
         if (!file) {
-            if (fileInput.hasAttribute('required')) {
-                setError(fileInput, "Este documento adjunto es obligatorio.");
-                return false;
-            }
-            return true;
+            setError(fileInput, "Este documento adjunto es obligatorio.");
+            return false;
         }
         
         const ext = file.name.split('.').pop().toLowerCase();
@@ -130,7 +93,7 @@ document.addEventListener("DOMContentLoaded", () => {
         return true;
     };
 
-    // Eventos de validación al perder foco o cambiar entrada
+    // Eventos en tiempo real al cambiar valores
     form.querySelectorAll("input, select").forEach(input => {
         input.addEventListener("change", () => {
             if (input.type === "file") {
@@ -145,18 +108,12 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    // ================================
-    // MANEJADOR DE ENVÍO DE FORMULARIO
-    // ================================
+    // Control de envío
     form.addEventListener("submit", (e) => {
         let isValid = true;
 
-        // Validar todos los inputs textuales activos / obligatorios
         form.querySelectorAll("input").forEach(input => {
-            // Saltarse la validación si el elemento pertenece al bloque personal oculto
-            if (tipoInput.value === "cliente" && (input.name === "codigo_empresa" || input.type === "file")) {
-                return;
-            }
+            if (input.type === "file") return; // Se evalúan abajo por separado
 
             const rule = rules[input.name];
             if (rule) {
@@ -169,15 +126,13 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
 
-        // Validar archivos sólo si es cuenta personal laboral
-        if (tipoInput.value === "personal") {
-            const f1 = validarFile(fileCedula);
-            const f2 = validarFile(fileRecord);
-            if (!f1 || !f2) isValid = false;
-        }
+        // Validar ambos ficheros de forma obligatoria
+        const f1 = validarFile(fileCedula);
+        const f2 = validarFile(fileRecord);
+        if (!f1 || !f2) isValid = false;
 
         if (!isValid) {
-            e.preventDefault(); // CANCELA EL ENVÍO AL BACKEND COMPLETAMENTE
+            e.preventDefault(); 
             alert("Existen campos pendientes o con datos erróneos. Por favor verifique el formulario.");
         }
     });

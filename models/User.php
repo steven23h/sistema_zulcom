@@ -7,7 +7,6 @@ class User {
         $this->conn = $db;
     }
 
-    // Buscar usuario para el Login
     public function getByUsername($username) {
         $query = "SELECT * FROM " . $this->table_name . " WHERE username = :un LIMIT 1";
         $stmt = $this->conn->prepare($query);
@@ -16,16 +15,12 @@ class User {
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Crear nuevo usuario (Registro)
     public function create($data) {
-        // Aseguramos que las columnas coincidan con las claves del array del controlador
         $query = "INSERT INTO " . $this->table_name . " 
                 (cedula, telefono, domicilio, nombres, apellidos, email, username, password, role, copia_cedula, record_policial) 
                 VALUES (:cedula, :telefono, :domicilio, :nombres, :apellidos, :email, :username, :password, :role, :cc, :rp)";
         
         $stmt = $this->conn->prepare($query);
-        
-        // Ejecuta pasando el array sanitizado directo del controlador
         return $stmt->execute($data);
     }
 }

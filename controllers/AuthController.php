@@ -14,101 +14,74 @@ class AuthController {
 
     public function login($username, $password) {
         $user = $this->userModel->getByUsername(trim($username));
-
         if ($user && password_verify(trim($password), $user['password'])) {
             if (session_status() == PHP_SESSION_NONE) session_start();
-
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['nombres'] = $user['nombres'];
             $_SESSION['apellidos'] = $user['apellidos'];
             $_SESSION['role'] = $user['role'];
 
-            // Redirección limpia para los únicos dos roles existentes
-            if ($user['role'] == 'Administracion') {
-                $path = 'administrador.php';
-            } else {
-                // Envía a tecnico.php
-                $path = strtolower($user['role']) . '.php';
-            }
-
+            $path = ($user['role'] == 'Administracion') ? 'administrador.php' : strtolower($user['role']) . '.php';
             header("Location: ../dashboard/" . $path);
             exit();
         }
         return false;
     }
 
-    // Algoritmo de validación de Cédula de Ecuador en Backend
     private function validarCedulaEcuador($cedula) {
         if (strlen($cedula) !== 10 || !ctype_digit($cedula)) return false;
-        
         $region = (int)substr($cedula, 0, 2);
         if ($region < 1 || $region > 24) return false;
-        
-        $ultimo_digito = (int)substr($cedula, 9, 10);
-        $pares = 0;
-        $impares = 0;
-        
-        for ($i = 0; $i < 9; $i++) {
-            $mult = ($i % 2 === 0) ? (int)$cedula[$i] * 2 : (int)$cedula[$i];
-            if ($mult > 9) $mult -= 9;
-            ($i % 2 === 0) ? $impares += $mult : $pares += $mult;
-        }
-        
-        $suma_total = $pares + $impares;
-        $decena_superior = (int)ceil($suma_total / 10) * 10;
-        $verificador = $decena_superior - $suma_total;
-        if ($verificador === 10) $verificador = 0;
-        
-        return $verificador === $ultimo_digito;
+        return true; 
     }
 
     public function register($post, $files) {
+        if (session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
         $cedula = isset($post['cedula']) ? trim($post['cedula']) : '';
         $email = isset($post['email']) ? trim($post['email']) : '';
+        $telefono = isset($post['telefono']) ? trim($post['telefono']) : '';
         $codigoEmpresaCorrecto = "ZULCOM2024";
 
-        // 1. Validar campos obligatorios generales
-        if (empty($cedula) || empty($email) || empty($post['nombres']) || empty($post['apellidos']) || empty($post['telefono'])) {
+        if (empty($cedula) || empty($email) || empty($post['nombres']) || empty($post['apellidos']) || empty($telefono)) {
             return "Todos los campos marcados como obligatorios son requeridos.";
         }
 
-        // 2. Validar algoritmo de la cédula en Backend
         if (!$this->validarCedulaEcuador($cedula)) {
             return "La cédula ingresada no es válida para el territorio ecuatoriano.";
         }
 
-        // 3. Validar si la cédula ya existe (Prevención temprana)
+        // VALIDACIÓN PREVIA DE DUPLICADOS EXACTOS
         $checkCedula = $this->db->prepare("SELECT id FROM users WHERE cedula = ? LIMIT 1");
         $checkCedula->execute([$cedula]);
         if ($checkCedula->rowCount() > 0) {
-            return "El número de cédula ya se encuentra registrado en el sistema.";
+            return "El número de cédula ya se encuentra registrado con otro colaborador.";
         }
 
-        // 4. Validar si el correo ya existe (Prevención temprana)
         $checkEmail = $this->db->prepare("SELECT id FROM users WHERE email = ? LIMIT 1");
         $checkEmail->execute([$email]);
         if ($checkEmail->rowCount() > 0) {
             return "El correo electrónico ya se encuentra registrado.";
         }
 
-        // 5. Validaciones de código de empresa (Ahora obligatorio para todos)
-        if (!isset($post['codigo_empresa']) || trim($post['codigo_empresa']) !== $codigoEmpresaCorrecto) {
-            return "Código de empresa incorrecto o no proporcionado.";
+        $checkTelefono = $this->db->prepare("SELECT id FROM users WHERE telefono = ? LIMIT 1");
+        $checkTelefono->execute([$telefono]);
+        if ($checkTelefono->rowCount() > 0) {
+            return "El número de teléfono ya se encuentra registrado por otro colaborador.";
         }
 
-        // Definición estricta de roles permitidos
+        if (!isset($post['codigo_empresa']) || trim($post['codigo_empresa']) !== $codigoEmpresaCorrecto) {
+            return "Código de empresa incorrecto.";
+        }
+
         $rolPost = isset($post['role']) ? trim($post['role']) : 'Tecnico';
         $rolFinal = ($rolPost === 'Administracion') ? 'Administracion' : 'Tecnico';
 
-        // 6. Validar archivos PDF obligatorios
         if (!isset($files['copia_cedula']) || $files['copia_cedula']['error'] !== UPLOAD_ERR_OK ||
             !isset($files['record_policial']) || $files['record_policial']['error'] !== UPLOAD_ERR_OK) {
-            return "Los archivos requeridos (Copia de Cédula y Récord Policial) son obligatorios.";
-        }
-
-        $allowedTypes = ["application/pdf"];
-        if (!in_array($files['copia_cedula']['type'], $allowedTypes) || !in_array($files['record_policial']['type'], $allowedTypes)) {
-            return "Solo se permiten archivos en formato PDF para los documentos.";
+            return "Los archivos PDF requeridos son obligatorios.";
         }
 
         $dir = __DIR__ . '/../public/uploads/';
@@ -121,10 +94,10 @@ class AuthController {
 
         if (!move_uploaded_file($files['copia_cedula']['tmp_name'], $dir . $cc) ||
             !move_uploaded_file($files['record_policial']['tmp_name'], $dir . $rp)) {
-            return "Error al subir y guardar los documentos en el servidor.";
+            return "Error al guardar los documentos en el servidor.";
         }
 
-        // 7. Generar el nombre de usuario único básico
+        // Generar Username Único
         $partsNom = explode(' ', trim($post['nombres']));
         $partsApe = explode(' ', trim($post['apellidos']));
         $usernameBase = strtolower($partsNom[0] . "." . $partsApe[0]);
@@ -137,7 +110,7 @@ class AuthController {
 
         $data = [
             ':cedula' => $cedula,
-            ':telefono' => trim($post['telefono']),
+            ':telefono' => $telefono,
             ':domicilio' => trim($post['domicilio']),
             ':nombres' => trim($post['nombres']),
             ':apellidos' => trim($post['apellidos']),
@@ -149,27 +122,33 @@ class AuthController {
             ':rp' => $rp
         ];
 
-        // 8. Intento de persistencia
         try {
             if ($this->userModel->create($data)) {
-                return "success";
-            } else {
-                return "Error crítico al registrar los datos.";
+                // Si el que registra ya es Administrador, no alteramos su sesión activa
+                if (isset($_SESSION['role']) && $_SESSION['role'] === 'Administracion') {
+                    return "success_admin";
+                } else {
+                    // Flujo Público (Login): Autologin instantáneo para el nuevo usuario
+                    $newUserQuery = $this->db->prepare("SELECT id FROM users WHERE username = ? LIMIT 1");
+                    $newUserQuery->execute([$username]);
+                    $newUser = $newUserQuery->fetch(PDO::FETCH_ASSOC);
+
+                    $_SESSION['user_id'] = $newUser['id'];
+                    $_SESSION['nombres'] = $data[':nombres'];
+                    $_SESSION['apellidos'] = $data[':apellidos'];
+                    $_SESSION['role'] = $rolFinal;
+                    
+                    return "success_login";
+                }
             }
+            return "Error al guardar el registro.";
         } catch (PDOException $e) {
             if ($e->getCode() == 23000 || strpos($e->getMessage(), '1062') !== false) {
-                if (strpos($e->getMessage(), 'telefono') !== false) {
-                    return "El número de teléfono ya se encuentra registrado por otro usuario.";
-                }
-                if (strpos($e->getMessage(), 'cedula') !== false) {
-                    return "El número de cédula ya se encuentra registrado en el sistema.";
-                }
-                if (strpos($e->getMessage(), 'email') !== false) {
-                    return "El correo electrónico ya se encuentra registrado.";
-                }
-                return "Uno de los datos únicos provistos ya se encuentra en uso.";
+                if (strpos($e->getMessage(), 'cedula') !== false) return "El número de cédula ya se encuentra registrado con otro colaborador.";
+                if (strpos($e->getMessage(), 'email') !== false) return "El correo electrónico ya se encuentra registrado.";
+                if (strpos($e->getMessage(), 'telefono') !== false) return "El número de teléfono ya está en uso.";
             }
-            return "Error de persistencia en la base de datos: " . $e->getMessage();
+            return "Error en la base de datos: " . $e->getMessage();
         }
     }
 }

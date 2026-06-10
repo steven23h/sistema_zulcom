@@ -1,87 +1,74 @@
 <?php
-require_once '../../controllers/AuthController.php';
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-$mensaje = "";
-$tipo_alerta = "";
+$mensaje_local = "";
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
+// Solo procesa este bloque si se accede desde el login público (fuera del panel de administración)
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar']) && (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Administracion')) {
+    
+    require_once '../../controllers/AuthController.php';
     $auth = new AuthController();
     $res = $auth->register($_POST, $_FILES);
 
-    if ($res === "success") {
-        $mensaje = "¡Registro exitoso! El usuario del personal ha sido creado correctamente.";
-        $tipo_alerta = "success";
+    if ($res === "success_login" || $res === "success") {
+        $path = ($_SESSION['role'] === 'Administracion') ? 'administrador.php' : strtolower($_SESSION['role']) . '.php';
+        header("Location: ../dashboard/" . $path);
+        exit();
     } else {
-        $mensaje = $res;
-        $tipo_alerta = "error";
+        $mensaje_local = "<div class='alert error' style='background-color: #f8d7da; color: #721c24; padding: 15px; margin: 15px auto; border-radius: 5px; font-weight: bold; text-align: center;'>Error: $res</div>";
     }
 }
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Registro de Personal</title>
-    <link rel="stylesheet" href="../../public/css/register.css">
-</head>
-<body>
+<div class="container-form">
+    
+    <?php if(!empty($mensaje_local)) echo $mensaje_local; ?>
 
-    <div class="container-form">
+    <form method="POST" enctype="multipart/form-data" id="main-form">
+        <div class="form-row" style="display: flex; gap: 15px; margin-bottom: 15px;">
+            <input type="text" name="nombres" placeholder="Nombres" required style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" value="<?php echo (isset($res) && $res !== 'success_admin' && $res !== 'success' && $res !== 'success_login') ? htmlspecialchars($_POST['nombres']) : ''; ?>">
+            <input type="text" name="apellidos" placeholder="Apellidos" required style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" value="<?php echo (isset($res) && $res !== 'success_admin' && $res !== 'success' && $res !== 'success_login') ? htmlspecialchars($_POST['apellidos']) : ''; ?>">
+        </div>
 
-        <h2>Registro de Personal</h2>
-        <p id="form-desc">Acceso restringido para colaboradores autorizados.</p>
+        <div class="form-row" style="display: flex; gap: 15px; margin-bottom: 15px;">
+            <input type="text" name="cedula" pattern="[0-9]{10}" maxlength="10" title="La cédula debe tener exactamente 10 dígitos numéricos" placeholder="Cédula" required style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" value="<?php echo (isset($res) && $res !== 'success_admin' && $res !== 'success' && $res !== 'success_login') ? htmlspecialchars($_POST['cedula']) : ''; ?>">
+            <input type="text" name="telefono" placeholder="Teléfono" required style="flex: 1; padding: 10px; border: 1px solid #ccc; border-radius: 4px;" value="<?php echo (isset($res) && $res !== 'success_admin' && $res !== 'success' && $res !== 'success_login') ? htmlspecialchars($_POST['telefono']) : ''; ?>">
+        </div>
 
-        <?php if(!empty($mensaje)): ?>
-            <div class="alert alert-<?php echo $tipo_alerta; ?>">
-                <?php echo htmlspecialchars($mensaje, ENT_QUOTES, 'UTF-8'); ?>
+        <div class="form-group" style="margin-bottom: 15px;">
+            <input type="email" name="email" placeholder="Correo electrónico" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;" value="<?php echo (isset($res) && $res !== 'success_admin' && $res !== 'success' && $res !== 'success_login') ? htmlspecialchars($_POST['email']) : ''; ?>">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 15px;">
+            <input type="text" name="domicilio" placeholder="Domicilio" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;" value="<?php echo (isset($res) && $res !== 'success_admin' && $res !== 'success' && $res !== 'success_login') ? htmlspecialchars($_POST['domicilio']) : ''; ?>">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 15px;">
+            <input type="text" name="codigo_empresa" placeholder="Código Empresa" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+        </div>
+
+        <div class="form-group" style="margin-bottom: 15px;">
+            <select name="role" required style="width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                <option value="Tecnico">Técnico</option>
+                <option value="Administracion">Administración</option>
+            </select>
+        </div>
+
+        <div class="form-row" style="display: flex; gap: 15px; margin-bottom: 15px;">
+            <div style="flex: 1; text-align: left;">
+                <span style="font-size: 12px; color: #555; display: block; margin-bottom: 4px; font-weight: bold;">Copia de Cédula (PDF):</span>
+                <input type="file" name="copia_cedula" accept=".pdf" required style="width: 100%;">
             </div>
-        <?php endif; ?>
-
-        <form method="POST" enctype="multipart/form-data" id="main-form">
-
-            <div class="form-row">
-                <input type="text" name="nombres" placeholder="Nombres" required>
-                <input type="text" name="apellidos" placeholder="Apellidos" required>
+            <div style="flex: 1; text-align: left;">
+                <span style="font-size: 12px; color: #555; display: block; margin-bottom: 4px; font-weight: bold;">Récord Policial (PDF):</span>
+                <input type="file" name="record_policial" accept=".pdf" required style="width: 100%;">
             </div>
+        </div>
 
-            <div class="form-row">
-                <input type="text" name="cedula" maxlength="10" placeholder="Cédula" required>
-                <input type="text" name="telefono" placeholder="Teléfono" required>
-            </div>
-
-            <div class="form-group">
-                <input type="email" name="email" placeholder="Correo electrónico" required>
-            </div>
-
-            <div class="form-group">
-                <input type="text" name="domicilio" placeholder="Domicilio" required>
-            </div>
-
-            <div class="box-personal">
-                <input type="text" name="codigo_empresa" placeholder="Código Empresa" required>
-            </div>
-
-            <div class="form-group">
-                <select name="role" required>
-                    <option value="Tecnico">Técnico</option>
-                    <option value="Administracion">Administración</option>
-                </select>
-            </div>
-
-            <div class="form-row">
-                <input type="file" name="copia_cedula" accept="application/pdf" required>
-                <input type="file" name="record_policial" accept="application/pdf" required>
-            </div>
-
-            <button type="submit" name="btn_registrar" class="btn-register">
-                REGISTRAR
-            </button>
-
-        </form>
-
-    </div>
-
-    <script src="../../public/js/register.js"></script>
-</body>
-</html>
+        <button type="submit" name="btn_registrar" style="width: 100%; padding: 12px; background-color: #3b2a82; color: white; border: none; border-radius: 4px; font-weight: bold; cursor: pointer; font-size: 14px; margin-top: 15px;">
+            REGISTRAR
+        </button>
+    </form>
+</div>

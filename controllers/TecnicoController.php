@@ -20,6 +20,16 @@ class TecnicoController {
     public function show($id) {
         return $this->ticketModel->getById($id);
     }
+    // 🔥 OBTENER TODOS LOS CLIENTES PARA EL MÓDULO DE COORDENADAS
+public function getClientesCoordenadas() {
+    // Ajusta los nombres de las columnas 'coordenadas' e 'ip' según los tengas en tu tabla 'clientes'
+    $sql = "SELECT id_cliente, nombre, apellido, cedula, ip, coordenadas, direccion 
+            FROM clientes 
+            ORDER BY apellido ASC";
+            
+    $stmt = $this->db->query($sql);
+    return $stmt->fetchAll(PDO::FETCH_ASSOC);
+}
 
     // 🔥 RESOLVER TICKET (Sube imágenes fijas en disco y actualiza MySQL)
     public function resolver() {

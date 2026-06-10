@@ -93,4 +93,13 @@ class RolPago
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function eliminar($id)
+    {
+        $stmt = $this->db->prepare("
+        DELETE FROM roles_pago
+        WHERE id = ?
+    ");
+
+        return $stmt->execute([$id]);
+    }
 }

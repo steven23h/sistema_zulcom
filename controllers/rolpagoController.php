@@ -240,20 +240,9 @@ class RolPagoController
 // ==============================
 public function eliminarRol($id)
 {
-    try {
+    $rolModel = new RolPago();
 
-        $stmt = $this->db->prepare("
-            DELETE FROM roles_pago
-            WHERE id = ?
-        ");
-
-        $stmt->execute([$id]);
-
-        return true;
-
-    } catch (Exception $e) {
-
-        return false;
-    }
+    return $rolModel->eliminar($id);
 }
 }
+

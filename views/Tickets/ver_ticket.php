@@ -1,17 +1,17 @@
 <?php
+// Usamos el controlador de tickets que ya tiene la lógica de lectura show($id)
 require_once '../../controllers/TicketsController.php';
 
 $controller = new TicketsController();
-$ticket = $controller->show($_GET['id']);
+$ticket = $controller->show($_GET['id'] ?? 0);
 
 if (!$ticket) {
-    echo "<div style='padding:20px; background:#fee2e2; color:#ef4444; border-radius:8px;'>⚠️ Error: El ticket solicitado no existe o no tiene datos asociados.</div>";
+    echo "<div style='padding:20px; background:#fee2e2; color:#ef4444; border-radius:8px;'>⚠️ Error: El ticket solicitado no existe o no tiene datos asociados en Zulcom.</div>";
     exit;
 }
 
 $estadoReal = strtolower($ticket['estado'] ?? 'pendiente');
 ?>
-<link rel="stylesheet" href="../../public/css/tickets.css">
 
 <div style="background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); font-family: sans-serif; max-width: 1000px; margin: 0 auto;">
     
@@ -60,7 +60,7 @@ $estadoReal = strtolower($ticket['estado'] ?? 'pendiente');
                 <p style="margin: 0;">⏰ <b>Hora Cierre:</b> <?= htmlspecialchars($ticket['hora_solucion'] ?? '—') ?></p>
             </div>
 
-            <label style="font-weight: bold; color: #2d3748; display: block; margin-bottom: 5px;">Trabajo Realizado por el Técnico:</label>
+            <label style="font-weight: bold; color: #2d3748; display: block; margin-bottom: 5px;">Trabajo Realizado por ti:</label>
             <div style="background: #fff; padding: 15px; border: 1px solid #c6f6d5; border-radius: 8px; color: #2d3748; margin-bottom: 15px;">
                 <?= nl2br(htmlspecialchars($ticket['solucion'] ?? 'No se detalló la solución.')) ?>
             </div>
@@ -96,8 +96,8 @@ $estadoReal = strtolower($ticket['estado'] ?? 'pendiente');
     <?php endif; ?>
 
     <div style="margin-top: 25px; border-top: 1px solid #edf2f7; padding-top: 15px;">
-        <a href="administrador.php?page=ver_tickets" style="background: #718096; text-decoration: none; padding: 10px 20px; display: inline-block; border-radius: 6px; color: white; font-weight: bold; font-size: 0.9em;">
-            ⬅ Volver al Listado
+        <a href="tecnico.php?page=historial_tickets" style="background: #718096; text-decoration: none; padding: 10px 20px; display: inline-block; border-radius: 6px; color: white; font-weight: bold; font-size: 0.9em;">
+            ⬅ Volver al Historial
         </a>
     </div>
 

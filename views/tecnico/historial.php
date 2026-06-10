@@ -1,28 +1,28 @@
 <?php
 require_once '../../controllers/TecnicoController.php';
 
-// 🔥 Obtener ID del técnico logueado desde la sesión de forma segura
+// Obtener ID del técnico de forma segura
 $id_tecnico = $_SESSION['id'] ?? $_SESSION['user_id'] ?? 0;
 
 $tecnicoCtrl = new TecnicoController();
 $allTickets = $tecnicoCtrl->index($id_tecnico) ?: [];
 
-// 📊 Filtrar en el cliente: dejas solo los que NO están listos (Pendientes o En Proceso)
-$tickets = array_filter($allTickets, function($t) {
+// Filtrar en tiempo de ejecución: dejamos exclusivamente los que estén Completados o Cerrados
+$ticketsHistorial = array_filter($allTickets, function($t) {
     $estado = strtolower($t['estado'] ?? 'pendiente');
-    return $estado !== 'completado' && $estado !== 'cerrado';
+    return $estado === 'completado' || $estado === 'cerrado';
 });
 ?>
 
 <div style="margin-bottom: 25px; font-family: sans-serif;">
-    <h2>🛠️ Mis Órdenes de Trabajo Asignadas</h2>
-    <p style="color: #666;">A continuación verás la lista de soportes que tienes pendientes por atender en campo.</p>
+    <h2>📚 Historial de Tickets Finalizados</h2>
+    <p style="color: #666;">Aquí se almacena la bitácora de los soportes técnicos que ya solucionaste y cerraste.</p>
 </div>
 
 <div class="container-table" style="background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; padding: 10px;">
     <table class="table" style="width: 100%; border-collapse: collapse; text-align: left; font-family: sans-serif;">
         <thead>
-            <tr style="background: #4361ee; color: white;">
+            <tr style="background: #2a9d8f; color: white;">
                 <th style="padding: 12px 15px;">N° Ticket</th>
                 <th style="padding: 12px 15px;">Cliente</th>
                 <th style="padding: 12px 15px;">Descripción del Problema</th>
@@ -33,12 +33,12 @@ $tickets = array_filter($allTickets, function($t) {
             </tr>
         </thead>
         <tbody>
-            <?php if (empty($tickets)): ?>
+            <?php if (empty($ticketsHistorial)): ?>
                 <tr>
-                    <td colspan="7" style="padding: 30px; text-align: center; color: #a0aec0; font-style: italic;">🎉 ¡Excelente! No tienes soportes ni tickets pendientes asignados.</td>
+                    <td colspan="7" style="padding: 30px; text-align: center; color: #a0aec0; font-style: italic;">No registras ningún ticket resuelto en tu historial todavía.</td>
                 </tr>
             <?php else: ?>
-                <?php foreach($tickets as $t): ?>
+                <?php foreach($ticketsHistorial as $t): ?>
                 <tr style="border-bottom: 1px solid #edf2f7; transition: background 0.2s;" onmouseover="this.style.backgroundColor='#f8fafc'" onmouseout="this.style.backgroundColor='transparent'">
                     <td style="padding: 12px 15px;"><b>#<?= htmlspecialchars($t['numero_ticket']) ?></b></td>
                     <td style="padding: 12px 15px;">
@@ -55,18 +55,13 @@ $tickets = array_filter($allTickets, function($t) {
                         📅 <?= !empty($t['horaVisita']) ? date('d/m/Y - H:i', strtotime($t['horaVisita'])) : '—' ?>
                     </td>
                     <td style="padding: 12px 15px;">
-                        <?php 
-                        $est = $t['estado'] ?: 'Pendiente';
-                        $bgColor = '#e63946'; // Pendiente (Rojo)
-                        if ($est === 'En Proceso') $bgColor = '#f4a261'; // En Proceso (Naranja)
-                        ?>
-                        <span style="background-color: <?= $bgColor ?>; color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.85em; font-weight: bold; display: inline-block; text-transform: uppercase;">
-                            <?= htmlspecialchars($est) ?>
+                        <span style="background-color: #2a9d8f; color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.85em; font-weight: bold; display: inline-block; text-transform: uppercase;">
+                            <?= htmlspecialchars($t['estado']) ?>
                         </span>
                     </td>
                     <td style="padding: 12px 15px; text-align: center;">
-                        <a href="tecnico.php?page=resolver_ticket&id=<?= $t['id'] ?>" style="background: #4361ee; color: white; padding: 8px 14px; text-decoration: none; border-radius: 6px; font-size: 0.9em; font-weight: bold; box-shadow: 0 2px 5px rgba(67, 97, 238, 0.3); display: inline-block; transition: background 0.2s;" onmouseover="this.style.background='#314cc5'" onmouseout="this.style.background='#4361ee'">
-                            🔧 Resolver
+                        <a href="tecnico.php?page=ver_ticket&id=<?= $t['id'] ?>" style="background: #2a9d8f; color: white; padding: 8px 14px; text-decoration: none; border-radius: 6px; font-size: 0.9em; font-weight: bold; box-shadow: 0 2px 5px rgba(42, 157, 143, 0.3); display: inline-block; transition: background 0.2s;" onmouseover="this.style.background='#1f766c'" onmouseout="this.style.background='#2a9d8f'">
+                            👁️ Ver Realizado
                         </a>
                     </td>
                 </tr>

@@ -57,11 +57,20 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Tecnico') {
                 case 'tecnico_tickets':
                     include '../tecnico/index.php';
                 break;
+                case 'historial_tickets':
+        include '../tecnico/historial.php'; // Aquí cargaremos el nuevo diseño limpio
+        break; 
+        case 'ver_ticket':
+                include '../Tickets/ver_ticket.php';
+                break;
 
                 // 🔥 RESOLVER TICKET
                 case 'resolver_ticket':
                     include '../tecnico/resolver.php';
                 break;
+                case 'coordenadas_clientes':
+        include '../tecnico/coordenadas_clientes.php';
+        break;
                  // 🔥 MIS ROLES
             case 'mis_roles':
                 include '../rolespago/ver_roles_tecnico.php';

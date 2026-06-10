@@ -104,65 +104,11 @@ class RolPagoController
     }
 
 
-
-    // ==============================
-    // LISTAR ROLES DE PAGO
-    // ==============================
     public function listarRolesPago($mes = null, $colaborador = null)
     {
+        $rolModel = new RolPago();
 
-        if (session_status() === PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        $query = "
-
-        SELECT r.*, u.nombres, u.apellidos, u.role AS cargo
-
-        FROM roles_pago r
-
-        JOIN users u ON r.id_trabajador = u.id
-
-        ";
-
-        $where = [];
-        $params = [];
-        if (isset($_SESSION['user_id'])) {
-
-            $rol = $_SESSION['role'];
-
-            // Solo el técnico ve sus propios roles
-            if ($rol == 'Tecnico') {
-
-                $where[] = "r.id_trabajador = ?";
-                $params[] = $_SESSION['user_id'];
-            }
-        } else {
-
-            if ($colaborador) {
-
-                $where[] = "r.id_trabajador = ?";
-                $params[] = $colaborador;
-            }
-        }
-
-        if ($mes) {
-
-            $where[] = "r.periodo = ?";
-            $params[] = $mes;
-        }
-
-        if (count($where) > 0) {
-
-            $query .= " WHERE " . implode(" AND ", $where);
-        }
-
-        $query .= " ORDER BY r.periodo DESC, r.id DESC";
-
-        $stmt = $this->db->prepare($query);
-        $stmt->execute($params);
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $rolModel->listarRolesPago($mes, $colaborador);
     }
 
 

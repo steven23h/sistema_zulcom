@@ -17,9 +17,7 @@ function activarFormularioRol() {
             console.log(key, value);
         }
 
-        // NO usamos e.preventDefault()
-        // NO usamos fetch()
-        // El formulario se envía directamente a PHP
+        
 
     });
 

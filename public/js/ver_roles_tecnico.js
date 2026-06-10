@@ -1,42 +1,37 @@
-function cargarMisRoles(){
+let rolesTecnico = window.rolesTecnico || [];
 
-    const mes = document.getElementById("filtroMes").value;
+function cargarMisRoles() {
 
-    let url = "/zulcom/routes/rolpagoRoutes.php?action=listar";
+    const tbody = document.getElementById("tablaMisRoles");
+    if (!tbody) return;
 
-    if(mes){
-        url += "&mes=" + mes;
+    const mes = document.getElementById("filtroMes")?.value || "";
+
+    tbody.innerHTML = "";
+
+    let filtrados = rolesTecnico;
+
+    if (mes) {
+        filtrados = filtrados.filter(r => r.periodo == mes);
     }
 
-    fetch(url)
-    .then(res => res.json())
-    .then(data => {
+    filtrados.forEach(r => {
 
-        const tabla = document.getElementById("tablaMisRoles");
-
-        tabla.innerHTML = "";
-
-        data.forEach(r => {
-
-            tabla.innerHTML += `
-                <tr>
-                    <td>${r.id}</td>
-                    <td>${r.periodo}</td>
-                    <td>$${r.salario}</td>
-                    <td>$${r.total}</td>
-                    <td>${r.estado}</td>
-                    <td>
-                        <button class="btn btn-success btn-sm"
-                        onclick="window.open('/zulcom/routes/rolpagoRoutes.php?action=pdf&id_trabajador=${r.id_trabajador}')">
-                        PDF
-                        </button>
-                    </td>
-                </tr>
-            `;
-
-        });
-
-    })
-    .catch(error => console.error("Error:", error));
-
+        tbody.innerHTML += `
+        <tr>
+            <td>${r.id}</td>
+            <td>${r.periodo}</td>
+            <td>$${r.salario}</td>
+            <td>$${r.total}</td>
+            <td>${r.estado}</td>
+            <td>
+                <a href="../rolespago/acciones.php?action=pdf&id_trabajador=${r.id_trabajador}"
+                   class="btn btn-primary btn-sm"
+                   target="_blank">
+                   PDF
+                </a>
+            </td>
+        </tr>
+        `;
+    });
 }

@@ -1,7 +1,10 @@
 <?php
-if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
+require_once '../../controllers/RolPagoController.php';
+
+$controller = new RolPagoController();
+$roles = $controller->listarRolesPago();
+
+
 ?>
 
 <div class="dashboard-content">
@@ -56,10 +59,9 @@ if (session_status() === PHP_SESSION_NONE) {
 
 </div>
 
-<script src="/zulcom/public/js/ver_roles_tecnico.js"></script>
-
 <script>
-document.addEventListener("DOMContentLoaded", function() {
-    cargarMisRoles();
-});
+window.rolesTecnico = <?= json_encode($roles) ?>;
 </script>
+
+<script src="/zulcom2/public/js/ver_roles_tecnico.js"></script>
+

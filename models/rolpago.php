@@ -103,8 +103,8 @@ class RolPago
         return $stmt->execute([$id]);
     }
     public function listarColaboradores()
-{
-    $stmt = $this->db->prepare("
+    {
+        $stmt = $this->db->prepare("
 
         SELECT
         id AS id_trabajador,
@@ -120,17 +120,18 @@ class RolPago
 
     ");
 
-    $stmt->execute();
+        $stmt->execute();
 
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
-public function listarRolesPago($mes = null, $colaborador = null)
-{
-    if (session_status() === PHP_SESSION_NONE) {
-        session_start();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function listarRolesPago($mes = null, $colaborador = null)
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+        
 
-    $query = "
+        $query = "
 
     SELECT r.*, u.nombres, u.apellidos, u.role AS cargo
 
@@ -140,43 +141,43 @@ public function listarRolesPago($mes = null, $colaborador = null)
 
     ";
 
-    $where = [];
-    $params = [];
+        $where = [];
+        $params = [];
 
-    if (isset($_SESSION['user_id'])) {
+        if (isset($_SESSION['user_id'])) {
 
-        $rol = $_SESSION['role'];
+            $rol = $_SESSION['role'];
 
-        if ($rol == 'Tecnico') {
+            if ($rol == 'Tecnico') {
 
-            $where[] = "r.id_trabajador = ?";
-            $params[] = $_SESSION['user_id'];
+                $where[] = "r.id_trabajador = ?";
+                $params[] = $_SESSION['user_id'];
+            }
+        } else {
+
+            if ($colaborador) {
+
+                $where[] = "r.id_trabajador = ?";
+                $params[] = $colaborador;
+            }
         }
-    } else {
 
-        if ($colaborador) {
+        if ($mes) {
 
-            $where[] = "r.id_trabajador = ?";
-            $params[] = $colaborador;
+            $where[] = "r.periodo = ?";
+            $params[] = $mes;
         }
+
+        if (count($where) > 0) {
+
+            $query .= " WHERE " . implode(" AND ", $where);
+        }
+
+        $query .= " ORDER BY r.periodo DESC, r.id DESC";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->execute($params);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-
-    if ($mes) {
-
-        $where[] = "r.periodo = ?";
-        $params[] = $mes;
-    }
-
-    if (count($where) > 0) {
-
-        $query .= " WHERE " . implode(" AND ", $where);
-    }
-
-    $query .= " ORDER BY r.periodo DESC, r.id DESC";
-
-    $stmt = $this->db->prepare($query);
-    $stmt->execute($params);
-
-    return $stmt->fetchAll(PDO::FETCH_ASSOC);
-}
 }

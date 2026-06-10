@@ -90,7 +90,7 @@ $colaboradores = $controller->listarColaboradores();
 window.roles = <?= json_encode($roles) ?>;
 </script>
 
-<script src="/zulcom2/public/js/listadoroles.js"></script>
+<script src="/zulcom2/public/js/rolespago.js"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {

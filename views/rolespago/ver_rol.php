@@ -63,5 +63,5 @@ $roles = $controller->listarRolesPago();
 window.rolesTecnico = <?= json_encode($roles) ?>;
 </script>
 
-<script src="/zulcom2/public/js/ver_roles_tecnico.js"></script>
+<script src="/zulcom2/public/js/rolespago.js"></script>
 

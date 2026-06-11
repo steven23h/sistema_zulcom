@@ -93,4 +93,128 @@ class RolPago
 
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    public function eliminar($id)
+    {
+        $stmt = $this->db->prepare("
+        DELETE FROM roles_pago
+        WHERE id = ?
+    ");
+
+        return $stmt->execute([$id]);
+    }
+    public function listarColaboradores()
+    {
+        $stmt = $this->db->prepare("
+
+        SELECT
+        id AS id_trabajador,
+        nombres,
+        apellidos,
+        role AS cargo
+
+        FROM users
+
+        WHERE role IN ('Tecnico','Administracion')
+
+        ORDER BY nombres ASC
+
+    ");
+
+        $stmt->execute();
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    public function listarRolesPago($mes = null, $colaborador = null)
+    {
+        if (session_status() === PHP_SESSION_NONE) {
+            session_start();
+        }
+
+
+        $query = "
+
+    SELECT r.*, u.nombres, u.apellidos, u.role AS cargo
+
+    FROM roles_pago r
+
+    JOIN users u ON r.id_trabajador = u.id
+
+    ";
+
+        $where = [];
+        $params = [];
+
+        if (isset($_SESSION['user_id'])) {
+
+            $rol = $_SESSION['role'];
+
+            if ($rol == 'Tecnico') {
+
+                $where[] = "r.id_trabajador = ?";
+                $params[] = $_SESSION['user_id'];
+            }
+        } else {
+
+            if ($colaborador) {
+
+                $where[] = "r.id_trabajador = ?";
+                $params[] = $colaborador;
+            }
+        }
+
+        if ($mes) {
+
+            $where[] = "r.periodo = ?";
+            $params[] = $mes;
+        }
+
+        if (count($where) > 0) {
+
+            $query .= " WHERE " . implode(" AND ", $where);
+        }
+
+        $query .= " ORDER BY r.periodo DESC, r.id DESC";
+
+        $stmt = $this->db->prepare($query);
+        $stmt->execute($params);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    // ==========================
+    // OBTENER COLABORADOR
+    // ==========================
+    public function obtenerColaborador($id_trabajador)
+    {
+        $stmt = $this->db->prepare("
+        SELECT
+            id,
+            nombres,
+            apellidos,
+            cedula,
+            role AS cargo,
+            fecha_ingreso
+        FROM users
+        WHERE id = ?
+    ");
+
+        $stmt->execute([$id_trabajador]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+    // ==========================
+    // OBTENER ROLES DEL TRABAJADOR
+    // ==========================
+    public function obtenerRolesTrabajador($id_trabajador)
+    {
+        $stmt = $this->db->prepare("
+        SELECT *
+        FROM roles_pago
+        WHERE id_trabajador = ?
+        ORDER BY id DESC
+    ");
+
+        $stmt->execute([$id_trabajador]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

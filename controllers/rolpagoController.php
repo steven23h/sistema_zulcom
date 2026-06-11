@@ -20,7 +20,6 @@ class RolPagoController
     // ==============================
     public function crearRolPago($post)
     {
-
         try {
 
             $id_trabajador = intval($post['id_trabajador']);
@@ -47,42 +46,24 @@ class RolPagoController
                 $descuentos -
                 $aporte_iess;
 
-            $stmt = $this->db->prepare("
-            INSERT INTO roles_pago
-            (
-                id_trabajador,
-                periodo,
-                salario,
-                horas_extra,
-                valor_horas_extras,
-                decimos,
-                aporte_iess,
-                aporte_empleador,
-                bonos,
-                descuentos,
-                total,
-                estado
-            )
-            VALUES
-            (
-                ?,?,?,?,?,?,?,?,?,?,?,?
-            )
-        ");
+            $datos = [
+                'id_trabajador'      => $id_trabajador,
+                'periodo'            => $periodo,
+                'salario'            => $salario,
+                'horas_extra'        => $horas_extra,
+                'valor_horas_extras' => round($pagoHorasExtra, 2),
+                'decimos'            => $decimos,
+                'aporte_iess'        => $aporte_iess,
+                'aporte_empleador'   => $aporte_empleador,
+                'bonos'              => $bonos,
+                'descuentos'         => $descuentos,
+                'total'              => round($total, 2),
+                'estado'             => 'generado'
+            ];
 
-            $stmt->execute([
-                $id_trabajador,
-                $periodo,
-                $salario,
-                $horas_extra,
-                round($pagoHorasExtra, 2),
-                $decimos,
-                $aporte_iess,
-                $aporte_empleador,
-                $bonos,
-                $descuentos,
-                round($total, 2),
-                'generado'
-            ]);
+            $rolModel = new RolPago();
+
+            $rolModel->crear($datos);
 
             return [
                 "mensaje" => "✅ Rol de pago generado correctamente"
@@ -96,96 +77,19 @@ class RolPagoController
         }
     }
 
-    // ==============================
-    // LISTAR COLABORADORES
-    // ==============================
     public function listarColaboradores()
     {
+        $rolModel = new RolPago();
 
-        $stmt = $this->db->prepare("
-
-            SELECT 
-            id AS id_trabajador,
-            nombres,
-            apellidos,
-            role AS cargo
-
-            FROM users
-
-            WHERE role IN ('Tecnico','Administracion')
-
-            ORDER BY nombres ASC
-
-        ");
-
-        $stmt->execute();
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $rolModel->listarColaboradores();
     }
 
 
-
-    // ==============================
-    // LISTAR ROLES DE PAGO
-    // ==============================
     public function listarRolesPago($mes = null, $colaborador = null)
     {
+        $rolModel = new RolPago();
 
-       if (session_status() === PHP_SESSION_NONE) {
-    session_start();
-}
-
-        $query = "
-
-        SELECT r.*, u.nombres, u.apellidos, u.role AS cargo
-
-        FROM roles_pago r
-
-        JOIN users u ON r.id_trabajador = u.id
-
-        ";
-
-        $where = [];
-        $params = [];
-        if (isset($_SESSION['user_id'])) {
-
-            $rol = $_SESSION['role'];
-
-            // Solo el técnico ve sus propios roles
-            if ($rol == 'Tecnico') {
-
-                $where[] = "r.id_trabajador = ?";
-                $params[] = $_SESSION['user_id'];
-
-
-                
-            }
-        } else {
-
-            if ($colaborador) {
-
-                $where[] = "r.id_trabajador = ?";
-                $params[] = $colaborador;
-            }
-        }
-
-        if ($mes) {
-
-            $where[] = "r.periodo = ?";
-            $params[] = $mes;
-        }
-
-        if (count($where) > 0) {
-
-            $query .= " WHERE " . implode(" AND ", $where);
-        }
-
-        $query .= " ORDER BY r.periodo DESC, r.id DESC";
-
-        $stmt = $this->db->prepare($query);
-        $stmt->execute($params);
-
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $rolModel->listarRolesPago($mes, $colaborador);
     }
 
 
@@ -195,38 +99,15 @@ class RolPagoController
     // ==============================
     public function generarPDF($id_trabajador)
     {
+        $rolModel = new RolPago();
 
-        $stmt = $this->db->prepare("
-
-        SELECT id,nombres,apellidos,cedula,role AS cargo, fecha_ingreso
-         FROM users
-         WHERE id=?
-
-        ");
-
-        $stmt->execute([$id_trabajador]);
-
-        $colaborador = $stmt->fetch(PDO::FETCH_ASSOC);
+        $colaborador = $rolModel->obtenerColaborador($id_trabajador);
 
         if (!$colaborador) {
             return ["mensaje" => "Colaborador no encontrado"];
         }
 
-        $stmt = $this->db->prepare("
-
-        SELECT *
-
-        FROM roles_pago
-
-        WHERE id_trabajador=?
-
-        ORDER BY id DESC
-
-        ");
-
-        $stmt->execute([$id_trabajador]);
-
-        $roles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $roles = $rolModel->obtenerRolesTrabajador($id_trabajador);
 
         if (!$roles) {
             return ["mensaje" => "No hay roles para este colaborador"];
@@ -236,24 +117,12 @@ class RolPagoController
     }
 
     // ==============================
-// ELIMINAR ROL
-// ==============================
-public function eliminarRol($id)
-{
-    try {
+    // ELIMINAR ROL
+    // ==============================
+    public function eliminarRol($id)
+    {
+        $rolModel = new RolPago();
 
-        $stmt = $this->db->prepare("
-            DELETE FROM roles_pago
-            WHERE id = ?
-        ");
-
-        $stmt->execute([$id]);
-
-        return true;
-
-    } catch (Exception $e) {
-
-        return false;
+        return $rolModel->eliminar($id);
     }
-}
 }

@@ -170,19 +170,19 @@ tr:hover {
 /* ===== GENERAR ROL ===== */
 
 .page-title{
-    font-size:22px;
+    font-size:48px;
     font-weight:700;
     color:#2f3192;
-    margin-bottom:5px;
+    margin-bottom:10px;
 }
 
 .page-subtitle{
-    font-size:13px;
+    font-size:18px;
     color:#6c757d;
 }
 
 .stats-text{
-    font-size:13px;
+    font-size:16px;
     color:#6c757d;
     margin-top:15px;
     margin-bottom:15px;
@@ -211,7 +211,7 @@ tr:hover {
 /* LABELS IGUALES A LOS HEADERS DE LA TABLA */
 .form-group label{
     display:block;
-    font-size:13px;
+    font-size:15px;
     font-weight:700;
     color:#2f3192;
     margin-bottom:8px;
@@ -223,11 +223,11 @@ tr:hover {
 .form-group input,
 .form-group select{
     width:100%;
-    height:38px;
+    height:45px;
     border:1px solid #d6dbe4;
     border-radius:8px;
     padding:0 12px;
-    font-size:13px;
+    font-size:15px;
     background:#fff;
     color:#374151;
 }
@@ -251,8 +251,8 @@ tr:hover {
     color:#fff;
     border:none;
     border-radius:8px;
-    padding:10px 18px;
-    font-size:13px;
+    padding:12px 22px;
+    font-size:15px;
     font-weight:600;
     cursor:pointer;
     transition:.2s;
@@ -266,8 +266,10 @@ tr:hover {
    LISTADO DE ROLES
    ============================================================ */
 
-.roles-header{
-    margin-bottom:25px;
+.roles-header h2{
+    font-size:2.2rem;
+    color:#3b3086;
+    margin-bottom:10px;
 }
 
 .roles-header h2{
@@ -277,8 +279,8 @@ tr:hover {
 }
 
 .roles-header p{
-    color:#666;
-    font-size:1.1rem;
+    color:#6c757d;
+    font-size:18px;
 }
 
 .roles-filter{
@@ -307,12 +309,14 @@ tr:hover {
     padding:18px;
     text-align:left;
     border-bottom:2px solid #eee;
-    font-weight:bold;
+    font-weight:700;
+    font-size:15px;
 }
 
 .roles-table td{
     padding:18px;
     border-bottom:1px solid #f0f0f0;
+    font-size:15px;
 }
 
 .roles-table tr:hover{
@@ -325,10 +329,33 @@ tr:hover {
     border:none;
     border-radius:10px;
     padding:14px;
-    font-weight:bold;
+    font-weight:700;
+    font-size:15px;
     cursor:pointer;
 }
 
 .btn-filtrar:hover{
     background:#2a2263;
+}
+.roles-filter label{
+    font-size:15px;
+    font-weight:700;
+    color:#2f3192;
+    margin-bottom:8px;
+    display:block;
+}
+
+.roles-filter input,
+.roles-filter select{
+    font-size:15px;
+    height:45px;
+}
+.roles-header h2{
+    font-size:48px !important;
+    font-weight:700 !important;
+    color:#2f3192 !important;
+}
+.roles-header p{
+    font-size:18px !important;
+    color:#6c757d !important;
 }

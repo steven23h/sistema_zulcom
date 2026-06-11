@@ -1,32 +1,47 @@
+/* =====================================================
+   VARIABLES
+===================================================== */
+
 :root {
   --purple-700: #3b3086;
   --purple-500: #845ef7;
   --light-gray: #f4f7fe;
   --white: #ffffff;
-  /* Tamaños de letra aumentados */
-  --font-size-title: 2.5rem; /* ~40px */
-  --font-size-user: 1.2rem;  /* ~19px */
+
+  --font-size-title: 2.5rem;
+  --font-size-user: 1.2rem;
 }
+
+/* =====================================================
+   BODY
+===================================================== */
 
 body {
   margin: 0;
   font-family: 'Segoe UI', Tahoma, sans-serif;
   background-color: var(--light-gray);
-  font-size: 18px; /* Texto base más grande */
+  font-size: 18px;
 }
+
+/* =====================================================
+   ESTRUCTURA GENERAL DEL DASHBOARD
+===================================================== */
 
 .dashboard-container {
   display: flex;
   min-height: 100vh;
 }
 
-/* CONTENIDO PRINCIPAL */
 .main-content {
   flex: 1;
   padding: 30px;
   display: flex;
   flex-direction: column;
 }
+
+/* =====================================================
+   HEADER SUPERIOR
+===================================================== */
 
 .content-header {
   display: flex;
@@ -41,10 +56,14 @@ body {
 
 .content-header h1 {
   font-size: var(--font-size-title);
-  color: var(--purple-700);
+  color: #3b3086 !important;
   margin: 0;
   text-transform: uppercase;
 }
+
+/* =====================================================
+   INFORMACIÓN DE USUARIO
+===================================================== */
 
 .user-actions {
   display: flex;
@@ -57,6 +76,10 @@ body {
   font-weight: 600;
   color: #555;
 }
+
+/* =====================================================
+   BOTÓN CERRAR SESIÓN
+===================================================== */
 
 .logout-btn {
   background-color: #4361ee;
@@ -74,7 +97,10 @@ body {
   transform: scale(1.05);
 }
 
-/* CONTENEDOR CARD PARA SUBPÁGINAS DINÁMICAS */
+/* =====================================================
+   CONTENEDOR PRINCIPAL DE MÓDULOS
+===================================================== */
+
 .card {
   background: var(--white);
   padding: 30px;
@@ -83,7 +109,10 @@ body {
   flex: 1;
 }
 
-/* ALERTAS MAESTRAS DEL DASHBOARD (PROCESAMIENTO PRG) */
+/* =====================================================
+   ALERTAS DEL DASHBOARD
+===================================================== */
+
 .alert {
   padding: 15px;
   margin: 15px auto;
@@ -105,20 +134,24 @@ body {
   border: 1px solid #f5c6cb;
 }
 
-/* RESPONSIVO */
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+
 @media (max-width: 992px) {
+
   .dashboard-container {
     flex-direction: column;
   }
+
   .content-header {
     flex-direction: column;
     text-align: center;
     gap: 15px;
   }
+
   .content-header h1 {
     font-size: 1.8rem;
   }
-}
-.content-header h1 {
-  color: #3b3086 !important;
+
 }

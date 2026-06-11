@@ -1,77 +1,110 @@
 <?php
 require_once '../../controllers/TecnicoController.php';
 
-// 🔥 Obtener ID del técnico logueado desde la sesión de forma segura
 $id_tecnico = $_SESSION['id'] ?? $_SESSION['user_id'] ?? 0;
 
 $tecnicoCtrl = new TecnicoController();
 $allTickets = $tecnicoCtrl->index($id_tecnico) ?: [];
 
-// 📊 Filtrar en el cliente: dejas solo los que NO están listos (Pendientes o En Proceso)
 $tickets = array_filter($allTickets, function($t) {
     $estado = strtolower($t['estado'] ?? 'pendiente');
     return $estado !== 'completado' && $estado !== 'cerrado';
 });
 ?>
 
-<div style="margin-bottom: 25px; font-family: sans-serif;">
-    <h2>🛠️ Mis Órdenes de Trabajo Asignadas</h2>
-    <p style="color: #666;">A continuación verás la lista de soportes que tienes pendientes por atender en campo.</p>
+<div class="header-seccion">
+    <div>
+        <h2>Mis Órdenes de Trabajo Asignadas</h2>
+        <p>
+            A continuación verás la lista de soportes que tienes pendientes por atender en campo.
+        </p>
+    </div>
 </div>
 
-<div class="container-table" style="background: white; border-radius: 12px; box-shadow: 0 4px 12px rgba(0,0,0,0.05); overflow: hidden; padding: 10px;">
-    <table class="table" style="width: 100%; border-collapse: collapse; text-align: left; font-family: sans-serif;">
+<div class="table-container">
+
+    <table class="zulcom-table">
+
         <thead>
-            <tr style="background: #4361ee; color: white;">
-                <th style="padding: 12px 15px;">N° Ticket</th>
-                <th style="padding: 12px 15px;">Cliente</th>
-                <th style="padding: 12px 15px;">Descripción del Problema</th>
-                <th style="padding: 12px 15px;">Fecha Registro</th>
-                <th style="padding: 12px 15px;">Fecha / Hora Visita</th>
-                <th style="padding: 12px 15px;">Estado</th>
-                <th style="padding: 12px 15px; text-align: center;">Acción</th>
+            <tr>
+                <th>N° Ticket</th>
+                <th>Cliente</th>
+                <th>Descripción</th>
+                <th>Fecha Registro</th>
+                <th>Fecha / Hora Visita</th>
+                <th>Estado</th>
+                <th>Acción</th>
             </tr>
         </thead>
+
         <tbody>
             <?php if (empty($tickets)): ?>
+
                 <tr>
-                    <td colspan="7" style="padding: 30px; text-align: center; color: #a0aec0; font-style: italic;">🎉 ¡Excelente! No tienes soportes ni tickets pendientes asignados.</td>
+                    <td colspan="7" class="empty-row">
+                        🎉 ¡Excelente! No tienes soportes ni tickets pendientes asignados.
+                    </td>
                 </tr>
+
             <?php else: ?>
+
                 <?php foreach($tickets as $t): ?>
-                <tr style="border-bottom: 1px solid #edf2f7; transition: background 0.2s;" onmouseover="this.style.backgroundColor='#f8fafc'" onmouseout="this.style.backgroundColor='transparent'">
-                    <td style="padding: 12px 15px;"><b>#<?= htmlspecialchars($t['numero_ticket']) ?></b></td>
-                    <td style="padding: 12px 15px;">
-                        <strong><?= htmlspecialchars(($t['nombre'] ?? '').' '.($t['apellido'] ?? '')) ?></strong>
-                        <br><small style="color: #718096;">💳 CI: <?= htmlspecialchars($t['cedula'] ?? '—') ?></small>
-                    </td>
-                    <td style="padding: 12px 15px; max-width: 250px; word-wrap: break-word;">
-                        <?= htmlspecialchars($t['descripcion']) ?>
-                    </td>
-                    <td style="padding: 12px 15px; color: #4a5568;">
-                        📝 <?= !empty($t['fecha_creacion']) ? date('d/m/Y', strtotime($t['fecha_creacion'])) : '—' ?>
-                    </td>
-                    <td style="padding: 12px 15px; color: #4a5568;">
-                        📅 <?= !empty($t['horaVisita']) ? date('d/m/Y - H:i', strtotime($t['horaVisita'])) : '—' ?>
-                    </td>
-                    <td style="padding: 12px 15px;">
-                        <?php 
+
+                    <?php 
                         $est = $t['estado'] ?: 'Pendiente';
-                        $bgColor = '#e63946'; // Pendiente (Rojo)
-                        if ($est === 'En Proceso') $bgColor = '#f4a261'; // En Proceso (Naranja)
-                        ?>
-                        <span style="background-color: <?= $bgColor ?>; color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.85em; font-weight: bold; display: inline-block; text-transform: uppercase;">
-                            <?= htmlspecialchars($est) ?>
-                        </span>
-                    </td>
-                    <td style="padding: 12px 15px; text-align: center;">
-                        <a href="tecnico.php?page=resolver_ticket&id=<?= $t['id'] ?>" style="background: #4361ee; color: white; padding: 8px 14px; text-decoration: none; border-radius: 6px; font-size: 0.9em; font-weight: bold; box-shadow: 0 2px 5px rgba(67, 97, 238, 0.3); display: inline-block; transition: background 0.2s;" onmouseover="this.style.background='#314cc5'" onmouseout="this.style.background='#4361ee'">
-                            🔧 Resolver
-                        </a>
-                    </td>
-                </tr>
+                        $estadoClase = 'pendiente';
+
+                        if ($est === 'En Proceso') {
+                            $estadoClase = 'proceso';
+                        }
+                    ?>
+
+                    <tr>
+                        <td>
+                            <strong>#<?= htmlspecialchars($t['numero_ticket']) ?></strong>
+                        </td>
+
+                        <td>
+                            <strong>
+                                <?= htmlspecialchars(($t['nombre'] ?? '') . ' ' . ($t['apellido'] ?? '')) ?>
+                            </strong>
+                            <br>
+                            <small>
+                                CI: <?= htmlspecialchars($t['cedula'] ?? '—') ?>
+                            </small>
+                        </td>
+
+                        <td>
+                            <?= htmlspecialchars($t['descripcion']) ?>
+                        </td>
+
+                        <td>
+                            <?= !empty($t['fecha_creacion']) ? date('d/m/Y', strtotime($t['fecha_creacion'])) : '—' ?>
+                        </td>
+
+                        <td>
+                            <?= !empty($t['horaVisita']) ? date('d/m/Y - H:i', strtotime($t['horaVisita'])) : '—' ?>
+                        </td>
+
+                        <td>
+                            <span class="badge-status <?= $estadoClase ?>">
+                                <?= htmlspecialchars($est) ?>
+                            </span>
+                        </td>
+
+                        <td>
+                            <a href="tecnico.php?page=resolver_ticket&id=<?= $t['id'] ?>"
+                               class="btn-accion">
+                                Resolver
+                            </a>
+                        </td>
+                    </tr>
+
                 <?php endforeach; ?>
+
             <?php endif; ?>
         </tbody>
+
     </table>
+
 </div>

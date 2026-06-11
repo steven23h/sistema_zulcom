@@ -263,7 +263,127 @@ h2{
     font-size:.9rem;
     font-weight:600;
 }
+/* ===================== ESTADOS / BADGES ===================== */
 
+.badge-status{
+    padding:10px 20px;
+    border-radius:30px;
+    font-size:1.05rem;
+    font-weight:bold;
+    text-transform:uppercase;
+    display:inline-block;
+}
+
+.badge-status.pendiente{
+    background:#f8d7da;
+    color:#721c24;
+}
+
+.badge-status.proceso{
+    background:#fff3cd;
+    color:#856404;
+    border:1px solid #ffeeba;
+}
+
+.badge-status.activo,
+.badge-status.pagado{
+    background:#d4edda;
+    color:#155724;
+}
+
+/* ===================== ACCIONES TABLA ===================== */
+
+.btn-accion{
+    background:#4361ee;
+    color:#fff;
+    padding:10px 16px;
+    border-radius:8px;
+    text-decoration:none;
+    font-size:.95rem;
+    font-weight:600;
+    display:inline-block;
+    transition:.3s;
+}
+
+.btn-accion:hover{
+    background:#314cc5;
+    transform:translateY(-2px);
+}
+
+.empty-row{
+    padding:30px !important;
+    text-align:center;
+    color:#a0aec0;
+    font-style:italic;
+}
+/* ===================== HISTORIAL ===================== */
+
+.badge-status.completado{
+    background:#d4edda;
+    color:#155724;
+}
+
+.badge-status.cerrado{
+    background:#d4edda;
+    color:#155724;
+}
+
+.btn-ver{
+    background:#27ae60;
+    color:#fff;
+    padding:10px 16px;
+    border-radius:8px;
+    text-decoration:none;
+    font-size:.95rem;
+    font-weight:600;
+    display:inline-block;
+    transition:.3s;
+}
+
+.btn-ver:hover{
+    background:#219150;
+    transform:translateY(-2px);
+}
+/* ===================== COORDENADAS ===================== */
+
+.ip-badge{
+    background:#e2e8f0;
+    color:#4a5568;
+    padding:6px 12px;
+    border-radius:8px;
+    font-family:monospace;
+    font-size:.95rem;
+    font-weight:bold;
+    display:inline-block;
+}
+
+.btn-maps{
+    background:#27ae60;
+    color:#fff;
+    padding:10px 16px;
+    border-radius:8px;
+    text-decoration:none;
+    font-size:.95rem;
+    font-weight:600;
+    display:inline-block;
+    transition:.3s;
+}
+
+.btn-maps:hover{
+    background:#219150;
+    transform:translateY(-2px);
+}
+
+.sin-coordenadas{
+    color:#a0aec0;
+    font-size:.95rem;
+    font-style:italic;
+    background:#f7fafc;
+    padding:8px 14px;
+    border-radius:8px;
+    border:1px dashed #cbd5e0;
+    display:inline-block;
+}
 /* ===================== RESPONSIVE ===================== */
 
 @media (max-width:768px){

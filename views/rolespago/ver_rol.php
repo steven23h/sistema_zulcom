@@ -10,21 +10,22 @@ $roles = $controller->listarRolesPago();
 <div class="dashboard-content">
     <link rel="stylesheet" href="../../css/styles.css">
    <link rel="stylesheet" href="../../public/css/navbar.css">
-    <div class="roles-header">
+    <div class="header-seccion">
         <h2>Mis Roles de Pago</h2>
-        <p>
-            Consulta y descarga tus roles de pago generados.
-        </p>
+        
     </div>
 
-    <div class="roles-filter">
+   <div class="container-form">
+<div class="container-form">
 
-        <div class="filter-group">
+    <div class="filtros-grid">
+
+        <div class="form-group">
             <label>Filtrar por Mes</label>
             <input type="month" id="filtroMes">
         </div>
 
-        <div class="filter-button">
+        <div>
             <button onclick="cargarMisRoles()" class="btn-filtrar">
                 Buscar
             </button>
@@ -32,11 +33,14 @@ $roles = $controller->listarRolesPago();
 
     </div>
 
-    <div class="roles-table-container">
+</div>
+        
+
+<div class="table-container">
 
         <div class="table-responsive">
 
-            <table class="roles-table">
+           <table class="zulcom-table">
 
                 <thead>
                     <tr>

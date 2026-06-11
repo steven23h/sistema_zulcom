@@ -21,6 +21,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Tecnico') {
     <title>ZULCOM - Panel Técnico</title>
     <link rel="stylesheet" href="../../public/css/navbar.css">
     <link rel="stylesheet" href="../../public/css/dashboard.css">
+    <link rel="stylesheet" href="/zulcom2/css/styles.css">
 </head>
 
 <body>
@@ -46,7 +47,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Tecnico') {
             </div>
         </header>
 
-        <div class="dashboard-content" style="background:#fff; padding:30px; border-radius:8px; min-height:500px; margin-top:20px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+        <div class="card">
             
             <?php 
             $page = isset($_GET['page']) ? $_GET['page'] : 'inicio';

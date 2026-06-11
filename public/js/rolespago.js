@@ -120,10 +120,11 @@ function cargarMisRoles() {
             <td>$${r.total}</td>
             <td>${r.estado}</td>
             <td>
-                <a href="../rolespago/acciones.php?action=pdf&id_trabajador=${r.id_trabajador}"
-                   class="btn btn-primary btn-sm"
-                   target="_blank">
-                   PDF
+                 <a href="../rolespago/acciones.php?action=pdf&id_trabajador=${r.id_trabajador}"
+   class="btn-pdf"
+   target="_blank">
+   PDF
+</a>
                 </a>
             </td>
         </tr>

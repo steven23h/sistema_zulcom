@@ -94,11 +94,10 @@ h2{
     padding-bottom:25px;
     border-bottom:3px solid #f0f2f5;
 }
-
 .header-seccion p{
-    font-size:1.3rem;
-    color:#555;
     margin-top:10px;
+    color:#555;
+    font-size:1.3rem;
 }
 
 .btn-new{

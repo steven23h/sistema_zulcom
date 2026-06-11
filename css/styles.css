@@ -170,10 +170,10 @@ tr:hover {
 /* ===== GENERAR ROL ===== */
 
 .page-title{
-    font-size:48px;
+    font-size:22px;
     font-weight:700;
     color:#2f3192;
-    margin-bottom:10px;
+    margin-bottom:5px;
 }
 
 .page-subtitle{
@@ -206,6 +206,12 @@ tr:hover {
     display:grid;
     grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
     gap:15px;
+}
+.rol-title{
+    font-size:48px;
+    font-weight:700;
+    color:#3b3086;
+    margin-bottom:10px;
 }
 
 /* LABELS IGUALES A LOS HEADERS DE LA TABLA */

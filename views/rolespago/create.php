@@ -23,7 +23,7 @@ $colaboradores = $controller->listarColaboradores();
     <!-- HEADER -->
     <div class="page-header">
         <div>
-            <h1 class="page-title">
+            <h1 class="rol-title">
                 Gestión de Roles de Pago
             </h1>
 

@@ -95,7 +95,10 @@ $colaboradores = $controller->listarColaboradores();
 <script src="/zulcom2/public/js/rolespago.js"></script>
 
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        cargarListadoRoles();
-    });
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("tablaRoles").innerHTML = `
+        
+    `;
+
+});
 </script>

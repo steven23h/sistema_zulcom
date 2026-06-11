@@ -384,6 +384,110 @@ h2{
     border:1px dashed #cbd5e0;
     display:inline-block;
 }
+/* ===================== RESPONSIVE TABLAS ===================== */
+
+.table-container{
+    width:100%;
+    overflow-x:auto;
+}
+
+.zulcom-table{
+    min-width:900px;
+}
+/* ===================== RESOLVER TICKET ===================== */
+
+.form-resolver{
+    max-width:900px;
+    margin:20px auto;
+}
+
+.ticket-info-box{
+    background:#f7fafc;
+    padding:18px;
+    border-radius:12px;
+    margin-bottom:30px;
+    color:#4a5568;
+    font-size:1.1rem;
+    line-height:1.7;
+    border:1px solid #edf2f7;
+}
+
+.form-group.full-width{
+    grid-column:1 / -1;
+}
+
+.form-group textarea{
+    min-height:130px;
+    resize:vertical;
+}
+
+.evidencias-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+    margin-bottom:30px;
+    background:#f8fafc;
+    padding:20px;
+    border-radius:12px;
+    border:1px dashed #cbd5e0;
+}
+
+.label-danger{
+    color:#e63946 !important;
+}
+
+.label-success{
+    color:#27ae60 !important;
+}
+
+.acciones-form{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+    border-top:1px solid #edf2f7;
+    padding-top:20px;
+}
+
+@media(max-width:768px){
+    .acciones-form{
+        grid-template-columns:1fr;
+    }
+}
+
+/* ===================== RESPONSIVE FILTROS ===================== */
+
+@media (max-width:768px){
+
+    .container-form,
+    .table-container,
+    .container-table{
+        padding:20px;
+    }
+
+    .filtros-grid{
+        grid-template-columns:1fr;
+    }
+
+    .btn-filtrar{
+        width:100%;
+    }
+
+    .search-input{
+        max-width:100%;
+        font-size:1rem;
+        padding:14px;
+    }
+
+    .zulcom-table{
+        font-size:1rem;
+    }
+
+    .zulcom-table th,
+    .zulcom-table td{
+        padding:14px;
+        white-space:nowrap;
+    }
+}
 /* ===================== RESPONSIVE ===================== */
 
 @media (max-width:768px){

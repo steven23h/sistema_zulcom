@@ -30,8 +30,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
     $res = $auth->register($_POST, $_FILES);
 
     if ($res === "success_admin" || $res === "success") {
-        // Almacenamos el mensaje verde estructurado dentro de la sesión
-        $_SESSION['registro_exito_msg'] = "<div class='alert success' style='background-color: #d4edda; color: #155724; padding: 15px; margin: 15px auto; border-radius: 5px; font-weight: bold; text-align: center; max-width: 600px; border: 1px solid #c3e6cb;'>
+        // Almacenamos el mensaje limpio estructurado con clases CSS
+        $_SESSION['registro_exito_msg'] = "<div class='alert success'>
                                             ¡Usuario registrado con éxito! El colaborador ha sido creado correctamente.
                                            </div>";
         
@@ -43,10 +43,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
         header("Location: " . $path);
         exit();
     } else {
-        // En caso de duplicados reales, pintamos la alerta roja sin redireccionar
-        $mensaje = "<div class='alert error' style='background-color: #f8d7da; color: #721c24; padding: 15px; margin: 15px auto; border-radius: 5px; font-weight: bold; text-align: center; max-width: 600px; border: 1px solid #f5c6cb;'>
-                        Error: $res
-                    </div>";
+        // En caso de duplicados reales, pintamos la alerta con clase semántica
+        $mensaje = "<div class='alert error'>Error: " . htmlspecialchars($res) . "</div>";
     }
 }
 ?>
@@ -57,7 +55,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
     <title>ZULCOM - Panel de Control</title>
     <link rel="stylesheet" href="/zulcom2/public/css/navbar.css">
     <link rel="stylesheet" href="/zulcom2/public/css/dashboard.css">
-    <link rel="stylesheet" href="/zulcom2/css/styles.css">
 </head>
 <body>
 
@@ -164,7 +161,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
                         include '../rolespago/ver_rol.php';
                         break;
                         
-
                     default:
                         echo "<h3>Bienvenido al Sistema Zulcom</h3>";
                         echo "<p>Seleccione una opción del menú lateral para gestionar el sistema.</p>";

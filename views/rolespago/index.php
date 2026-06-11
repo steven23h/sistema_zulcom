@@ -14,19 +14,21 @@ $colaboradores = $controller->listarColaboradores();
 
 <div class="dashboard-content">
 
-    <div class="roles-header">
-        <h2>Listado de Roles de Pago</h2>
-        <p>
-            Consulta, filtra y administra los roles de pago generados.
-        </p>
+    <div class="header-seccion">
+        <div>
+            <h2>Listado de Roles de Pago</h2>
+            <p>
+                Consulta, filtra y administra los roles de pago generados.
+            </p>
+        </div>
     </div>
 
     <!-- FILTROS -->
-    <div class="roles-filter">
+    <div class="container-form">
 
-        <div class="row">
+       <div class="filtros-grid">
 
-            <div class="col-md-4">
+            <div class="form-group">
                 <label>Colaborador</label>
                 <select id="filtro_colaborador" class="form-control">
                     <option value="">Todos</option>
@@ -40,7 +42,7 @@ $colaboradores = $controller->listarColaboradores();
                 </select>
             </div>
 
-            <div class="col-md-4">
+        <div class="form-group">
                 <label>Mes</label>
                 <input
                     type="month"
@@ -48,10 +50,10 @@ $colaboradores = $controller->listarColaboradores();
                     class="form-control">
             </div>
 
-            <div class="col-md-4 d-flex align-items-end">
+       <div>
                 <button
                     onclick="filtrarRoles()"
-                    class="btn-filtrar w-100">
+                    class="btn-filtrar">
                     Filtrar
                 </button>
             </div>
@@ -61,9 +63,9 @@ $colaboradores = $controller->listarColaboradores();
     </div>
 
     <!-- TABLA -->
-    <div class="roles-table-container">
+    <div class="table-container">
 
-        <table class="roles-table">
+        <table class="zulcom-table">
 
             <thead>
                 <tr>
@@ -87,13 +89,13 @@ $colaboradores = $controller->listarColaboradores();
 </div>
 
 <script>
-window.roles = <?= json_encode($roles) ?>;
+    window.roles = <?= json_encode($roles) ?>;
 </script>
 
 <script src="/zulcom2/public/js/rolespago.js"></script>
 
 <script>
-document.addEventListener("DOMContentLoaded", function () {
-    cargarListadoRoles();
-});
+    document.addEventListener("DOMContentLoaded", function() {
+        cargarListadoRoles();
+    });
 </script>

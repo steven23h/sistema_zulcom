@@ -17,15 +17,15 @@ $colaboradores = $controller->listarColaboradores();
 ?>
 
 <div class="dashboard-content">
-  
-   <link rel="stylesheet" href="../../public/css/navbar.css">
-  <link rel="stylesheet" href="/zulcom2/css/styles.css">
+
+    <link rel="stylesheet" href="../../public/css/navbar.css">
+    <link rel="stylesheet" href="/zulcom2/css/styles.css">
     <!-- HEADER -->
-    <div class="page-header">
+    <div class="header-seccion">
         <div>
-            <h1 class="rol-title">
+            <h2>
                 Gestión de Roles de Pago
-            </h1>
+            </h2>
 
             <p class="page-subtitle">
                 Genera y administra los roles de pago de los colaboradores.
@@ -48,9 +48,9 @@ $colaboradores = $controller->listarColaboradores();
         </div>
 
     <?php endif; ?>
-    <hr class="divider">
+    
 
-    <div class="module-card">
+    <div class="container-form">
 
         <form id="formRol" method="POST">
 
@@ -133,11 +133,11 @@ $colaboradores = $controller->listarColaboradores();
 
             </div>
 
-            <div class="actions-container">
+            <div>
                 <button
                     type="submit"
                     name="crearRol"
-                    class="btn-success-custom">
+                    class="btn-filtrar">
                     + Generar Rol
                 </button>
             </div>

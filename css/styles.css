@@ -1,310 +1,285 @@
 /* ===================== VARIABLES ===================== */
 :root {
-  --primary-blue: #3a57e8;
-  --secondary-blue: #6a8eff;
-  --primary-purple: #9a4dff;
-  --secondary-purple: #b07dff;
+    --morado-zulcom: #3b3086;
+    --morado-hover: #2a2263;
+    --verde-zulcom: #27ae60;
+    --verde-hover: #219150;
+    --rojo-zulcom: #e74c3c;
+    --gris-cancel: #e2e8f0;
+    --bg-gris: #f8f9fc;
+    --azul-info: #4361ee;
 
-  --blue-100: #eef2ff;
-  --blue-500: #3a57e8;
-  --blue-700: #2f4ed8;
+    --primary-blue: #3a57e8;
+    --secondary-blue: #6a8eff;
+    --primary-purple: #9a4dff;
+    --secondary-purple: #b07dff;
 
-  --purple-100: #f3e8ff;
-  --purple-300: #c4b5fd;
-  --purple-500: #9a4dff;
-  --purple-700: #6d28d9;
+    --white: #ffffff;
+    --light-gray: #f5f6fa;
+    --dark-gray: #333;
 
-  --white: #ffffff;
-  --light-gray: #f5f6fa;
-  --medium-gray: #e0e0e0;
-  --dark-gray: #333;
-
-  --error-color: #ff4d4d;
-
-  --font-main: 'Segoe UI', sans-serif;
+    --font-main: 'Segoe UI', sans-serif;
 }
 
 /* ===================== RESET ===================== */
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: var(--font-main);
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:var(--font-main);
 }
 
-body {
-  background: var(--light-gray);
-  color: var(--dark-gray);
+body{
+    background:var(--light-gray);
+    color:var(--dark-gray);
 }
-
-
-/* ===================== BOTONES ===================== */
-.btn, .btn-logout, .auth-button {
-  background: linear-gradient(to right, var(--primary-blue), var(--primary-purple));
-  color: var(--white);
-  border: none;
-  padding: 10px 15px;
-  border-radius: 6px;
-  cursor: pointer;
-  text-decoration: none;
-  transition: 0.3s;
-}
-
-.btn:hover,
-.btn-logout:hover,
-.auth-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(74,107,255,0.3);
-}
-
 
 /* ===================== AUTH ===================== */
-body.auth-page {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  min-height: 100vh;
+
+body.auth-page{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:100vh;
 }
 
-.auth-container {
-  max-width: 500px;
-  width: 100%;
+.auth-container{
+    max-width:500px;
+    width:100%;
 }
 
-.auth-header {
-  background: linear-gradient(to right, var(--primary-blue), var(--primary-purple));
-  color: white;
-  padding: 20px;
-  text-align: center;
+.auth-header{
+    background:linear-gradient(to right,var(--primary-blue),var(--primary-purple));
+    color:white;
+    padding:20px;
+    text-align:center;
 }
 
-.auth-body {
-  padding: 25px;
-}
-
-.auth-form {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-}
-
-
-/* ===================== TABLAS ===================== */
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 15px;
-}
-
-thead {
-  background: var(--primary-purple);
-  color: white;
-}
-
-th, td {
-  padding: 10px;
-}
-
-tr:hover {
-  background: transparent;
-}
-
-
-/* ===== GENERAR ROL ===== */
-
-.page-title{
-    font-size:22px;
-    font-weight:700;
-    color:#2f3192;
-    margin-bottom:5px;
-}
-
-.page-subtitle{
-    font-size:18px;
-    color:#6c757d;
-}
-
-.stats-text{
-    font-size:16px;
-    color:#6c757d;
-    margin-top:15px;
-    margin-bottom:15px;
-}
-
-.divider{
-    border:none;
-    border-top:1px solid #ececec;
-    margin:15px 0 20px;
-}
-
-.module-card{
-    background:#fff;
-    border-radius:15px;
+.auth-body{
     padding:25px;
-    border:1px solid #f0f0f0;
-    box-shadow:none;
 }
 
-.form-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+.auth-form{
+    display:flex;
+    flex-direction:column;
     gap:15px;
 }
-.rol-title{
-    font-size:48px;
+
+/* ==========================================================
+   CLIENTES - TICKETS - ROLES DE PAGO (ESTILO GLOBAL)
+   ========================================================== */
+
+h2{
+    font-size:2.8rem;
+    color:var(--morado-zulcom);
+    margin:0;
     font-weight:700;
-    color:#3b3086;
-    margin-bottom:10px;
 }
 
-/* LABELS IGUALES A LOS HEADERS DE LA TABLA */
-.form-group label{
-    display:block;
-    font-size:15px;
-    font-weight:700;
-    color:#2f3192;
-    margin-bottom:8px;
-    text-transform:uppercase;
-    letter-spacing:.3px;
-}
-
-/* INPUTS */
-.form-group input,
-.form-group select{
-    width:100%;
-    height:45px;
-    border:1px solid #d6dbe4;
-    border-radius:8px;
-    padding:0 12px;
-    font-size:15px;
+.container-table,
+.container-form,
+.table-container{
     background:#fff;
-    color:#374151;
+    padding:45px;
+    border-radius:20px;
+    box-shadow:0 8px 30px rgba(0,0,0,.05);
+    margin-bottom:30px;
 }
 
-.form-group input:focus,
-.form-group select:focus{
-    outline:none;
-    border-color:#3a57e8;
-    box-shadow:0 0 0 3px rgba(58,87,232,.10);
-}
-
-/* BOTÓN */
-.actions-container{
+.header-seccion{
     display:flex;
-    justify-content:flex-end;
-    margin-top:25px;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+    padding-bottom:25px;
+    border-bottom:3px solid #f0f2f5;
 }
 
-.btn-success-custom{
-    background:#16a34a;
+.header-seccion p{
+    font-size:1.3rem;
+    color:#555;
+    margin-top:10px;
+}
+
+.btn-new{
+    background-color:var(--verde-zulcom);
     color:#fff;
-    border:none;
-    border-radius:8px;
-    padding:12px 22px;
-    font-size:15px;
-    font-weight:600;
-    cursor:pointer;
-    transition:.2s;
-}
-
-.btn-success-custom:hover{
-    background:#15803d;
-}
-
-/* ============================================================
-   LISTADO DE ROLES
-   ============================================================ */
-
-.roles-header h2{
-    font-size:2.2rem;
-    color:#3b3086;
-    margin-bottom:10px;
-}
-
-.roles-header h2{
-    font-size:2.2rem;
-    color:#3b3086;
-    margin-bottom:10px;
-}
-
-.roles-header p{
-    color:#6c757d;
-    font-size:18px;
-}
-
-.roles-filter{
-    background:#fff;
-    padding:25px;
+    padding:15px 25px;
     border-radius:12px;
-    margin-bottom:25px;
-    box-shadow:0 4px 15px rgba(0,0,0,0.05);
+    text-decoration:none;
+    font-weight:bold;
+    font-size:1.3rem;
+    transition:.3s;
 }
 
-.roles-table-container{
-    background:#fff;
-    border-radius:12px;
-    overflow-x:auto;
-    box-shadow:0 4px 15px rgba(0,0,0,0.05);
+.btn-new:hover{
+    background-color:var(--verde-hover);
 }
 
-.roles-table{
+.search-input{
+    width:100%;
+    max-width:550px;
+    padding:18px 25px;
+    font-size:1.4rem;
+    border:2px solid #ddd;
+    border-radius:15px;
+    margin-bottom:35px;
+}
+
+.search-input:focus{
+    border-color:var(--morado-zulcom);
+    box-shadow:0 0 12px rgba(59,48,134,.15);
+}
+
+/* ===================== TABLAS ===================== */
+
+.zulcom-table{
     width:100%;
     border-collapse:collapse;
+    font-size:1.25rem;
 }
 
-.roles-table th{
+.zulcom-table th{
     background:#fafbfc;
-    color:#3b3086;
-    padding:18px;
+    color:var(--morado-zulcom);
+    padding:22px;
     text-align:left;
-    border-bottom:2px solid #eee;
-    font-weight:700;
-    font-size:15px;
+    border-bottom:3px solid #eee;
+    font-size:1.35rem;
 }
 
-.roles-table td{
-    padding:18px;
+.zulcom-table td{
+    padding:20px 22px;
     border-bottom:1px solid #f0f0f0;
-    font-size:15px;
 }
-
-.roles-table tr:hover{
+.zulcom-table tr:hover{
     background:#fafafa;
 }
 
+.zulcom-table th{
+    text-transform:uppercase;
+}
+
+/* ===================== FORMULARIOS ===================== */
+
+.form-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:30px;
+    margin-bottom:40px;
+}
+
+.form-group label{
+    display:block;
+    font-size:1.35rem;
+    margin-bottom:12px;
+    font-weight:600;
+    color:#444;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea{
+    width:100%;
+    padding:16px;
+    font-size:1.25rem;
+    border:2px solid #ccc;
+    border-radius:12px;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus{
+    outline:none;
+    border-color:var(--morado-zulcom);
+}
+/* ===================== FILTROS ===================== */
+
+.filtros-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr auto;
+    gap:20px;
+    align-items:end;
+}
+
+.filtros-grid .form-group{
+    margin-bottom:0;
+}
+
+.filtros-grid .btn-filtrar{
+    height:58px;
+}
+/* ===================== BOTONES ===================== */
+
+.btn-save{
+    background:var(--morado-zulcom);
+    color:white;
+    width:100%;
+    padding:22px;
+    border:none;
+    border-radius:15px;
+    font-size:1.6rem;
+    font-weight:bold;
+    cursor:pointer;
+}
 .btn-filtrar{
     background:#3b3086;
-    color:white;
+    color:#fff;
     border:none;
-    border-radius:10px;
-    padding:14px;
-    font-weight:700;
-    font-size:15px;
+    border-radius:12px;
+    padding:14px 28px;
+    font-size:1rem;
+    font-weight:600;
     cursor:pointer;
+    transition:.3s;
+    width:auto;
+    min-width:140px;
 }
 
 .btn-filtrar:hover{
     background:#2a2263;
 }
-.roles-filter label{
-    font-size:15px;
-    font-weight:700;
-    color:#2f3192;
-    margin-bottom:8px;
-    display:block;
+
+.btn-save:hover{
+    background:var(--morado-hover);
 }
 
-.roles-filter input,
-.roles-filter select{
-    font-size:15px;
-    height:45px;
+.btn-pdf{
+    background:#4361ee;
+    color:#fff;
+    padding:8px 14px;
+    border-radius:8px;
+    text-decoration:none;
+    font-size:.9rem;
+    font-weight:600;
+    margin-right:5px;
 }
-.roles-header h2{
-    font-size:48px !important;
-    font-weight:700 !important;
-    color:#2f3192 !important;
+
+.btn-delete{
+    background:#e74c3c;
+    color:#fff;
+    padding:8px 14px;
+    border-radius:8px;
+    text-decoration:none;
+    font-size:.9rem;
+    font-weight:600;
 }
-.roles-header p{
-    font-size:18px !important;
-    color:#6c757d !important;
+
+/* ===================== RESPONSIVE ===================== */
+
+@media (max-width:768px){
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .header-seccion{
+        flex-direction:column;
+        align-items:flex-start;
+        gap:15px;
+    }
+
+    h2{
+        font-size:2.2rem;
+    }
 }

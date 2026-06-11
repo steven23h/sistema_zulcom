@@ -119,3 +119,6 @@ body {
     font-size: 1.8rem;
   }
 }
+.content-header h1 {
+  color: #3b3086 !important;
+}

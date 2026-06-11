@@ -15,7 +15,6 @@ class ClientesController {
         return $this->clienteModel->getAll();
     }
 
-    // --- MÉTODOS PARA FILTRADO DE PAGOS ---
     public function listarPagados() {
         return $this->clienteModel->obtenerNoDeudores();
     }
@@ -23,14 +22,33 @@ class ClientesController {
     public function listarDeudores() {
         return $this->clienteModel->obtenerDeudores();
     }
-    // --------------------------------------
 
     public function obtenerPorId($id) {
         return $this->clienteModel->getById($id);
     }
 
+    // FILTRO DE VALIDACIÓN DEL LADO DEL SERVIDOR
+    private function validarDatos($data) {
+        if (!preg_match('/^[0-9]{10}([0-9]{3})?$/', $data['cedula'])) {
+            return "La cédula o RUC ingresado no cuenta con un formato válido para Ecuador.";
+        }
+        if (!filter_var($data['correo'], FILTER_VALIDATE_EMAIL)) {
+            return "La dirección de correo electrónico no es válida.";
+        }
+        if (!filter_var($data['ip'], FILTER_VALIDATE_IP)) {
+            return "La dirección IP local o pública es incorrecta.";
+        }
+        return "OK";
+    }
+
     public function store() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $validacion = $this->validarDatos($_POST);
+            if ($validacion !== "OK") {
+                echo "<script>alert('$validacion'); window.history.back();</script>";
+                exit;
+            }
+
             $success = $this->clienteModel->create($_POST);
             if ($success) {
                 echo "<script>
@@ -45,8 +63,13 @@ class ClientesController {
 
     public function update() {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $validacion = $this->validarDatos($_POST);
+            if ($validacion !== "OK") {
+                echo "<script>alert('$validacion'); window.history.back();</script>";
+                exit;
+            }
+
             $success = $this->clienteModel->update($_POST);
-            
             if ($success) {
                 echo "<script>
                     alert('¡Datos actualizados correctamente!');
@@ -73,7 +96,6 @@ class ClientesController {
     }
 }
 
-// LÓGICA DE ACTIVACIÓN DE MÉTODOS
 $controller = new ClientesController();
 
 if (isset($_POST['btn_guardar_cliente'])) {

@@ -1,10 +1,8 @@
 <?php
 require_once '../../controllers/PlanesController.php';
-
 $planCtrl = new PlanesController();
 $planes = $planCtrl->listarPlanes();
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -15,17 +13,15 @@ $planes = $planCtrl->listarPlanes();
 </head>
 <body>
 
-
     <h2>➕ Registrar Nuevo Cliente</h2>
 
     <form action="../../controllers/ClientesController.php" method="POST" id="formCliente">
         <input type="hidden" name="btn_guardar_cliente" value="1">
 
         <div class="form-grid">
-
             <div class="form-group">
                 <label>Cédula / RUC</label>
-                <input type="text" name="cedula" maxlength="13" placeholder="Ej: 17xxxxxxx" required>
+                <input type="text" name="cedula" maxlength="13" pattern="^[0-9]{10}([0-9]{3})?$" title="Debe tener 10 dígitos (Cédula) o 13 dígitos (RUC)" placeholder="Ej: 17xxxxxxx" required>
             </div>
 
             <div class="form-group">
@@ -42,13 +38,13 @@ $planes = $planCtrl->listarPlanes();
             </div>
 
             <div class="form-group">
-                <label>Teléfono1 / WhatsApp</label>
+                <label>Teléfono 1 / WhatsApp</label>
                 <input type="text" name="telefono1" placeholder="09xxxxxxxx" required>
             </div> 
 
              <div class="form-group">
                 <label>Teléfono 2 / WhatsApp</label>
-                <input type="text" name="telefono2" placeholder="09xxxxxxxx" required>
+                <input type="text" name="telefono2" placeholder="Opcional: 09xxxxxxxx">
             </div>
 
             <div class="form-group full-width">
@@ -88,7 +84,7 @@ $planes = $planCtrl->listarPlanes();
 
             <div class="form-group">
                 <label>Coordenadas GPS</label>
-                <input type="text" name="coordenadas" placeholder="Opcional: -0.123, -78.456">
+                <input type="text" name="coordenadas" placeholder="Ej: -0.104819, -78.399725">
             </div>
 
             <div class="form-group">
@@ -120,21 +116,12 @@ $planes = $planCtrl->listarPlanes();
                 <label>Referencias de llegada</label>
                 <textarea name="referencias" placeholder="Ej: Frente a la tienda de la esquina"></textarea>
             </div>
-
         </div>
 
-        <button type="submit" class="btn-save">
-            💾 Guardar Nuevo Cliente
-        </button>
-
-        <a href="administrador.php?page=ver_clientes" class="btn-cancel">
-            Cancelar registro
-        </a>
-
+        <button type="submit" class="btn-save">💾 Guardar Nuevo Cliente</button>
+        <a href="administrador.php?page=ver_clientes" class="btn-cancel">Cancelar registro</a>
     </form>
-</div>
 
-<script src="../../public/js/cliente.js"></script>
-
+    <script src="../../public/js/cliente.js"></script>
 </body>
 </html>

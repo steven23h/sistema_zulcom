@@ -31,14 +31,14 @@ $clientes = $clienteCtrl->index();
         <tbody>
             <?php foreach ($clientes as $c): ?>
             <tr>
-                <td style="font-weight: bold;"><?= $c['cedula'] ?></td>
+                <td style="font-weight: bold;"><?= htmlspecialchars($c['cedula']) ?></td>
                 <td><?= htmlspecialchars($c['nombre'] . " " . $c['apellido']) ?></td>
-                <td><?= $c['telefono1'] ?></td>
-                <td><span class="ip-code"><?= $c['ip'] ?></span></td>
-                <td class="plan-text"><?= $c['nombre_plan'] ?? 'Sin plan' ?></td>
+                <td><?= htmlspecialchars($c['telefono1']) ?></td>
+                <td><span class="ip-code"><?= htmlspecialchars($c['ip']) ?></span></td>
+                <td class="plan-text"><?= htmlspecialchars($c['nombre_plan'] ?? 'Sin plan') ?></td>
                 <td>
                     <span class="badge-status <?= strtolower($c['estado']) ?>">
-                        <?= $c['estado'] ?>
+                        <?= htmlspecialchars($c['estado']) ?>
                     </span>
                 </td>
                 <td>

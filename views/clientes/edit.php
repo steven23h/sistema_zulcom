@@ -18,7 +18,6 @@ if (!$cliente) {
     exit;
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -37,10 +36,9 @@ if (!$cliente) {
         <input type="hidden" name="btn_actualizar_cliente" value="1">
 
         <div class="form-grid">
-            
             <div class="form-group">
                 <label>Cédula / RUC</label>
-                <input type="text" name="cedula" value="<?= $cliente['cedula'] ?>" required>
+                <input type="text" name="cedula" value="<?= htmlspecialchars($cliente['cedula']) ?>" required>
             </div>
 
             <div class="form-group">
@@ -53,41 +51,39 @@ if (!$cliente) {
 
             <div class="form-group">
                 <label>IP del Cliente</label>
-                <input type="text" name="ip" value="<?= $cliente['ip'] ?>" required>
+                <input type="text" name="ip" value="<?= htmlspecialchars($cliente['ip']) ?>" required>
             </div>
 
             <div class="form-group">
                 <label>Teléfono 1</label>
-                <input type="text" name="telefono1" value="<?= $cliente['telefono1'] ?>" required>
+                <input type="text" name="telefono1" value="<?= htmlspecialchars($cliente['telefono1']) ?>" required>
             </div>
 
             <div class="form-group">
                 <label>Teléfono 2</label>
-                <input type="text" name="telefono2" value="<?= $cliente['telefono2'] ?>" required>
+                <input type="text" name="telefono2" value="<?= htmlspecialchars($cliente['telefono2'] ?? '') ?>">
             </div>
-
 
             <div class="form-group full-width">
                 <label>Nombres</label>
-                <input type="text" name="nombre" value="<?= $cliente['nombre'] ?>" required>
+                <input type="text" name="nombre" value="<?= htmlspecialchars($cliente['nombre']) ?>" required>
             </div>
 
             <div class="form-group full-width">
                 <label>Apellidos</label>
-                <input type="text" name="apellido" value="<?= $cliente['apellido'] ?>" required>
+                <input type="text" name="apellido" value="<?= htmlspecialchars($cliente['apellido']) ?>" required>
             </div>
 
             <div class="form-group">
                 <label>Email</label>
-                <input type="email" name="correo" value="<?= $cliente['correo'] ?>" required>
+                <input type="email" name="correo" value="<?= htmlspecialchars($cliente['correo']) ?>" required>
             </div>
 
             <div class="form-group">
                 <label>Plan Contratado</label>
                 <select name="id_plan">
                     <?php foreach ($planes as $p): ?>
-                        <option value="<?= $p['id_plan'] ?>" 
-                            <?= $p['id_plan'] == $cliente['id_plan'] ? 'selected' : '' ?>>
+                        <option value="<?= $p['id_plan'] ?>" <?= $p['id_plan'] == $cliente['id_plan'] ? 'selected' : '' ?>>
                             <?= $p['nombre_plan'] ?> - <?= $p['megas'] ?> Mbps
                         </option>
                     <?php endforeach; ?>
@@ -104,49 +100,42 @@ if (!$cliente) {
 
             <div class="form-group">
                 <label>Coordenadas (GPS)</label>
-                <input type="text" name="coordenadas" value="<?= $cliente['coordenadas'] ?? '' ?>">
+                <input type="text" name="coordenadas" value="<?= htmlspecialchars($cliente['coordenadas'] ?? '') ?>">
             </div>
 
             <div class="form-group">
                 <label>Parroquia</label>
-                <input type="text" name="parroquia" value="<?= $cliente['parroquia'] ?? '' ?>">
+                <input type="text" name="parroquia" value="<?= htmlspecialchars($cliente['parroquia'] ?? '') ?>">
             </div>
 
             <div class="form-group">
                 <label>Cantón</label>
-                <input type="text" name="canton" value="<?= $cliente['canton'] ?? '' ?>">
+                <input type="text" name="canton" value="<?= htmlspecialchars($cliente['canton'] ?? '') ?>">
             </div>
 
             <div class="form-group">
                 <label>Ciudad</label>
-                <input type="text" name="ciudad" value="<?= $cliente['ciudad'] ?? '' ?>">
+                <input type="text" name="ciudad" value="<?= htmlspecialchars($cliente['ciudad'] ?? '') ?>">
             </div>
 
             <div class="form-group">
                 <label>Provincia</label>
-                <input type="text" name="provincia" value="<?= $cliente['provincia'] ?? '' ?>">
+                <input type="text" name="provincia" value="<?= htmlspecialchars($cliente['provincia'] ?? '') ?>">
             </div>
 
             <div class="form-group full-width">
                 <label>Dirección Exacta</label>
-                <textarea name="direccion"><?= $cliente['direccion'] ?></textarea>
+                <textarea name="direccion"><?= htmlspecialchars($cliente['direccion']) ?></textarea>
             </div>
 
             <div class="form-group full-width">
                 <label>Referencias del Domicilio</label>
-                <textarea name="referencias"><?= $cliente['referencias'] ?? '' ?></textarea>
+                <textarea name="referencias"><?= htmlspecialchars($cliente['referencias'] ?? '') ?></textarea>
             </div>
-
         </div>
 
-        <button type="submit" class="btn-save">
-            🔄 Guardar Cambios
-        </button>
-
-        <a href="administrador.php?page=ver_clientes" class="btn-cancel">
-            Cancelar y Volver
-        </a>
-
+        <button type="submit" class="btn-save">🔄 Guardar Cambios</button>
+        <a href="administrador.php?page=ver_clientes" class="btn-cancel">Cancelar y Volver</a>
     </form>
 </div>
 

@@ -17,9 +17,9 @@ $colaboradores = $controller->listarColaboradores();
 ?>
 
 <div class="dashboard-content">
-    <link rel="stylesheet" href="../../css/styles.css">
+  
    <link rel="stylesheet" href="../../public/css/navbar.css">
-   <link rel="stylesheet" href="/zulcom2/css/styles.css">
+  
     <!-- HEADER -->
     <div class="page-header">
         <div>

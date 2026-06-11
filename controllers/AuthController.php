@@ -12,6 +12,12 @@ class AuthController {
         $this->userModel = new User($this->db);
     }
 
+   
+     
+    public function listUsers() {
+        return $this->userModel->getAll();
+    }
+
     public function login($username, $password) {
         $user = $this->userModel->getByUsername(trim($username));
         if ($user && password_verify(trim($password), $user['password'])) {
@@ -124,11 +130,9 @@ class AuthController {
 
         try {
             if ($this->userModel->create($data)) {
-                // Si el que registra ya es Administrador, no alteramos su sesión activa
                 if (isset($_SESSION['role']) && $_SESSION['role'] === 'Administracion') {
                     return "success_admin";
                 } else {
-                    // Flujo Público (Login): Autologin instantáneo para el nuevo usuario
                     $newUserQuery = $this->db->prepare("SELECT id FROM users WHERE username = ? LIMIT 1");
                     $newUserQuery->execute([$username]);
                     $newUser = $newUserQuery->fetch(PDO::FETCH_ASSOC);

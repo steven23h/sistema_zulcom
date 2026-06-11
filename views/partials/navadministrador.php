@@ -6,7 +6,7 @@
     <div class="nav-section">
         <ul class="nav-list">
             <li class="nav-item"><a href="administrador.php">Dashboard</a></li>
-            <li class="nav-item"><a href="administrador.php?page=registrar">Registrar Personal</a></li>
+            <li class="nav-item"><a href="administrador.php?page=ver_persona">Registrar Personal</a></li>
             <li class="nav-item"><a href="administrador.php?page=ver_planes">Planes</a></li>
             <li class="nav-item"><a href="administrador.php?page=ver_clientes">Lista de Clientes</a></li>
             <li class="nav-item"><a href="administrador.php?page=ver_tickets">Soporte Técnico</a></li>

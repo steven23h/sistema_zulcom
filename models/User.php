@@ -7,6 +7,24 @@ class User {
         $this->conn = $db;
     }
 
+    /**
+     * Obtener todos los colaboradores de la empresa
+     * Adaptado exactamente a tu estructura ($this->conn y $this->table_name)
+     */
+    public function getAll() {
+        try {
+            $query = "SELECT id, cedula, nombres, apellidos, email, telefono, role, username 
+                      FROM " . $this->table_name . " 
+                      ORDER BY id DESC";
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            error_log("Error en User::getAll -> " . $e->getMessage());
+            return [];
+        }
+    }
+
     public function getByUsername($username) {
         $query = "SELECT * FROM " . $this->table_name . " WHERE username = :un LIMIT 1";
         $stmt = $this->conn->prepare($query);

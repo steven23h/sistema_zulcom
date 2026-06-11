@@ -84,6 +84,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
                 $page = isset($_GET['page']) ? $_GET['page'] : 'inicio';
 
                 switch ($page) {
+                    case 'ver_persona':
+        include '../auth/index.php'; // Carga la tabla de colaboradores
+        break;
                     case 'registrar':
                         define('ACCESO_PERMITIDO', true);
                         include '../auth/register.php';

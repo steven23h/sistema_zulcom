@@ -10,43 +10,66 @@ $stmtT = $db->query("SELECT id, nombres, apellidos FROM users WHERE role = 'Tecn
 $tecnicosLista = $stmtT->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Gestión de Tickets - Zulcom</title>
-    <link rel="stylesheet" href="../../public/css/tickets.css">
-</head>
-<body>
+<div class="header-seccion">
+    <div>
+        <h2>🎫 Gestión de Tickets</h2>
+        <p>Consulta, filtra y administra los tickets registrados.</p>
+    </div>
 
-<div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-    <h2>🎫 Gestión de Tickets</h2>
-    <a href="administrador.php?page=crear_ticket" class="btn-new">➕ Nuevo Ticket</a>
+    <a href="administrador.php?page=crear_ticket" class="btn-new">
+        ➕ Nuevo Ticket
+    </a>
 </div>
 
-<div class="filters" style="display: flex; gap: 10px; margin-bottom: 20px; flex-wrap: wrap;">
-    <input type="text" id="filtroCedula" placeholder="🔍 Buscar cédula...">
-    
-    <select id="filtroEstado">
-        <option value="">Todos los Estados</option>
-        <option value="Pendiente">Pendiente</option>
-        <option value="En Proceso">En Proceso</option>
-        <option value="Completado">Completado</option>
-    </select>
+<div class="container-form">
 
-    <select id="filtroTecnico">
-        <option value="">Todos los Técnicos</option>
-        <?php foreach($tecnicosLista as $tec): ?>
-            <option value="<?= $tec['id'] ?>"><?= htmlspecialchars($tec['nombres'].' '.$tec['apellidos']) ?></option>
-        <?php endforeach; ?>
-    </select>
+    <div class="filtros-grid filtros-grid-tickets">
 
-    <input type="date" id="fechaInicio" title="Fecha Inicio">
-    <input type="date" id="fechaFin" title="Fecha Fin">
+        <div class="form-group">
+            <label>Cédula</label>
+            <input type="text" id="filtroCedula" placeholder="🔍 Buscar cédula...">
+        </div>
+
+        <div class="form-group">
+            <label>Estado</label>
+            <select id="filtroEstado">
+                <option value="">Todos los Estados</option>
+                <option value="Pendiente">Pendiente</option>
+                <option value="En Proceso">En Proceso</option>
+                <option value="Completado">Completado</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Técnico</label>
+            <select id="filtroTecnico">
+                <option value="">Todos los Técnicos</option>
+                <?php foreach($tecnicosLista as $tec): ?>
+                    <option value="<?= $tec['id'] ?>">
+                        <?= htmlspecialchars($tec['nombres'].' '.$tec['apellidos']) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Fecha Inicio</label>
+            <input type="date" id="fechaInicio">
+        </div>
+
+        <div class="form-group">
+            <label>Fecha Fin</label>
+            <input type="date" id="fechaFin">
+        </div>
+
+    </div>
+
 </div>
 
-<div class="container-table">
-    <table class="table" id="tablaTickets">
+<div class="table-container">
+
+    <table class="zulcom-table" id="tablaTickets">
+
         <thead>
             <tr>
                 <th>N° Ticket</th>
@@ -57,59 +80,102 @@ $tecnicosLista = $stmtT->fetchAll(PDO::FETCH_ASSOC);
                 <th>Acciones</th>
             </tr>
         </thead>
+
         <tbody>
             <?php foreach($tickets as $t): ?>
-            <?php 
-                // Normalizamos el estado a minúsculas para evaluar de forma segura en todo el bloque
-                $estadoReal = strtolower($t['estado'] ?? 'pendiente'); 
-            ?>
-            <tr data-cedula="<?= htmlspecialchars($t['cedula'] ?? '') ?>" 
-                data-estado="<?= htmlspecialchars($t['estado'] ?? 'Pendiente') ?>" 
-                data-tecnico="<?= htmlspecialchars($t['id_tecnico'] ?? '') ?>"
-                data-fecha="<?= htmlspecialchars($t['fecha_creacion'] ?? '') ?>">
-                
-                <td><b>#<?= htmlspecialchars($t['numero_ticket']) ?></b></td>
-                <td>
-                    <?= htmlspecialchars(($t['nombre'] ?? '').' '.($t['apellido'] ?? '')) ?>
-                    <br><small><?= htmlspecialchars($t['cedula'] ?? '') ?></small>
-                </td>
-                <td>
-                    <?php 
-                    if (!empty($t['tecnico_nombre'])) {
-                        echo htmlspecialchars($t['tecnico_nombre'] . ' ' . ($t['tecnico_apellido'] ?? ''));
-                    } else {
-                        echo '<i style="color: #a0aec0;">Sin asignar</i>';
-                    }
-                    ?>
-                </td>
-                <td>
-                    <span style="color: <?= !empty($t['tiene_costo']) ? '#e63946' : '#2a9d8f' ?>; font-weight: bold;">
-                        <?= !empty($t['tiene_costo']) ? '💰 Sí' : '✅ No' ?>
-                    </span>
-                </td>
-                <td>
-                    <?php $est = $t['estado'] ?: 'Pendiente'; ?>
-                    <span class="badge" style="background-color: <?= $estadoReal === 'completado' || $estadoReal === 'cerrado' ? '#2a9d8f' : ($estadoReal === 'en proceso' ? '#f4a261' : '#e63946') ?>; color: white; padding: 5px 10px; border-radius: 5px;">
-                        <?= htmlspecialchars($est) ?>
-                    </span>
-                </td>
-                <td style="font-size: 1.6rem;">
-                    <a href="administrador.php?page=ver_ticket&id=<?= $t['id'] ?>" title="Ver Ticket" style="text-decoration: none;">👁️</a>
-                    
-                    <?php if ($estadoReal === 'completado' || $estadoReal === 'cerrado'): ?>
-                        <a href="administrador.php?page=ver_ticket&id=<?= $t['id'] ?>#seccion-solucion" title="Ver Resultado Técnico" style="text-decoration: none; margin-left: 8px;">📋</a>
-                    <?php else: ?>
-                        <span style="font-size: 1.6rem; filter: grayscale(1); opacity: 0.3; cursor: not-allowed; margin-left: 8px;" title="Sin respuesta técnica">📋</span>
-                    <?php endif; ?>
+                <?php 
+                    $estadoReal = strtolower($t['estado'] ?? 'pendiente');
 
-                    <a href="administrador.php?page=editar_ticket&id=<?= $t['id'] ?>" title="Editar Ticket" style="text-decoration: none; margin-left: 8px;">✏️</a>
-                </td>
-            </tr>
+                    $estadoClase = 'pendiente';
+
+                    if ($estadoReal === 'en proceso') {
+                        $estadoClase = 'proceso';
+                    }
+
+                    if ($estadoReal === 'completado' || $estadoReal === 'cerrado') {
+                        $estadoClase = 'completado';
+                    }
+                ?>
+
+                <tr data-cedula="<?= htmlspecialchars($t['cedula'] ?? '') ?>"
+                    data-estado="<?= htmlspecialchars($t['estado'] ?? 'Pendiente') ?>"
+                    data-tecnico="<?= htmlspecialchars($t['id_tecnico'] ?? '') ?>"
+                    data-fecha="<?= htmlspecialchars($t['fecha_creacion'] ?? '') ?>">
+
+                    <td>
+                        <strong>#<?= htmlspecialchars($t['numero_ticket']) ?></strong>
+                    </td>
+
+                    <td>
+                        <?= htmlspecialchars(($t['nombre'] ?? '').' '.($t['apellido'] ?? '')) ?>
+                        <br>
+                        <small><?= htmlspecialchars($t['cedula'] ?? '') ?></small>
+                    </td>
+
+                    <td>
+                        <?php if (!empty($t['tecnico_nombre'])): ?>
+
+                            <?= htmlspecialchars($t['tecnico_nombre'] . ' ' . ($t['tecnico_apellido'] ?? '')) ?>
+
+                        <?php else: ?>
+
+                            <span class="text-muted">Sin asignar</span>
+
+                        <?php endif; ?>
+                    </td>
+
+                    <td>
+                        <?php if (!empty($t['tiene_costo'])): ?>
+                            <span class="costo-si">💰 Sí</span>
+                        <?php else: ?>
+                            <span class="costo-no">✅ No</span>
+                        <?php endif; ?>
+                    </td>
+
+                    <td>
+                        <span class="badge-status <?= $estadoClase ?>">
+                            <?= htmlspecialchars($t['estado'] ?: 'Pendiente') ?>
+                        </span>
+                    </td>
+
+                    <td>
+                        <div class="acciones-iconos">
+
+                            <a href="administrador.php?page=ver_ticket&id=<?= $t['id'] ?>"
+                               title="Ver Ticket">
+                                👁️
+                            </a>
+
+                            <?php if ($estadoReal === 'completado' || $estadoReal === 'cerrado'): ?>
+
+                                <a href="administrador.php?page=ver_ticket&id=<?= $t['id'] ?>#seccion-solucion"
+                                   title="Ver Resultado Técnico">
+                                    📋
+                                </a>
+
+                            <?php else: ?>
+
+                                <span title="Sin respuesta técnica">
+                                    📋
+                                </span>
+
+                            <?php endif; ?>
+
+                            <a href="administrador.php?page=editar_ticket&id=<?= $t['id'] ?>"
+                               title="Editar Ticket">
+                                ✏️
+                            </a>
+
+                        </div>
+                    </td>
+
+                </tr>
+
             <?php endforeach; ?>
         </tbody>
+
     </table>
+
 </div>
 
 <script src="../../public/js/tickets.js"></script>
-</body>
-</html>

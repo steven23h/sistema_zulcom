@@ -208,6 +208,23 @@ h2{
 .filtros-grid .btn-filtrar{
     height:58px;
 }
+.filtros-grid-tickets{
+    display:grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap:20px;
+    align-items:end;
+}
+@media(max-width:1200px){
+    .filtros-grid-tickets{
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width:768px){
+    .filtros-grid-tickets{
+        grid-template-columns: 1fr;
+    }
+}
 /* ===================== BOTONES ===================== */
 
 .btn-save{
@@ -383,6 +400,122 @@ h2{
     border-radius:8px;
     border:1px dashed #cbd5e0;
     display:inline-block;
+}
+
+/* ===================== CREAR TICKET CENTRADO ===================== */
+
+.crear-ticket-card{
+    max-width:800px;
+    margin:30px auto;
+    padding:45px;
+}
+
+.crear-ticket-title{
+    font-size:2.4rem;
+    color:var(--morado-zulcom);
+    font-weight:700;
+    margin-bottom:30px;
+    text-align:left;
+}
+
+.crear-ticket-card .form-grid{
+    grid-template-columns:repeat(2,1fr);
+}
+
+.crear-ticket-card .form-group.full-width{
+    grid-column:1 / -1;
+}
+
+.crear-ticket-card .acciones-form{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+    margin-top:25px;
+}
+
+.crear-ticket-card .btn-save,
+.crear-ticket-card .btn-cancel{
+    width:100%;
+}
+.hidden{
+    display:none !important;
+}
+/* ===================== CREAR / EDITAR TICKETS ===================== */
+
+.search-box{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:12px;
+    margin-bottom:25px;
+}
+
+.search-box button,
+.btn-buscar{
+    background:var(--morado-zulcom);
+    color:white;
+    border:none;
+    padding:0 25px;
+    border-radius:12px;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.client-info,
+.client-card{
+    background:#f0f7ff;
+    padding:20px;
+    border-radius:15px;
+    border-left:6px solid var(--azul-info);
+    margin-bottom:25px;
+}
+
+.client-info p,
+.client-card p{
+    margin:6px 0;
+    font-size:1.05rem;
+    color:#333;
+}
+
+.btn-cancel{
+    background:var(--gris-cancel);
+    color:#475569;
+    width:100%;
+    padding:22px;
+    border:none;
+    border-radius:15px;
+    font-size:1.6rem;
+    font-weight:bold;
+    cursor:pointer;
+    text-align:center;
+    text-decoration:none;
+    display:block;
+}
+
+.btn-cancel:hover{
+    background:#cbd5e1;
+}
+
+.btn-back{
+    background:#eee;
+    color:#333;
+    margin-top:20px;
+    padding:18px;
+    border-radius:12px;
+    display:block;
+    text-align:center;
+    text-decoration:none;
+    font-weight:bold;
+}
+
+@media(max-width:768px){
+    .search-box{
+        grid-template-columns:1fr;
+    }
+
+    .search-box button,
+    .btn-buscar{
+        padding:16px;
+    }
 }
 /* ===================== RESPONSIVE TABLAS ===================== */
 

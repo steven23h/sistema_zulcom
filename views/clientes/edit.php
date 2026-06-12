@@ -18,24 +18,18 @@ if (!$cliente) {
     exit;
 }
 ?>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Cliente - Zulcom</title>
-    <link rel="stylesheet" href="../../public/css/cliente.css">
-</head>
-<body>
 
-<div class="container-form">
+<div class="container-form cliente-form-card">
+
     <h2>✏️ Editar Cliente</h2>
 
     <form action="../../controllers/ClientesController.php" method="POST">
-        <input type="hidden" name="id_cliente" value="<?= $cliente['id_cliente'] ?>">
+
+        <input type="hidden" name="id_cliente" value="<?= htmlspecialchars($cliente['id_cliente']) ?>">
         <input type="hidden" name="btn_actualizar_cliente" value="1">
 
         <div class="form-grid">
+
             <div class="form-group">
                 <label>Cédula / RUC</label>
                 <input type="text" name="cedula" value="<?= htmlspecialchars($cliente['cedula']) ?>" required>
@@ -84,7 +78,7 @@ if (!$cliente) {
                 <select name="id_plan">
                     <?php foreach ($planes as $p): ?>
                         <option value="<?= $p['id_plan'] ?>" <?= $p['id_plan'] == $cliente['id_plan'] ? 'selected' : '' ?>>
-                            <?= $p['nombre_plan'] ?> - <?= $p['megas'] ?> Mbps
+                            <?= htmlspecialchars($p['nombre_plan']) ?> - <?= htmlspecialchars($p['megas']) ?> Mbps
                         </option>
                     <?php endforeach; ?>
                 </select>
@@ -99,7 +93,7 @@ if (!$cliente) {
             </div>
 
             <div class="form-group">
-                <label>Coordenadas (GPS)</label>
+                <label>Coordenadas GPS</label>
                 <input type="text" name="coordenadas" value="<?= htmlspecialchars($cliente['coordenadas'] ?? '') ?>">
             </div>
 
@@ -132,12 +126,19 @@ if (!$cliente) {
                 <label>Referencias del Domicilio</label>
                 <textarea name="referencias"><?= htmlspecialchars($cliente['referencias'] ?? '') ?></textarea>
             </div>
+
         </div>
 
-        <button type="submit" class="btn-save">🔄 Guardar Cambios</button>
-        <a href="administrador.php?page=ver_clientes" class="btn-cancel">Cancelar y Volver</a>
-    </form>
-</div>
+        <div class="acciones-form">
+            <button type="submit" class="btn-save">
+                🔄 Guardar Cambios
+            </button>
 
-</body>
-</html>
+            <a href="administrador.php?page=ver_clientes" class="btn-cancel">
+                Cancelar y Volver
+            </a>
+        </div>
+
+    </form>
+
+</div>

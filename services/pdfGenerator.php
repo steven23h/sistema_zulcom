@@ -166,16 +166,6 @@ function generarPDFColaborador($colaborador,$roles,$id){
         t('Declaro haber recibido conforme el pago correspondiente al periodo indicado, de acuerdo con la legislación laboral vigente.')
     );
 
-    // ==============================
-    // FIRMAS
-    // ==============================
-    $pdf->Line(20,180,80,180);
-    $pdf->SetXY(20,182);
-    $pdf->Cell(60,10,t('Firma Empleado'));
-
-    $pdf->Line(120,180,180,180);
-    $pdf->SetXY(120,182);
-    $pdf->Cell(60,10,t('Firma Gerente'));
 
     $pdf->Output('D', "rol_pago_$id.pdf");
 

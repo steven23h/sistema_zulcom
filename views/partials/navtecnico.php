@@ -5,7 +5,6 @@
 
     <div class="nav-section">
         <ul class="nav-list">
-            <li class="nav-item"><a href="tecnico.php">Dashboard</a></li>
             <li class="nav-item"><a href="tecnico.php?page=tecnico_tickets">Mis Tickets</a></li>
             <li class="nav-item"><a href="tecnico.php?page=historial_tickets">Historial de tickets</a></li>
             <li class="nav-item"><a href="tecnico.php?page=coordenadas_clientes">Cordenadas de clientes</a></li>

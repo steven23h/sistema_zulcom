@@ -824,6 +824,37 @@ h2{
     margin-bottom:30px;
     font-size:1rem;
 }
+/* ===================== FACTURAS / RECIBOS ===================== */
+
+.factura-form-card{
+    max-width:900px;
+    margin:30px auto;
+}
+
+.btn-disabled{
+    opacity:.5;
+}
+/* ===================== BUSCADOR FACTURA ===================== */
+
+.factura-form-card .search-box{
+    display:grid;
+    grid-template-columns:1fr auto;
+    gap:12px;
+    margin-bottom:30px;
+}
+
+.factura-form-card .search-box input{
+    width:100%;
+    padding:16px;
+    font-size:1.1rem;
+    border:2px solid #ccc;
+    border-radius:12px;
+}
+
+.factura-form-card .btn-buscar{
+    padding:0 24px;
+    height:58px;
+}
 /* ===================== RESPONSIVE FILTROS ===================== */
 
 @media (max-width:768px){

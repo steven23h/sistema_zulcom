@@ -768,7 +768,46 @@ h2{
         grid-template-columns:1fr;
     }
 }
+/* ===================== PLANES ===================== */
 
+.plan-name-cell{
+    font-weight:700;
+    color:var(--morado-zulcom);
+}
+
+.badge-megas{
+    background:#dbeafe;
+    color:#1d4ed8;
+    padding:8px 14px;
+    border-radius:20px;
+    font-weight:700;
+    display:inline-block;
+}
+
+.plan-costo{
+    font-weight:700;
+    color:var(--verde-zulcom);
+}
+
+.table-empty-cell{
+    text-align:center;
+    padding:40px;
+    color:#64748b;
+    font-style:italic;
+}
+/* ===================== FORMULARIOS PLANES ===================== */
+
+.plan-form-card{
+    max-width:900px;
+    margin:30px auto;
+}
+
+.acciones-form{
+    display:flex;
+    flex-direction:column;
+    gap:15px;
+    margin-top:25px;
+}
 /* ===================== RESPONSIVE FILTROS ===================== */
 
 @media (max-width:768px){

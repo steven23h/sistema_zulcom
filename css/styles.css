@@ -855,6 +855,53 @@ h2{
     padding:0 24px;
     height:58px;
 }
+/* ===================== DEUDORES ===================== */
+
+.header-seccion-deudores{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:40px;
+    padding-bottom:25px;
+    border-bottom:3px solid #f0f2f5;
+}
+
+.header-seccion-deudores h2{
+    color:var(--rojo-zulcom);
+}
+
+.header-seccion-deudores p{
+    font-size:1.3rem;
+    color:#555;
+    margin-top:10px;
+}
+
+.bg-deudores th{
+    color:var(--rojo-zulcom) !important;
+    border-bottom:3px solid #fcd3d3 !important;
+}
+
+.plan-text-deuda{
+    font-weight:700;
+    color:var(--morado-zulcom);
+    text-transform:uppercase;
+}
+
+.btn-pagar{
+    background:var(--verde-zulcom);
+    color:white;
+    padding:12px 20px;
+    border-radius:10px;
+    text-decoration:none;
+    font-weight:bold;
+    display:inline-block;
+    transition:.3s;
+}
+
+.btn-pagar:hover{
+    background:var(--verde-hover);
+    transform:translateY(-2px);
+}
 /* ===================== RESPONSIVE FILTROS ===================== */
 
 @media (max-width:768px){

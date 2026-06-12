@@ -77,8 +77,6 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Tecnico') {
                 include '../rolespago/ver_rol.php';
             break;
 
-
-                // 🔥 DEFAULT
                 default:
                     echo "<h3>Bienvenido Técnico</h3>";
                     echo "<p>Aquí podrás ver y gestionar tus tickets asignados.</p>";

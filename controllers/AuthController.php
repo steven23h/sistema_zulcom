@@ -11,8 +11,6 @@ class AuthController {
         $this->db = Database::connect();
         $this->userModel = new User($this->db);
     }
-
-   
      
     public function listUsers() {
         return $this->userModel->getAll();

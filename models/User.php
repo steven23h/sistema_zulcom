@@ -9,7 +9,6 @@ class User {
 
     /**
      * Obtener todos los colaboradores de la empresa
-     * Adaptado exactamente a tu estructura ($this->conn y $this->table_name)
      */
     public function getAll() {
         try {

@@ -5,15 +5,16 @@ if (session_status() === PHP_SESSION_NONE) {
 
 $mensaje_local = "";
 
-// Bloque de procesamiento de registro
-if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar']) && (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Administracion')) {
+// CORREGIDO: Se eliminó la restricción de rol en el POST para permitir que el Administrador registre
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
 
     require_once '../../controllers/AuthController.php';
     $auth = new AuthController();
     $res = $auth->register($_POST, $_FILES);
 
-    if ($res === "success_login" || $res === "success") {
-        $path = ($_SESSION['role'] === 'Administracion') ? 'administrador.php' : strtolower($_SESSION['role']) . '.php';
+    // CORREGIDO: Ahora valida correctamente "success_admin" para procesar el redireccionamiento
+    if ($res === "success_login" || $res === "success_admin" || $res === "success") {
+        $path = (isset($_SESSION['role']) && $_SESSION['role'] === 'Administracion') ? 'administrador.php' : strtolower($_SESSION['role']) . '.php';
         header("Location: ../dashboard/" . $path);
         exit();
     } else {
@@ -167,3 +168,5 @@ $esError = (isset($res) && $res !== 'success_admin' && $res !== 'success' && $re
         </form>
 
     </div>
+</body>
+</html>

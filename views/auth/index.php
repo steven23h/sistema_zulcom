@@ -3,30 +3,39 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Bloqueo de seguridad: Solo Administradores
 if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'Administracion') {
     die("Acceso denegado.");
 }
 
 require_once '../../controllers/AuthController.php';
+
 $authCtrl = new AuthController();
 $usuarios = $authCtrl->listUsers();
 ?>
 
-<link rel="stylesheet" href="../../public/css/cliente.css">
-
 <div class="header-seccion">
+
     <div>
         <h2>Gestión de Personal</h2>
         <p>Total colaboradores: <strong><?= count($usuarios) ?></strong></p>
     </div>
-    <a href="administrador.php?page=registrar" class="btn-new">➕ Registrar Personal</a>
+
+    <a href="administrador.php?page=registrar" class="btn-new">
+        ➕ Registrar Personal
+    </a>
+
 </div>
 
-<input type="text" id="personalSearch" class="search-input" placeholder="Buscar colaborador por nombre, cédula o usuario...">
+<input
+    type="text"
+    id="personalSearch"
+    class="search-input"
+    placeholder="Buscar colaborador por nombre, cédula o usuario...">
 
 <div class="table-container">
+
     <table class="zulcom-table" id="tablaPersonal">
+
         <thead>
             <tr>
                 <th>Cédula</th>
@@ -37,29 +46,61 @@ $usuarios = $authCtrl->listUsers();
                 <th>Rol / Cargo</th>
             </tr>
         </thead>
+
         <tbody>
+
             <?php if (!empty($usuarios)): ?>
+
                 <?php foreach ($usuarios as $u): ?>
+
+                    <tr>
+
+                        <td class="text-bold">
+                            <?= htmlspecialchars($u['cedula']) ?>
+                        </td>
+
+                        <td>
+                            <?= htmlspecialchars($u['nombres'] . " " . $u['apellidos']) ?>
+                        </td>
+
+                        <td>
+                            <span class="ip-code">
+                                <?= htmlspecialchars($u['username']) ?>
+                            </span>
+                        </td>
+
+                        <td>
+                            <?= htmlspecialchars($u['email']) ?>
+                        </td>
+
+                        <td>
+                            <?= htmlspecialchars($u['telefono']) ?>
+                        </td>
+
+                        <td>
+                            <span class="badge-status <?= strtolower($u['role']) === 'administracion' ? 'activo' : 'pendiente' ?>">
+                                <?= htmlspecialchars($u['role']) ?>
+                            </span>
+                        </td>
+
+                    </tr>
+
+                <?php endforeach; ?>
+
+            <?php else: ?>
+
                 <tr>
-                    <td style="font-weight: bold;"><?= htmlspecialchars($u['cedula']) ?></td>
-                    <td><?= htmlspecialchars($u['nombres'] . " " . $u['apellidos']) ?></td>
-                    <td><span class="ip-code"><?= htmlspecialchars($u['username']) ?></span></td>
-                    <td><?= htmlspecialchars($u['email']) ?></td>
-                    <td><?= htmlspecialchars($u['telefono']) ?></td>
-                    <td>
-                        <span class="badge-status <?= strtolower($u['role']) === 'administracion' ? 'activo' : 'pendiente' ?>">
-                            <?= htmlspecialchars($u['role']) ?>
-                        </span>
+                    <td colspan="6" class="empty-row">
+                        No hay colaboradores registrados en el sistema.
                     </td>
                 </tr>
-                <?php endforeach; ?>
-            <?php else: ?>
-                <tr>
-                    <td colspan="6" style="text-align: center; padding: 20px; color: #718096;">No hay colaboradores registrados en el sistema.</td>
-                </tr>
+
             <?php endif; ?>
+
         </tbody>
+
     </table>
+
 </div>
 
 <script src="../../public/js/register.js"></script>

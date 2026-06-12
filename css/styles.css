@@ -192,6 +192,10 @@ h2{
     outline:none;
     border-color:var(--morado-zulcom);
 }
+.personal-form-card .form-grid{
+    gap:10px;
+    margin-bottom:10px;
+}
 /* ===================== FILTROS ===================== */
 
 .filtros-grid{
@@ -807,6 +811,18 @@ h2{
     flex-direction:column;
     gap:15px;
     margin-top:25px;
+}
+/* ===================== PERSONAL ===================== */
+
+.personal-form-card{
+    max-width:1100px;
+    margin:30px auto;
+}
+
+.form-subtitle{
+    color:#64748b;
+    margin-bottom:30px;
+    font-size:1rem;
 }
 /* ===================== RESPONSIVE FILTROS ===================== */
 

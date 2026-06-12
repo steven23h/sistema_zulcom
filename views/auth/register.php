@@ -34,75 +34,122 @@ $esError = (isset($res) && $res !== 'success_admin' && $res !== 'success' && $re
 </head>
 <body>
 
-<div class="container-form">
+<div class="container-form personal-form-card">
+
     <h2>👤 Registro de Nuevo Personal</h2>
-    <p>Complete la información requerida para dar de alta al nuevo usuario en el sistema.</p>
-    
+
+    <p class="form-subtitle">
+        Complete la información requerida para dar de alta al nuevo usuario en el sistema.
+    </p>
+
     <?php if (!empty($mensaje_local)) echo $mensaje_local; ?>
 
     <form method="POST" enctype="multipart/form-data" id="main-form">
-        
+
         <div class="form-grid">
+
             <div class="form-group">
-                <input type="text" name="nombres" placeholder="Nombres" required 
+                <label>Nombres</label>
+                <input type="text" name="nombres" required
                        value="<?= $esError ? htmlspecialchars($_POST['nombres']) : ''; ?>">
             </div>
+
             <div class="form-group">
-                <input type="text" name="apellidos" placeholder="Apellidos" required 
+                <label>Apellidos</label>
+                <input type="text" name="apellidos" required
                        value="<?= $esError ? htmlspecialchars($_POST['apellidos']) : ''; ?>">
             </div>
+
         </div>
 
         <div class="form-grid">
+
             <div class="form-group">
-                <input type="text" name="cedula" pattern="[0-9]{10}" maxlength="10" 
-                       title="La cédula debe tener exactamente 10 dígitos numéricos" placeholder="Cédula" required 
+                <label>Cédula</label>
+                <input type="text"
+                       name="cedula"
+                       pattern="[0-9]{10}"
+                       maxlength="10"
+                       required
                        value="<?= $esError ? htmlspecialchars($_POST['cedula']) : ''; ?>">
             </div>
+
             <div class="form-group">
-                <input type="text" name="telefono" placeholder="Teléfono" required 
+                <label>Teléfono</label>
+                <input type="text"
+                       name="telefono"
+                       required
                        value="<?= $esError ? htmlspecialchars($_POST['telefono']) : ''; ?>">
             </div>
+
         </div>
 
         <div class="form-group">
-            <input type="email" name="email" placeholder="Correo electrónico" required 
+            <label>Correo Electrónico</label>
+            <input type="email"
+                   name="email"
+                   required
                    value="<?= $esError ? htmlspecialchars($_POST['email']) : ''; ?>">
         </div>
 
         <div class="form-group">
-            <input type="text" name="domicilio" placeholder="Domicilio" required 
+            <label>Domicilio</label>
+            <input type="text"
+                   name="domicilio"
+                   required
                    value="<?= $esError ? htmlspecialchars($_POST['domicilio']) : ''; ?>">
         </div>
 
         <div class="form-grid">
+
             <div class="form-group">
-                <input type="text" name="codigo_empresa" placeholder="Código Empresa" required>
+                <label>Código Empresa</label>
+                <input type="text"
+                       name="codigo_empresa"
+                       required>
             </div>
+
             <div class="form-group">
+                <label>Rol</label>
                 <select name="role" required>
                     <option value="Tecnico">Técnico</option>
                     <option value="Administracion">Administración</option>
                 </select>
             </div>
+
         </div>
 
         <div class="form-grid">
+
             <div class="form-group">
-                <span class="file-label">Copia de Cédula (PDF):</span>
-                <input type="file" name="copia_cedula" accept=".pdf" required>
+                <label>Copia de Cédula (PDF)</label>
+                <input type="file"
+                       name="copia_cedula"
+                       accept=".pdf"
+                       required>
             </div>
+
             <div class="form-group">
-                <span class="file-label">Récord Policial (PDF):</span>
-                <input type="file" name="record_policial" accept=".pdf" required>
+                <label>Récord Policial (PDF)</label>
+                <input type="file"
+                       name="record_policial"
+                       accept=".pdf"
+                       required>
             </div>
+
         </div>
 
-        <button type="submit" name="btn_registrar" class="btn-save">
-            REGISTRAR PERSONAL
-        </button>
-    </form>
-</div>
+        <div class="acciones-form">
 
-</body>
-</html>
+            <button
+                type="submit"
+                name="btn_registrar"
+                class="btn-save">
+                REGISTRAR PERSONAL
+            </button>
+
+        </div>
+
+    </form>
+
+</div>

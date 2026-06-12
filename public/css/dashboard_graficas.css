@@ -1,0 +1,125 @@
+/* Base del contenedor principal */
+.dashboard-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* 1. Tarjetas de Métricas (KPIs) - Autoajustables según el espacio */
+.kpi-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.kpi-card {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    border-left: 5px solid #4e73df;
+    transition: transform 0.2s;
+}
+
+.kpi-card:hover { 
+    transform: translateY(-3px); 
+}
+
+.kpi-card.recaudacion { border-left-color: #1cc88a; }
+.kpi-card.morosidad { border-left-color: #e74a3b; }
+.kpi-card.tickets { border-left-color: #f6c23e; }
+
+.kpi-title { 
+    font-size: 0.85rem; 
+    font-weight: bold; 
+    color: #858796; 
+    text-transform: uppercase; 
+    margin-bottom: 5px; 
+}
+
+.kpi-value { 
+    font-size: 1.8rem; 
+    font-weight: 700; 
+    color: #5a5c69; 
+    margin: 0; 
+}
+
+/* 2. Estructura de Filas (Gráficos y Tablas) */
+.charts-row {
+    display: grid;
+    grid-template-columns: 1fr; /* Por defecto en móvil: una sola columna */
+    gap: 20px;
+}
+
+/* Bloques contenedores */
+.dashboard-block {
+    background: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    min-width: 0; /* Evita que el contenedor rompa el layout */
+}
+
+.block-title { 
+    font-size: 1.1rem; 
+    color: #333; 
+    margin-top: 0; 
+    margin-bottom: 20px; 
+    border-bottom: 1px solid #f2f2f2; 
+    padding-bottom: 10px; 
+    display: flex; 
+    justify-content: space-between; 
+    align-items: center; 
+    flex-wrap: wrap; /* Si el título es largo en móvil, se salta de línea */
+    gap: 10px;
+}
+
+.chart-container {
+    position: relative; 
+    height: 250px; /* Un poco más pequeño en móviles */
+    width: 100%;
+}
+
+.view-all-link {
+    font-size: 0.8rem; 
+    color: #4e73df; 
+    text-decoration: none;
+}
+
+/* 3. 🔥 Optimización Responsiva para Tablas (Evita desbordamiento) */
+.table-responsive {
+    width: 100%;
+    overflow-x: auto; /* Agrega scroll horizontal interno solo si la tabla no cabe */
+    -webkit-overflow-scrolling: touch;
+}
+
+.recent-table { 
+    width: 100%; 
+    border-collapse: collapse; 
+    text-align: left; 
+    font-size: 0.9rem; 
+    min-width: 400px; /* Asegura que mantenga forma legible al hacer scroll en móvil */
+}
+
+.recent-table th, .recent-table td { 
+    padding: 12px; 
+    border-bottom: 1px solid #eee; 
+}
+
+.recent-table th { 
+    background-color: #f8f9fc; 
+    color: #4e73df; 
+}
+
+/* 4. Media Query para Pantallas Medianas y Grandes (Laptops/Escritorio) */
+@media (min-width: 992px) { 
+    .charts-row { 
+        grid-template-columns: 2fr 1fr; /* Se divide en dos columnas en pantallas grandes */
+    }
+    .chart-container {
+        height: 300px; /* Recupera su tamaño completo */
+    }
+}

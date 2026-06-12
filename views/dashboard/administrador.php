@@ -53,10 +53,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
 <head>
     <meta charset="UTF-8">
     <title>ZULCOM - Panel de Control</title>
-    <link rel="stylesheet" href="/zulcom2/public/css/navbar.css">
-     <link rel="stylesheet" href="/zulcom2/css/styles.css">
-    <link rel="stylesheet" href="/zulcom2/public/css/dashboard.css">
-
+    <link class="css-link" rel="stylesheet" href="/zulcom2/public/css/navbar.css">
+    <link class="css-link" rel="stylesheet" href="/zulcom2/css/styles.css">
+    <link class="css-link" rel="stylesheet" href="/zulcom2/public/css/dashboard.css">
+</head>
 <body>
 
     <div class="dashboard-container">
@@ -86,8 +86,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
 
                 switch ($page) {
                     case 'ver_persona':
-        include '../auth/index.php'; // Carga la tabla de colaboradores
-        break;
+                        include '../auth/index.php'; // Carga la tabla de colaboradores
+                        break;
+                        
                     case 'registrar':
                         define('ACCESO_PERMITIDO', true);
                         include '../auth/register.php';
@@ -165,9 +166,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['btn_registrar'])) {
                         include '../rolespago/ver_rol.php';
                         break;
                         
+                    // 📈 Se corrige la ruta hacia la nueva carpeta estructurada de estadísticas
+                    case 'estadisticas_empresa':
+                        include '../administrado/graficas_empresa.php';
+                        break;
+                        
+                    // Por defecto la pantalla principal del administrador mostrará los gráficos
                     default:
-                        echo "<h3>Bienvenido al Sistema Zulcom</h3>";
-                        echo "<p>Seleccione una opción del menú lateral para gestionar el sistema.</p>";
+                        include '../administrado/graficas_empresa.php';
                         break;
                 }
                 ?>

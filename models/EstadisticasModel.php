@@ -8,7 +8,6 @@ class EstadisticasModel {
         $this->db = Database::connect();
     }
 
-    // 📊 1. Datos para las tarjetas KPI superiores
     public function getResumenKpi() {
         // Clientes activos
         $st1 = $this->db->query("SELECT COUNT(*) as total FROM clientes WHERE estado = 'Activo'");
@@ -29,7 +28,7 @@ class EstadisticasModel {
         ];
     }
 
-    // 🥧 2. Clientes por Plan (Gráfico de Pastel 3D)
+  
     public function getClientesPorPlan() {
         $sql = "SELECT p.nombre_plan, COUNT(c.id_cliente) as cantidad 
                 FROM planes p 
@@ -39,7 +38,6 @@ class EstadisticasModel {
         return $stmt->fetchAll(PDO::FETCH_ASSOC) ?: [];
     }
 
-    // 📈 3. Montos por Forma de Pago (Gráfico de Columnas 3D)
     public function getIngresosPorMetodo() {
         $sql = "SELECT forma_pago, SUM(monto) as total FROM facturas GROUP BY forma_pago";
         $stmt = $this->db->query($sql);

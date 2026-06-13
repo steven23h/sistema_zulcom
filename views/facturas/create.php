@@ -4,6 +4,9 @@ require_once '../../config/database.php';
 
 $clienteCtrl = new ClientesController();
 $clientes = $clienteCtrl->index();
+
+// Captura la cédula automáticamente si viene desde el módulo de deudores
+$cedulaUrl = isset($_GET['cedula']) ? htmlspecialchars($_GET['cedula']) : '';
 ?>
 
 <div class="container-form factura-form-card">
@@ -15,15 +18,16 @@ $clientes = $clienteCtrl->index();
     </p>
 
     <div class="search-box">
-    <input
-        type="text"
-        id="busqueda_cedula"
-        placeholder="Ingrese Cédula...">
+        <input
+            type="text"
+            id="busqueda_cedula"
+            value="<?= $cedulaUrl ?>"
+            placeholder="Ingrese Cédula...">
 
-    <button type="button" onclick="buscarCliente()" class="btn-buscar">
-        🔍 Buscar
-    </button>
-</div>
+        <button type="button" onclick="buscarCliente()" class="btn-buscar">
+            🔍 Buscar
+        </button>
+    </div>
 
     <form action="../../controllers/FacturasController.php" method="POST" id="formFactura">
 
@@ -32,7 +36,7 @@ $clientes = $clienteCtrl->index();
         <input type="hidden" name="email_cliente" id="email_cliente">
         <input type="hidden" name="nombre_cliente" id="nombre_cliente">
 
-        <div id="infoCliente" class="client-card hidden">
+        <div id="infoCliente" class="client-card" style="display: none; margin-bottom: 20px;">
             <p><strong>Cliente:</strong> <span id="display_nombre"></span></p>
             <p><strong>Plan Actual:</strong> <span id="display_plan" class="plan-tag"></span></p>
             <p><strong>Email:</strong> <span id="display_email"></span></p>
@@ -65,13 +69,14 @@ $clientes = $clienteCtrl->index();
 
             <button
                 type="submit"
-                class="btn-save btn-disabled"
+                class="btn-save"
                 id="btnSubmit"
+                style="opacity: 0.5;"
                 disabled>
                 ✅ Generar y Enviar Recibo
             </button>
 
-            <a href="../dashboard/administrador.php?page=crear_factura"
+            <a href="../dashboard/administrador.php?page=clientes_deudores"
                class="btn-cancel">
                 Cancelar
             </a>
@@ -85,5 +90,4 @@ $clientes = $clienteCtrl->index();
 <script>
     window.listaClientes = <?= json_encode($clientes); ?>;
 </script>
-
 <script src="../../public/js/facturas.js"></script>

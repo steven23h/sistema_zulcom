@@ -8,26 +8,23 @@ class EstadisticasController {
         $this->model = new EstadisticasModel();
     }
 
-    // 🔥 Retorna los datos limpios en JSON para Highcharts
     public function obtenerMetricasAjax() {
         header('Content-Type: application/json');
         
         $kpis = $this->model->getResumenKpi();
         $planes = $this->model->getClientesPorPlan();
-        $pagos = $this->model->getIngresosPorMetodo();
+        $conexiones = $this->model->getEstadoConexiones();
 
         echo json_encode([
-            'status' => 'success',
-            'kpis' => $kpis,
-            'planes' => $planes,
-            'pagos' => $pagos
+            'status'     => 'success',
+            'kpis'       => $kpis,
+            'planes'     => $planes,
+            'conexiones' => $conexiones
         ]);
         exit;
     }
 }
 
-// Escuchador para peticiones en tiempo real (AJAX)
-if (isset($_GET['action']) && $_GET['action'] === 'getLiveMetrics') {
-    $controller = new EstadisticasController();
-    $controller->obtenerMetricasAjax();
-}
+// Inicialización automática para peticiones AJAX
+$controller = new EstadisticasController();
+$controller->obtenerMetricasAjax();

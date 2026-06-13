@@ -1,39 +1,44 @@
 <?php
-// Evitar acceso directo si no está definido en el enrutador
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-// Simulador de datos traídos del controlador
-$totalClientes = 42; 
-$clientesDeudores = 12;
-$porcentajeMorosidad = ($totalClientes > 0) ? round(($clientesDeudores / $totalClientes) * 100, 1) : 0;
-$recaudacionProyectada = 285.00;
-$ticketsPendientes = 5;
+require_once '../../config/database.php';
+$db = Database::connect();
+
+// Consulta sincrónica de las últimas 5 Órdenes de Trabajo (Soportes)
+$stmtTickets = $db->query("SELECT t.numero_ticket, t.descripcion, t.estado, c.nombre, c.apellido 
+                           FROM tickets t
+                           LEFT JOIN clientes c ON t.id_cliente = c.id_cliente
+                           ORDER BY t.id DESC LIMIT 5");
+$ultimosTickets = $stmtTickets->fetchAll(PDO::FETCH_ASSOC);
+
+// Consulta sincrónica de los Planes Habilitados en la plataforma
+$stmtPlanes = $db->query("SELECT nombre_plan, costo FROM planes ORDER BY costo ASC");
+$planesConfigurados = $stmtPlanes->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
 <link rel="stylesheet" href="/zulcom2/public/css/dashboard_graficas.css">
 
 <div class="dashboard-grid">
 
     <div class="kpi-container">
         <div class="kpi-card">
-            <div class="kpi-title">Clientes Totales</div>
-            <div class="kpi-value"><?php echo $totalClientes; ?></div>
+            <div class="kpi-title">CLIENTES TOTALES</div>
+            <div class="kpi-value" id="kpi-clientes-totales">...</div>
         </div>
         <div class="kpi-card recaudacion">
-            <div class="kpi-title">Recaudación Mensual</div>
-            <div class="kpi-value">$<?php echo number_format($recaudacionProyectada, 2); ?></div>
+            <div class="kpi-title">RECAUDACIÓN MENSUAL</div>
+            <div class="kpi-value" id="kpi-total-recaudado">$...</div>
         </div>
         <div class="kpi-card morosidad">
-            <div class="kpi-title">Índice de Morosidad</div>
-            <div class="kpi-value"><?php echo $porcentajeMorosidad; ?>%</div>
+            <div class="kpi-title">ÍNDICE DE MOROSIDAD</div>
+            <div class="kpi-value" id="kpi-indice-morosidad">...</div>
         </div>
         <div class="kpi-card tickets">
-            <div class="kpi-title">Soportes Pendientes</div>
-            <div class="kpi-value"><?php echo $ticketsPendientes; ?></div>
+            <div class="kpi-title">SOPORTES PENDIENTES</div>
+            <div class="kpi-value" id="kpi-tickets-pendientes">...</div>
         </div>
     </div>
 
@@ -59,53 +64,62 @@ $ticketsPendientes = 5;
                 <span>⚠️ Últimas Órdenes de Trabajo Asignadas</span>
                 <a href="administrador.php?page=ver_tickets" class="view-all-link">Ver todos</a>
             </div>
-            <table class="recent-table">
-                <thead>
-                    <tr>
-                        <th>N° Ticket</th>
-                        <th>Cliente</th>
-                        <th>Descripción del Problema</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>#TICK-0005</strong></td>
-                        <td>juan carlos lincango farinango</td>
-                        <td>jejejejjejeje</td>
-                    </tr>
-                    <tr>
-                        <td><strong>#TICK-0003</strong></td>
-                        <td>juan carlos lincango farinango</td>
-                        <td>saddadas</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-responsive">
+                <table class="recent-table">
+                    <thead>
+                        <tr>
+                            <th>N° Ticket</th>
+                            <th>Cliente</th>
+                            <th>Descripción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($ultimosTickets)): ?>
+                            <?php foreach ($ultimosTickets as $tk): ?>
+                                <tr>
+                                    <td><strong><?= htmlspecialchars($tk['numero_ticket']) ?></strong></td>
+                                    <td><?= htmlspecialchars($tk['nombre'] . ' ' . $tk['apellido']) ?></td>
+                                    <td><?= htmlspecialchars($tk['descripcion']) ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="3" class="text-center-muted">No hay órdenes de trabajo registradas.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
 
         <div class="dashboard-block">
-            <div class="block-title">Planes Configurados</div>
-            <table class="recent-table">
-                <thead>
-                    <tr>
-                        <th>Plan</th>
-                        <th>Precio Mensual</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Plan Fibra 50 Mbps</td>
-                        <td>$20.00</td>
-                    </tr>
-                    <tr>
-                        <td>Plan Familiar 100 Mbps</td>
-                        <td>$25.00</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="block-title">Planes Habilitados</div>
+            <div class="table-responsive">
+                <table class="recent-table">
+                    <thead>
+                        <tr>
+                            <th>Plan</th>
+                            <th>Costo Mensual</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php if (!empty($planesConfigurados)): ?>
+                            <?php foreach ($planesConfigurados as $plan): ?>
+                                <tr>
+                                    <td><?= htmlspecialchars($plan['nombre_plan']) ?></td>
+                                    <td>$<?= number_format($plan['costo'], 2) ?></td>
+                                </tr>
+                            <?php endforeach; ?>
+                        <?php else: ?>
+                            <tr>
+                                <td colspan="2" class="text-center-muted">No hay planes en el sistema.</td>
+                            </tr>
+                        <?php endif; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
-
-
 
 <script src="/zulcom2/public/js/dashboard_graficas.js"></script>

@@ -104,7 +104,7 @@ $estadoReal = strtolower($ticket['estado'] ?? 'pendiente');
     <?php endif; ?>
 
     <div class="ticket-actions">
-        <a href="tecnico.php?page=historial_tickets" class="btn-back">
+       <a href="administrador.php?page=ver_tickets" class="btn-back">
             ⬅ Volver al Historial
         </a>
     </div>
